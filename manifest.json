@@ -9,16 +9,10 @@
   "theme_color": "#4F46E5",
   "icons": [
     {
-      "src": "./assets/icon.png",
-      "sizes": "1024x1024",
+      "src": "./assets/genba_icon_a.PNG",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
-    },
-    {
-      "src": "./assets/adaptive-icon.png",
-      "sizes": "1024x1024",
-      "type": "image/png",
-      "purpose": "any"
     }
   ]
 }
