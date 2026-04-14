@@ -1,0 +1,24 @@
+{
+  "name": "彩心堂 現場管理",
+  "short_name": "現場管理",
+  "description": "内装施工 出面管理システム",
+  "start_url": "./genba-kanri.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EEF0F8",
+  "theme_color": "#4F46E5",
+  "icons": [
+    {
+      "src": "./assets/icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/adaptive-icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

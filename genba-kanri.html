@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="現場管理">
+<meta name="theme-color" content="#4F46E5">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./assets/icon.png">
+<title>彩心堂 現場管理</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; background: #EEF0F8; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Meiryo", "Noto Sans JP", sans-serif; color: #1A2240; }
+  input, textarea, button, select { font-family: inherit; }
+  input::placeholder, textarea::placeholder { color: #B0BAC8; }
+  button { cursor: pointer; }
+  ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-thumb { background: #D0D4E8; border-radius: 4px; }
+
+  /* Cards & Layout */
+  .card { background: #fff; border-radius: 14px; border: 1px solid #E4E7F2; box-shadow: 0 1px 4px rgba(20,30,80,.05), 0 4px 16px rgba(20,30,80,.04); overflow: hidden; }
+  .card-header { padding: 12px 16px; border-bottom: 1px solid #EEF0F8; background: #FAFBFF; display: flex; align-items: center; justify-content: space-between; }
+  .page { min-height: 100vh; background: #EEF0F8; }
+  .topbar { background: #fff; border-bottom: 1px solid #E4E7F2; }
+  .topbar-inner { max-width: 540px; margin: 0 auto; padding: 52px 18px 16px; }
+  .content { max-width: 540px; margin: 0 auto; padding: 14px 18px 100px; }
+
+  /* Typography */
+  .page-title { font-size: 20px; font-weight: 800; margin: 0; letter-spacing: -.3px; }
+  .section-title { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 5px; }
+  .label { font-size: 10px; color: #8892AD; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 3px; }
+  .sub { font-size: 11px; color: #8892AD; margin: 0; }
+
+  /* Buttons */
+  .btn { display: inline-flex; align-items: center; gap: 4px; border: none; border-radius: 9px; font-weight: 700; cursor: pointer; transition: transform .12s, box-shadow .12s; }
+  .btn:active { transform: scale(0.96); }
+  .btn-primary { background: linear-gradient(135deg,#4F46E5,#7C3AED); color: #fff; padding: 8px 16px; font-size: 12px; box-shadow: 0 3px 12px rgba(79,70,229,.22); }
+  .btn-secondary { background: #F0F2FB; color: #5A6478; padding: 7px 13px; font-size: 12px; border: 1px solid #E4E7F2; }
+  .btn-success { background: #ECFDF5; color: #059669; padding: 7px 13px; font-size: 12px; border: 1px solid #D1FAE5; }
+  .btn-danger { background: #FEF2F2; color: #DC2626; padding: 7px 11px; font-size: 12px; border: 1px solid #FEE2E2; }
+  .btn-ghost { background: none; color: #8892AD; padding: 6px 10px; font-size: 12px; }
+  .btn-sm { padding: 5px 10px; font-size: 11px; border-radius: 8px; }
+  .fab { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 7px; padding: 13px 28px; border-radius: 99px; color: #fff; font-size: 13px; font-weight: 700; background: linear-gradient(135deg,#4F46E5,#7C3AED); box-shadow: 0 6px 22px rgba(79,70,229,.3); border: none; white-space: nowrap; }
+  .fab:active { transform: translateX(-50%) scale(0.96); }
+
+  /* Fields */
+  .field-input { width: 100%; padding: 10px 13px; border-radius: 10px; border: 1.5px solid #E4E7F2; background: #F4F5FB; color: #1A2240; font-size: 13px; transition: all .2s; }
+  .field-input:focus { border-color: #4F46E5; background: #fff; box-shadow: 0 0 0 3px #C7D2FE; outline: none; }
+  textarea.field-input { resize: none; line-height: 1.6; }
+  .field-input-plan:focus { border-color: #2563EB; box-shadow: 0 0 0 3px #DBEAFE; }
+  .field-input-actual:focus { border-color: #059669; box-shadow: 0 0 0 3px #D1FAE5; }
+
+  /* Chip */
+  .chip { display: inline-flex; align-items: center; gap: 3px; padding: 3px 9px; border-radius: 99px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+
+  /* ─── Calendar (Professional iOS-style) ─── */
+  .cal-grid { background: #fff; }
+  .dow-row { display: grid; grid-template-columns: repeat(7,1fr); border-bottom: 1px solid #E4E7F2; }
+  .dow-header { padding: 8px 0; text-align: center; font-size: 11px; font-weight: 600; color: #8892AD; }
+  /* Week rows */
+  .week-row { border-bottom: 1px solid #F0F2F8; min-height: 82px; display: flex; flex-direction: column; }
+  .week-row:last-child { border-bottom: none; }
+  .week-nums { display: grid; grid-template-columns: repeat(7,1fr); border-bottom: none; }
+  /* Day cells — number top-right, indicators below */
+  .day-cell { padding: 3px 3px 1px; cursor: pointer; position: relative; display: flex; flex-direction: column; align-items: flex-end; gap: 1px; min-height: 32px; border-right: 1px solid #F4F5FA; }
+  .day-cell:last-child { border-right: none; }
+  .day-cell:active { background: #F0F2FB; }
+  .day-cell.selected { background: #EEF2FF; }
+  .day-cell .dn { font-size: 12px; font-weight: 600; color: #64748B; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; transition: all .12s; }
+  .day-cell.selected .dn { background: #4F46E5; color: #fff !important; font-weight: 700; }
+  .day-cell .dn.today { background: #4F46E5; color: #fff !important; font-weight: 800; box-shadow: 0 1px 4px rgba(79,70,229,.35); }
+  .day-cell .dn.sun { color: #DC2626; }
+  .day-cell .dn.sat { color: #2563EB; }
+  /* Count indicators in day cell */
+  .day-ind { display: flex; align-items: center; gap: 2px; }
+  .day-ind .plan-n { font-size: 10px; font-weight: 800; color: #2563EB; line-height: 1; }
+  .day-ind .actual-n { min-width: 16px; height: 16px; border-radius: 50%; background: #DC2626; color: #fff; font-size: 9px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+  .day-ind .dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+  /* Spanning event bars */
+  .week-bars { flex: 1; display: flex; flex-direction: column; gap: 1px; padding: 1px 0 3px; }
+  .bar-row { display: grid; grid-template-columns: repeat(7,1fr); }
+  .ev-bar { height: 18px; font-size: 10px; font-weight: 600; color: #fff; padding: 0 6px; display: flex; align-items: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; cursor: pointer; border-radius: 4px; margin: 0 2px 0; line-height: 1; letter-spacing: -.2px; }
+  .ev-bar.cont-l { border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: 0; }
+  .ev-bar.cont-r { border-top-right-radius: 0; border-bottom-right-radius: 0; margin-right: 0; }
+  .ev-more-row { display: grid; grid-template-columns: repeat(7,1fr); }
+  .ev-more-cell { font-size: 8px; font-weight: 700; color: #8892AD; text-align: center; cursor: pointer; }
+  /* Shared badge styles */
+  .plan-num { font-size: 10px; font-weight: 800; color: #2563EB; }
+  .actual-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 16px; height: 16px; border-radius: 50%; background: #DC2626; color: #fff; font-size: 8px; font-weight: 800; line-height: 1; }
+  .red-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; border-radius: 11px; background: #DC2626; color: #fff; font-size: 10px; font-weight: 700; padding: 0 5px; }
+  /* Star button on members */
+  .star-btn { background: none; border: none; cursor: pointer; padding: 4px; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+  .star-btn:active { transform: scale(0.85); }
+
+  /* Workers */
+  .worker-row { display: flex; align-items: center; gap: 9px; padding: 9px 15px; border-bottom: 1px solid #EEF0F8; }
+  .worker-row:last-child { border-bottom: none; }
+  .worker-avatar { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #fff; flex-shrink: 0; }
+
+  /* Tabs */
+  .tab-bar { display: flex; gap: 2px; padding: 8px 10px; border-bottom: 1px solid #EEF0F8; background: #F8FAFF; }
+  .tab-btn { display: flex; align-items: center; gap: 5px; padding: 6px 14px; border-radius: 8px; border: none; font-size: 12px; font-weight: 700; transition: all .15s; background: transparent; color: #8892AD; }
+  .tab-btn.active-plan { background: #EFF6FF; color: #2563EB; }
+  .tab-btn.active-actual { background: #ECFDF5; color: #059669; }
+
+  /* Status badges */
+  .status-btn { display: flex; align-items: center; gap: 4px; padding: 6px 11px; border-radius: 8px; font-size: 11px; font-weight: 700; border-width: 1.5px; border-style: solid; cursor: pointer; transition: all .12s; }
+  .status-btn:active { transform: scale(0.94); }
+
+  /* Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.28); z-index: 200; display: flex; align-items: flex-end; justify-content: center; }
+  .modal-sheet { background: #fff; border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; padding: 6px 22px 32px; max-height: 90vh; overflow-y: auto; }
+  .modal-handle { width: 30px; height: 4px; border-radius: 2px; background: #E0E3F0; margin: 0 auto 16px; }
+
+  /* Color picker */
+  .color-swatch { width: 32px; height: 32px; border-radius: 50%; border: none; cursor: pointer; transition: transform .15s, box-shadow .15s; display: flex; align-items: center; justify-content: center; }
+  .color-swatch:active { transform: scale(0.9); }
+
+  /* Animations */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  @keyframes scaleIn { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+  .fade-up { animation: fadeUp .3s ease both; }
+  .slide-up { animation: slideUp .3s cubic-bezier(.16,1,.3,1); }
+  .scale-in { animation: scaleIn .2s ease both; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     VIEWS
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- SITE LIST VIEW -->
+<div id="view-list" class="page">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#4F46E5,#7C3AED);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(79,70,229,.2)">
+            <svg width="18" height="18" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+          </div>
+          <div>
+            <h1 class="page-title">現場管理</h1>
+            <p class="sub">内装施工 出面管理システム</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <span id="list-site-count" class="chip" style="color:#4F46E5;background:#EEF2FF"></span>
+          <span id="list-worker-count" class="chip" style="color:#059669;background:#ECFDF5"></span>
+        </div>
+      </div>
+      <input type="search" id="search-input" placeholder="現場名・住所・担当者で検索" class="field-input" style="padding-left:36px;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%238892AD' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:11px center">
+    </div>
+  </div>
+  <div class="content">
+    <div id="site-list-container"></div>
+    <div id="empty-state" class="hidden" style="text-align:center;padding-top:60px">
+      <div style="width:68px;height:68px;border-radius:20px;background:#fff;border:1px solid #E4E7F2;margin:0 auto 14px;display:flex;align-items:center;justify-content:center">
+        <svg width="26" height="26" fill="none" stroke="#B0BAC8" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+      </div>
+      <p style="color:#5A6478;font-weight:600;margin:0 0 4px">現場がまだありません</p>
+      <p style="color:#8892AD;font-size:13px">下のボタンから追加してください</p>
+    </div>
+  </div>
+  <button class="fab" onclick="addSite()">
+    <svg width="17" height="17" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    新規現場を追加
+  </button>
+</div>
+
+<!-- SITE DETAIL VIEW -->
+<div id="view-detail" class="page hidden">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <button class="btn btn-ghost" onclick="goList()" style="padding-left:0">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>一覧
+        </button>
+        <div style="display:flex;gap:6px">
+          <button id="edit-btn" class="btn btn-secondary btn-sm" onclick="toggleEdit()">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>編集
+          </button>
+          <button id="save-btn" class="btn btn-success btn-sm hidden" onclick="saveEdit()">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>完了
+          </button>
+          <button class="btn btn-danger btn-sm" onclick="deleteSite()">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+          </button>
+        </div>
+      </div>
+      <h1 id="detail-title" class="page-title"></h1>
+      <p id="detail-address" class="sub" style="margin-top:4px;display:flex;align-items:center;gap:3px"></p>
+    </div>
+  </div>
+  <div class="content">
+    <!-- Calendar CTA -->
+    <button onclick="goCalendar()" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:15px;border-radius:14px;color:#fff;border:none;cursor:pointer;margin-bottom:14px;background:linear-gradient(135deg,#4F46E5,#6D28D9);box-shadow:0 4px 18px rgba(79,70,229,.2)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center">
+          <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div style="text-align:left">
+          <div style="font-size:14px;font-weight:700">カレンダー・出面管理</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px">予定入力 / 出勤管理 / 工程表</div>
+        </div>
+      </div>
+      <svg width="19" height="19" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+    </button>
+
+    <!-- Info Card -->
+    <div class="card fade-up" style="margin-bottom:14px">
+      <div class="card-header">
+        <span class="section-title">
+          <svg width="13" height="13" fill="none" stroke="#8892AD" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>現場情報
+        </span>
+      </div>
+      <div id="site-info-form" style="padding:16px;display:flex;flex-direction:column;gap:14px"></div>
+    </div>
+
+    <!-- Workers overview -->
+    <div class="card fade-up" style="animation-delay:.06s">
+      <div class="card-header">
+        <span class="section-title">
+          <svg width="13" height="13" fill="none" stroke="#8892AD" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          登録メンバー (<span id="detail-worker-count">0</span>名)
+        </span>
+        <button class="btn btn-primary btn-sm" onclick="showAddWorkerModal()">
+          <svg width="12" height="12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>追加
+        </button>
+      </div>
+      <div id="detail-workers" style="padding:12px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CALENDAR VIEW -->
+<div id="view-calendar" class="page hidden">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <button class="btn btn-ghost" onclick="goDetail()" style="padding-left:0">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>詳細
+        </button>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-secondary btn-sm" onclick="goToday()">今日</button>
+          <button class="btn btn-success btn-sm" onclick="exportPDF()">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>PDF出力
+          </button>
+        </div>
+      </div>
+      <h2 id="cal-site-name" style="font-size:15px;font-weight:700;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></h2>
+    </div>
+  </div>
+  <div class="content">
+    <!-- Month Nav -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0 12px">
+      <button class="btn btn-secondary" style="width:36px;height:36px;padding:0;justify-content:center" onclick="prevMonth()">
+        <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
+      </button>
+      <div style="text-align:center">
+        <div id="month-label" style="font-size:19px;font-weight:800;letter-spacing:-.5px"></div>
+        <div id="month-total" style="font-size:11px;color:#8892AD;margin-top:1px"></div>
+      </div>
+      <button class="btn btn-secondary" style="width:36px;height:36px;padding:0;justify-content:center" onclick="nextMonth()">
+        <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+      </button>
+    </div>
+
+    <!-- Calendar -->
+    <div class="card fade-up" style="margin-bottom:14px;overflow:hidden">
+      <div class="dow-row">
+        <div class="dow-header" style="color:#DC2626">日</div>
+        <div class="dow-header">月</div>
+        <div class="dow-header">火</div>
+        <div class="dow-header">水</div>
+        <div class="dow-header">木</div>
+        <div class="dow-header">金</div>
+        <div class="dow-header" style="color:#2563EB">土</div>
+      </div>
+      <div id="cal-grid" class="cal-grid"></div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:14px;padding:6px 12px;border-top:1px solid #F0F2F8;background:#FAFBFF;font-size:9px;color:#94A3B8">
+        <span style="display:flex;align-items:center;gap:3px"><span style="font-size:10px;font-weight:800;color:#2563EB">3</span>予定人数</span>
+        <span style="display:flex;align-items:center;gap:3px"><span style="min-width:14px;height:14px;border-radius:50%;background:#DC2626;color:#fff;font-size:8px;font-weight:800;display:inline-flex;align-items:center;justify-content:center">2</span>実績人数</span>
+        <span style="display:flex;align-items:center;gap:3px"><span style="width:5px;height:5px;border-radius:50%;background:#D97706;display:inline-block"></span>メモ</span>
+      </div>
+    </div>
+
+    <!-- Event List (工程リスト) -->
+    <div id="event-list" class="card fade-up" style="margin-bottom:14px">
+      <div class="card-header">
+        <span class="section-title" style="font-size:12px">
+          <svg width="13" height="13" fill="none" stroke="#8892AD" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          工程
+        </span>
+        <button class="btn btn-primary btn-sm" onclick="showEventModal()" style="padding:5px 10px;font-size:11px">
+          <svg width="11" height="11" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>追加
+        </button>
+      </div>
+      <div id="event-list-body"></div>
+    </div>
+
+    <!-- Day Detail (hidden initially) -->
+    <div id="day-detail" class="card fade-up hidden" style="margin-bottom:14px">
+      <div class="card-header" style="justify-content:center;gap:0;position:relative">
+        <button onclick="navDay(-1)" style="background:none;border:none;cursor:pointer;padding:6px 10px;color:#4F46E5;display:flex;align-items:center">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
+        </button>
+        <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:center">
+          <div id="day-badge" style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#4F46E5,#7C3AED);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff"></div>
+          <span id="day-label" style="font-size:14px;font-weight:700"></span>
+        </div>
+        <button onclick="navDay(1)" style="background:none;border:none;cursor:pointer;padding:6px 10px;color:#4F46E5;display:flex;align-items:center">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+        </button>
+        <button class="btn btn-ghost" onclick="clearSelectedDay()" style="padding:4px;position:absolute;right:12px;top:50%;transform:translateY(-50%)">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <!-- Stats -->
+      <div id="day-stats" style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #EEF0F8"></div>
+      <!-- Tabs -->
+      <div class="tab-bar">
+        <button class="tab-btn active-plan" id="tab-plan" onclick="setTab('plan')">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          予定入力
+        </button>
+        <button class="tab-btn" id="tab-actual" onclick="setTab('actual')">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          実績入力
+        </button>
+      </div>
+      <div id="tab-plan-content"></div>
+      <div id="tab-actual-content" class="hidden"></div>
+    </div>
+
+    <!-- Workers Section -->
+    <div class="card fade-up" style="animation-delay:.08s">
+      <div class="card-header">
+        <span class="section-title">
+          <svg width="13" height="13" fill="none" stroke="#8892AD" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          メンバー (<span id="cal-worker-count">0</span>名)
+        </span>
+        <button class="btn btn-primary btn-sm" onclick="showAddWorkerModal()">
+          <svg width="12" height="12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>追加
+        </button>
+      </div>
+      <div id="workers-list"></div>
+      <div id="workers-hint" style="padding:8px 14px;background:#EEF2FF;text-align:center;font-size:11px;color:#4F46E5;font-weight:600"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD / EDIT MEMBER MODAL -->
+<div id="add-worker-modal" class="modal-overlay hidden">
+  <div class="modal-sheet card slide-up" style="border-radius:20px 20px 0 0;border:none">
+    <div class="modal-handle"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <h3 id="modal-title" style="font-size:17px;font-weight:800;margin:0">メンバーを追加</h3>
+      <button class="btn btn-secondary btn-sm" onclick="hideAddWorkerModal()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="label">名前</div>
+    <input type="text" id="new-worker-name" class="field-input" placeholder="メンバーの名前を入力" style="margin-bottom:16px" oninput="updateWorkerPreview()" onkeydown="if(event.key==='Enter')saveWorker()">
+    <div class="label" style="margin-bottom:5px">アイコン文字 <span style="font-size:9px;color:#B0BAC8;font-weight:400;letter-spacing:0">（空欄=名前の頭文字）</span></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <div id="icon-preview-box" style="width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0;background:#4F46E5">?</div>
+      <input type="text" id="new-worker-icon" class="field-input" placeholder="例：佐・A・★ など1文字" maxlength="2" oninput="updateWorkerPreview()" style="font-size:18px;font-weight:700;text-align:center;letter-spacing:.05em">
+    </div>
+    <div class="label">テーマカラー</div>
+    <div id="color-picker" style="display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 18px"></div>
+    <div id="worker-preview" class="hidden" style="display:flex;align-items:center;gap:10px;padding:9px 13px;border-radius:11px;background:#F4F5FB;border:1px solid #E4E7F2;margin-bottom:16px">
+      <div id="preview-avatar" style="width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff"></div>
+      <span id="preview-name" style="font-size:13px;font-weight:600"></span>
+    </div>
+    <button class="btn btn-primary" id="add-worker-btn" onclick="saveWorker()" style="width:100%;justify-content:center;padding:12px 0;border-radius:11px;font-size:13px;opacity:.4;cursor:not-allowed">追加する</button>
+  </div>
+</div>
+
+<!-- ADD / EDIT EVENT (工程) MODAL -->
+<div id="event-modal" class="modal-overlay hidden">
+  <div class="modal-sheet card slide-up" style="border-radius:20px 20px 0 0;border:none">
+    <div class="modal-handle"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <h3 id="event-modal-title" style="font-size:17px;font-weight:800;margin:0">工程を追加</h3>
+      <button class="btn btn-secondary btn-sm" onclick="hideEventModal()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="label">工程名</div>
+    <input type="text" id="event-title" class="field-input" placeholder="例：ボード貼り、塗装作業" style="margin-bottom:14px">
+    <div style="display:flex;gap:10px;margin-bottom:14px">
+      <div style="flex:1">
+        <div class="label">開始日</div>
+        <input type="date" id="event-start" class="field-input">
+      </div>
+      <div style="flex:1">
+        <div class="label">終了日</div>
+        <input type="date" id="event-end" class="field-input">
+      </div>
+    </div>
+    <div class="label">バーの色</div>
+    <div id="event-color-picker" style="display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 18px"></div>
+    <div style="display:flex;gap:8px">
+      <button id="event-delete-btn" class="btn btn-danger hidden" onclick="deleteEvent()" style="padding:12px 16px;border-radius:11px;font-size:13px">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>削除
+      </button>
+      <button id="event-save-btn" class="btn btn-primary" onclick="saveEvent()" style="flex:1;justify-content:center;padding:12px 0;border-radius:11px;font-size:13px">保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+// ─── Data Store ───────────────────────────────────────────────
+const WORKER_COLORS = [
+  "#4F46E5","#E11D48","#0D9488","#D97706","#2563EB",
+  "#DC2626","#7C3AED","#059669","#EA580C","#0891B2",
+  "#BE185D","#65A30D","#0284C7","#C026D3","#9333EA",
+  "#0E7490","#B91C1C","#047857","#6D28D9","#C2410C"
+];
+
+// Fixed palette for 工程バー (kept short on purpose)
+const EVENT_COLORS = ["#4F46E5","#0EA5E9","#10B981","#F59E0B","#EF4444","#8B5CF6"];
+
+// 彩心堂 主要メンバー（全現場にデフォルト登録）
+const DEFAULT_WORKERS = [
+  { id: "saishindo-1", name: "髙嶋 宏",     color: "#DC2626", icon: "宏",  starred: true },
+  { id: "saishindo-2", name: "髙嶋 隆一",   color: "#7C3AED", icon: "隆", starred: true },
+  { id: "saishindo-3", name: "髙嶋 昇",     color: "#059669", icon: "昇",  starred: true },
+  { id: "saishindo-4", name: "佐久間 英二", color: "#D97706", icon: "佐",  starred: true },
+];
+
+const DAY_JP = ["日","月","火","水","木","金","土"];
+
+function uid() { return Math.random().toString(36).substr(2,9) + Date.now().toString(36); }
+function daysInMonth(y,m) { return new Date(y,m+1,0).getDate(); }
+function firstDow(y,m) { return new Date(y,m,1).getDay(); }
+function dkey(y,m,d) { return `${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`; }
+function jpDay(y,m,d) { return DAY_JP[new Date(y,m,d).getDay()]; }
+
+// Sort workers: starred first, then original order
+function sortedWorkers(s) {
+  if(!s || !s.workers) return [];
+  return [...s.workers].sort((a,b) => (b.starred?1:0) - (a.starred?1:0));
+}
+
+// Events overlapping a given date string
+function eventsOnDate(s, dateStr) {
+  if(!s || !s.events) return [];
+  return s.events.filter(e => dateStr >= e.start && dateStr <= e.end);
+}
+
+// Local storage
+function loadSites() {
+  try { return JSON.parse(localStorage.getItem("genba_sites")||"[]"); }
+  catch(e) { return []; }
+}
+function saveSites(sites) {
+  localStorage.setItem("genba_sites", JSON.stringify(sites));
+}
+
+// Demo data on first load
+function initDemoData() {
+  const sites = loadSites();
+  if(sites.length > 0) {
+    // Migration for older sites
+    let migrated = false;
+    sites.forEach(s => {
+      if(!s.events) { s.events = []; migrated = true; }
+      if(s.generalContractor === undefined) { s.generalContractor = ""; migrated = true; }
+      if(s.gcManager === undefined) { s.gcManager = ""; migrated = true; }
+      (s.workers || []).forEach(w => { if(w.starred === undefined) { w.starred = false; migrated = true; } });
+    });
+    if(migrated) saveSites(sites);
+    return;
+  }
+  const now = new Date(); const y=now.getFullYear(), m=now.getMonth();
+  const logs = {};
+  const pTexts=["LGS下地組み","ボード貼り","クロス下地処理","仕上げ塗装","建具吊り込み","タイル貼り","CF貼り","養生・清掃"];
+  const mTexts=["壁下地ボード貼り","天井LGS組み","床CF貼り","クロス貼り","建具取付","タイル施工","塗装作業",""];
+  for(let d=1;d<=Math.min(now.getDate(),daysInMonth(y,m));d++){
+    const dow=new Date(y,m,d).getDay(); if(dow===0||dow===6) continue;
+    const k=dkey(y,m,d), ws={}, pw={};
+    ws["w1"]=Math.random()>.15?"present":"half";
+    ws["w2"]=Math.random()>.2?"present":Math.random()>.5?"half":"absent";
+    ws["w3"]=Math.random()>.1?"present":"half";
+    ws["w4"]=d%3===0?"half":Math.random()>.25?"present":"";
+    pw["w1"]="planned"; pw["w2"]="planned"; pw["w3"]="planned";
+    if(d%3!==0) pw["w4"]="planned";
+    logs[k]={workerStatus:ws,planWorkers:pw,memo:mTexts[d%mTexts.length],planMemo:pTexts[d%pTexts.length]};
+    // sample plannedHeadcount on a few days
+    if(d%5===0) logs[k].plannedHeadcount = 3;
+  }
+  // Sample 工程イベント (multi-day bars) for current month
+  const dim = daysInMonth(y,m);
+  const events = [
+    { id: uid(), title: "LGS下地組み", start: dkey(y,m,Math.min(3,dim)), end: dkey(y,m,Math.min(7,dim)), color: "#4F46E5" },
+    { id: uid(), title: "ボード貼り", start: dkey(y,m,Math.min(8,dim)), end: dkey(y,m,Math.min(14,dim)), color: "#0EA5E9" },
+    { id: uid(), title: "クロス・仕上げ", start: dkey(y,m,Math.min(15,dim)), end: dkey(y,m,Math.min(22,dim)), color: "#10B981" },
+  ];
+  saveSites([{id:"demo1",name:"渋谷パークレジデンス 内装工事",address:"東京都渋谷区神南1-2-3",generalContractor:"渋谷建設株式会社",gcManager:"山本 一郎",manager:"髙嶋 宏",phone:"090-1234-5678",client:"渋谷開発株式会社",notes:"3階〜5階のリノベーション工事",workers:[
+    {id:"w1",name:"髙嶋 宏",color:"#DC2626",icon:"宏",starred:true},
+    {id:"w2",name:"髙嶋 隆一",color:"#7C3AED",icon:"隆一",starred:true},
+    {id:"w3",name:"髙嶋 昇",color:"#059669",icon:"昇",starred:true},
+    {id:"w4",name:"佐久間 英二",color:"#D97706",icon:"佐",starred:true},
+  ],dayLogs:logs,events:events,createdAt:new Date().toISOString()}]);
+}
+
+// ─── App State ────────────────────────────────────────────────
+let currentSiteId = null;
+let currentView = "list";
+let calYear = new Date().getFullYear();
+let calMonth = new Date().getMonth();
+let selectedDay = null;
+let currentTab = "plan";
+let selectedWorkerColor = WORKER_COLORS[0];
+let editMode = false;
+
+// ─── Navigation ───────────────────────────────────────────────
+function showView(v) {
+  ["list","detail","calendar"].forEach(x => {
+    document.getElementById("view-"+x).classList.toggle("hidden", x!==v);
+  });
+  currentView = v;
+}
+function goList() { showView("list"); currentSiteId=null; renderList(); }
+function goDetail(id) { if(id!==undefined) currentSiteId=id; editMode=false; showView("detail"); renderDetail(); }
+function goCalendar(id) { if(id!==undefined) currentSiteId=id; selectedDay=null; showView("calendar"); renderCalendar(); }
+
+// ─── Site CRUD ────────────────────────────────────────────────
+function getSite() { return loadSites().find(s=>s.id===currentSiteId)||null; }
+function updateSite(updater) {
+  const sites=loadSites(); const i=sites.findIndex(s=>s.id===currentSiteId);
+  if(i>=0){updater(sites[i]);saveSites(sites);}
+}
+
+function addSite() {
+  const defaultW = DEFAULT_WORKERS.map(w => ({...w, id: w.id + "-" + uid()}));
+  const s={id:uid(),name:"",address:"",generalContractor:"",gcManager:"",manager:"",phone:"",client:"",notes:"",workers:defaultW,dayLogs:{},events:[],createdAt:new Date().toISOString()};
+  const sites=loadSites(); sites.unshift(s); saveSites(sites);
+  currentSiteId=s.id; editMode=true; showView("detail"); renderDetail();
+}
+function deleteSite() {
+  if(!confirm("この現場を削除しますか？")) return;
+  const sites=loadSites().filter(s=>s.id!==currentSiteId); saveSites(sites);
+  goList();
+}
+function toggleEdit() { editMode=true; renderDetail(); }
+function saveEdit() {
+  // Read form values
+  updateSite(s=>{
+    ["name","address","manager","phone","client","notes"].forEach(k=>{
+      const el=document.getElementById("field-"+k); if(el) s[k]=el.value;
+    });
+  });
+  editMode=false; renderDetail();
+}
+
+// ─── Worker CRUD ──────────────────────────────────────────────
+let editingWorkerId = null; // null = 追加モード, wId = 編集モード
+
+function saveWorker() {
+  const name=document.getElementById("new-worker-name").value.trim();
+  if(!name) return;
+  const icon=document.getElementById("new-worker-icon").value.trim();
+  if(editingWorkerId) {
+    // 編集モード
+    updateSite(s=>{
+      const w=s.workers.find(w=>w.id===editingWorkerId);
+      if(w){ w.name=name; w.color=selectedWorkerColor; w.icon=icon||""; }
+    });
+  } else {
+    // 追加モード
+    updateSite(s=>{ s.workers.push({id:uid(),name,color:selectedWorkerColor,icon:icon||"",starred:false}); });
+  }
+  hideAddWorkerModal();
+  if(currentView==="calendar") renderCalendar(); else renderDetail();
+}
+
+function removeWorker(wId) {
+  if(!confirm("このメンバーを削除しますか？")) return;
+  updateSite(s=>{ s.workers=s.workers.filter(w=>w.id!==wId); });
+  closeWorkerMenu();
+  if(currentView==="calendar") renderCalendar(); else renderDetail();
+}
+
+// Quick-add one of the default 彩心堂 members
+function addDefaultWorker(defaultId) {
+  const tmpl = DEFAULT_WORKERS.find(w=>w.id===defaultId);
+  if(!tmpl) return;
+  updateSite(s=>{
+    // Avoid duplicate by name
+    if(s.workers.some(w=>w.name===tmpl.name)) return;
+    s.workers.push({...tmpl, id: tmpl.id + "-" + uid()});
+  });
+  if(currentView==="calendar") renderCalendar(); else renderDetail();
+}
+
+function openEditWorker(wId) {
+  closeWorkerMenu();
+  const s=getSite(); if(!s) return;
+  const w=s.workers.find(w=>w.id===wId); if(!w) return;
+  editingWorkerId=wId;
+  showAddWorkerModal(w);
+}
+
+let openMenu = null;
+function toggleWorkerMenu(wId) {
+  if(openMenu===wId){closeWorkerMenu();return;}
+  closeWorkerMenu();
+  openMenu=wId;
+  const el=document.getElementById("wmenu-"+wId);
+  if(el) el.classList.remove("hidden");
+}
+function closeWorkerMenu() {
+  if(openMenu){const el=document.getElementById("wmenu-"+openMenu);if(el)el.classList.add("hidden");}
+  openMenu=null;
+}
+
+function workerIcon(w) { return w.icon || w.name.charAt(0); }
+
+// ─── Day Log ──────────────────────────────────────────────────
+function getDayLog(day) { const s=getSite(); return s?.dayLogs?.[dkey(calYear,calMonth,day)]||{}; }
+
+function toggleActualStatus(wId) {
+  const k=dkey(calYear,calMonth,selectedDay);
+  updateSite(s=>{
+    if(!s.dayLogs[k]) s.dayLogs[k]={};
+    if(!s.dayLogs[k].workerStatus) s.dayLogs[k].workerStatus={};
+    const ws=s.dayLogs[k].workerStatus;
+    const cycle=["","present","half","absent"];
+    ws[wId]=cycle[(cycle.indexOf(ws[wId]||"")+1)%cycle.length];
+  });
+  renderDayDetail();
+  renderCalendarGrid(); // Update dots
+}
+function togglePlanWorker(wId) {
+  const k=dkey(calYear,calMonth,selectedDay);
+  updateSite(s=>{
+    if(!s.dayLogs[k]) s.dayLogs[k]={};
+    if(!s.dayLogs[k].planWorkers) s.dayLogs[k].planWorkers={};
+    const pw=s.dayLogs[k].planWorkers;
+    pw[wId]=pw[wId]==="planned"?"":"planned";
+  });
+  renderDayDetail();
+  renderCalendarGrid();
+}
+
+// Day picker state (for "+ メンバー追加" inline pickers)
+let planPickerOpen = false;
+let actualPickerOpen = false;
+let planPickerSelected = new Set();   // multi-select staging
+let actualPickerSelected = new Set();
+
+function togglePlanPicker() {
+  planPickerOpen = !planPickerOpen;
+  planPickerSelected.clear();
+  renderDayDetail();
+}
+function toggleActualPicker() {
+  actualPickerOpen = !actualPickerOpen;
+  actualPickerSelected.clear();
+  renderDayDetail();
+}
+
+// Toggle selection in multi-select picker (doesn't commit yet)
+function togglePlanPickerItem(wId) {
+  if(planPickerSelected.has(wId)) planPickerSelected.delete(wId);
+  else planPickerSelected.add(wId);
+  renderDayDetail();
+}
+function toggleActualPickerItem(wId) {
+  if(actualPickerSelected.has(wId)) actualPickerSelected.delete(wId);
+  else actualPickerSelected.add(wId);
+  renderDayDetail();
+}
+
+// Commit: add all selected members at once
+function commitPlanPicker() {
+  if(planPickerSelected.size === 0) return;
+  const k=dkey(calYear,calMonth,selectedDay);
+  updateSite(s=>{
+    if(!s.dayLogs[k]) s.dayLogs[k]={};
+    if(!s.dayLogs[k].planWorkers) s.dayLogs[k].planWorkers={};
+    planPickerSelected.forEach(wId => { s.dayLogs[k].planWorkers[wId]="planned"; });
+  });
+  planPickerSelected.clear();
+  planPickerOpen = false;
+  renderDayDetail();
+  renderCalendarGrid();
+}
+function commitActualPicker() {
+  if(actualPickerSelected.size === 0) return;
+  const k=dkey(calYear,calMonth,selectedDay);
+  updateSite(s=>{
+    if(!s.dayLogs[k]) s.dayLogs[k]={};
+    if(!s.dayLogs[k].workerStatus) s.dayLogs[k].workerStatus={};
+    actualPickerSelected.forEach(wId => { s.dayLogs[k].workerStatus[wId]="present"; });
+  });
+  actualPickerSelected.clear();
+  actualPickerOpen = false;
+  renderDayDetail();
+  renderCalendarGrid();
+}
+
+// Add a single member (kept for backward compat but unused now)
+function addPlanMember(wId) {
+  const k=dkey(calYear,calMonth,selectedDay);
+  updateSite(s=>{
+    if(!s.dayLogs[k]) s.dayLogs[k]={};
+    if(!s.dayLogs[k].planWorkers) s.dayLogs[k].planWorkers={};
+    s.dayLogs[k].planWorkers[wId]="planned";
+  });
+  planPickerOpen = false;
+  renderDayDetail();
+  renderCalendarGrid();
+}
+
+// Remove a member from today's plan list
+function removePlanMember(wId) {
+  const k=dkey(calYear,calMonth,selectedDay);
+  updateSite(s=>{
+    if(s.dayLogs[k]?.planWorkers) s.dayLogs[k].planWorkers[wId]="";
+  });
+  renderDayDetail();
+  renderCalendarGrid();
+}
+
+// Add a member to today's actual list (defaults to "present")
+function addActualMember(wId) {
+  const k=dkey(calYear,calMonth,selectedDay);
+  updateSite(s=>{
+    if(!s.dayLogs[k]) s.dayLogs[k]={};
+    if(!s.dayLogs[k].workerStatus) s.dayLogs[k].workerStatus={};
+    s.dayLogs[k].workerStatus[wId]="present";
+  });
+  actualPickerOpen = false;
+  renderDayDetail();
+  renderCalendarGrid();
+}
+
+// Remove a member from today's actual list
+function removeActualMember(wId) {
+  const k=dkey(calYear,calMonth,selectedDay);
+  updateSite(s=>{
+    if(s.dayLogs[k]?.workerStatus) s.dayLogs[k].workerStatus[wId]="";
+  });
+  renderDayDetail();
+  renderCalendarGrid();
+}
+function saveMemo(type, val) {
+  const k=dkey(calYear,calMonth,selectedDay);
+  updateSite(s=>{
+    if(!s.dayLogs[k]) s.dayLogs[k]={};
+    s.dayLogs[k][type==="plan"?"planMemo":"memo"]=val;
+  });
+}
+
+function savePlannedHeadcount(val) {
+  const k=dkey(calYear,calMonth,selectedDay);
+  const n = parseInt(val,10);
+  updateSite(s=>{
+    if(!s.dayLogs[k]) s.dayLogs[k]={};
+    if(isNaN(n) || n<=0) delete s.dayLogs[k].plannedHeadcount;
+    else s.dayLogs[k].plannedHeadcount = n;
+  });
+  renderCalendarGrid();
+  // Update stats bar without re-rendering entire day detail (keeps input focus)
+  updateDayStats();
+}
+
+function updateDayStats() {
+  if(!selectedDay) return;
+  const s=getSite(); if(!s) return;
+  const log=getDayLog(selectedDay);
+  const workers=sortedWorkers(s);
+  const sp=workers.filter(w=>log.workerStatus?.[w.id]==="present").length;
+  const sh=workers.filter(w=>log.workerStatus?.[w.id]==="half").length;
+  const pcMembers=dayPlanCount(selectedDay);
+  const pcHeadcount=log.plannedHeadcount||0;
+  const planDisplay=Math.max(pcHeadcount,pcMembers);
+  const stats=[{n:planDisplay,l:"予定",c:"#2563EB",bg:"#EFF6FF"},{n:sp,l:"出勤",c:"#059669",bg:"#ECFDF5"},{n:sh,l:"半日",c:"#D97706",bg:"#FFFBEB"},{n:sp+sh*.5,l:"人工計",c:"#4F46E5",bg:"#EEF2FF"}];
+  document.getElementById("day-stats").innerHTML=stats.map((st,i)=>`<div style="padding:12px 4px;text-align:center;${i<3?"border-right:1px solid #EEF0F8;":""}background:${st.bg}"><div style="font-size:21px;font-weight:900;color:${st.c};letter-spacing:-.5px">${st.n}</div><div style="font-size:9px;color:#8892AD;font-weight:700;letter-spacing:.4px;margin-top:1px">${st.l}</div></div>`).join("");
+}
+
+// ─── Star toggle (主要メンバー) ───────────────────────────────
+function toggleStarred(wId) {
+  updateSite(s=>{
+    const w=(s.workers||[]).find(w=>w.id===wId);
+    if(w) w.starred = !w.starred;
+  });
+  renderWorkersList();
+  if(selectedDay) renderDayDetail(); // member order in plan tab updates
+}
+
+// ─── 工程イベント (Events) CRUD ───────────────────────────────
+let editingEventId = null;
+let selectedEventColor = EVENT_COLORS[0];
+
+function showEventModal(eventId) {
+  const s = getSite(); if(!s) return;
+  editingEventId = eventId || null;
+  const isEdit = !!eventId;
+  const ev = isEdit ? (s.events||[]).find(e=>e.id===eventId) : null;
+
+  document.getElementById("event-modal-title").textContent = isEdit ? "工程を編集" : "工程を追加";
+  document.getElementById("event-delete-btn").classList.toggle("hidden", !isEdit);
+
+  // Default dates: selected day or today, in current calendar month
+  const defStart = ev ? ev.start : (selectedDay
+    ? dkey(calYear,calMonth,selectedDay)
+    : dkey(calYear,calMonth,1));
+  const defEnd = ev ? ev.end : defStart;
+
+  document.getElementById("event-title").value = ev ? ev.title : "";
+  document.getElementById("event-start").value = defStart;
+  document.getElementById("event-end").value = defEnd;
+  selectedEventColor = ev ? ev.color : EVENT_COLORS[0];
+  renderEventColorPicker();
+
+  document.getElementById("event-modal").classList.remove("hidden");
+  setTimeout(()=>document.getElementById("event-title").focus(), 100);
+}
+
+function hideEventModal() {
+  document.getElementById("event-modal").classList.add("hidden");
+  editingEventId = null;
+}
+
+function renderEventColorPicker() {
+  const cp = document.getElementById("event-color-picker");
+  cp.innerHTML = EVENT_COLORS.map(c => {
+    const sel = c === selectedEventColor;
+    return `<button class="color-swatch" onclick="selectEventColor('${c}')" style="background:${c};box-shadow:${sel?`0 0 0 2.5px #fff, 0 0 0 4px ${c}`:`0 1px 4px ${c}28`};transform:${sel?"scale(1.15)":"scale(1)"}">
+      ${sel?`<svg width="14" height="14" fill="none" stroke="#fff" stroke-width="3" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>`:""}
+    </button>`;
+  }).join("");
+}
+
+function selectEventColor(c) {
+  selectedEventColor = c;
+  renderEventColorPicker();
+}
+
+function saveEvent() {
+  const title = document.getElementById("event-title").value.trim();
+  const start = document.getElementById("event-start").value;
+  const end = document.getElementById("event-end").value;
+  if(!title) { alert("工程名を入力してください"); return; }
+  if(!start || !end) { alert("開始日と終了日を入力してください"); return; }
+  if(end < start) { alert("終了日は開始日以降にしてください"); return; }
+
+  updateSite(s=>{
+    if(!s.events) s.events = [];
+    if(editingEventId) {
+      const ev = s.events.find(e=>e.id===editingEventId);
+      if(ev) { ev.title=title; ev.start=start; ev.end=end; ev.color=selectedEventColor; }
+    } else {
+      s.events.push({ id: uid(), title, start, end, color: selectedEventColor });
+    }
+  });
+  hideEventModal();
+  renderCalendarGrid();
+}
+
+function deleteEvent() {
+  if(!editingEventId) return;
+  if(!confirm("この工程を削除しますか？")) return;
+  updateSite(s=>{ s.events = (s.events||[]).filter(e=>e.id!==editingEventId); });
+  hideEventModal();
+  renderCalendarGrid();
+}
+
+// ─── Calendar ─────────────────────────────────────────────────
+function prevMonth() { if(calMonth===0){calYear--;calMonth=11;}else calMonth--; selectedDay=null; renderCalendar(); }
+function nextMonth() { if(calMonth===11){calYear++;calMonth=0;}else calMonth++; selectedDay=null; renderCalendar(); }
+function goToday() { const n=new Date(); calYear=n.getFullYear(); calMonth=n.getMonth(); selectedDay=n.getDate(); renderCalendar(); }
+
+function dayNinku(day) {
+  const l=getDayLog(day); if(!l.workerStatus) return 0;
+  let n=0; Object.values(l.workerStatus).forEach(st=>{if(st==="present")n+=1;else if(st==="half")n+=.5});
+  return n;
+}
+function dayPlanCount(day) {
+  const l=getDayLog(day); if(!l.planWorkers) return 0;
+  return Object.values(l.planWorkers).filter(v=>v==="planned").length;
+}
+
+function selectDay(d) {
+  selectedDay = selectedDay===d ? null : d;
+  planPickerOpen = false;
+  actualPickerOpen = false;
+  // Update calendar grid selection
+  document.querySelectorAll(".cal-day").forEach(el=>{
+    el.classList.remove("selected");
+    if(parseInt(el.dataset.day)===selectedDay) el.classList.add("selected");
+  });
+  const dd=document.getElementById("day-detail");
+  if(selectedDay){ dd.classList.remove("hidden"); renderDayDetail(); }
+  else dd.classList.add("hidden");
+  renderWorkersList();
+}
+function clearSelectedDay() { selectedDay=null; planPickerOpen=false; actualPickerOpen=false; document.getElementById("day-detail").classList.add("hidden"); renderWorkersList(); document.querySelectorAll(".cal-day").forEach(el=>el.classList.remove("selected")); }
+
+// Arrow navigation between days
+function navDay(delta) {
+  if(!selectedDay) return;
+  const dim = daysInMonth(calYear, calMonth);
+  let newDay = selectedDay + delta;
+  if(newDay < 1) {
+    prevMonth();
+    newDay = daysInMonth(calYear, calMonth);
+  } else if(newDay > dim) {
+    nextMonth();
+    newDay = 1;
+  }
+  selectedDay = newDay;
+  planPickerOpen = false;
+  actualPickerOpen = false;
+  renderCalendarGrid();
+  renderDayDetail();
+  // Highlight selected day
+  document.querySelectorAll(".cal-day").forEach(el => {
+    el.classList.toggle("selected", parseInt(el.dataset.day) === selectedDay);
+  });
+}
+
+// Swipe detection on day detail panel
+let touchStartX = 0;
+function initSwipe() {
+  const el = document.getElementById("day-detail");
+  if(!el) return;
+  el.addEventListener("touchstart", e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  el.addEventListener("touchend", e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) > 50) navDay(dx < 0 ? 1 : -1); // swipe left = next, right = prev
+  }, { passive: true });
+}
+
+function setTab(t) {
+  currentTab=t;
+  document.getElementById("tab-plan").className="tab-btn"+(t==="plan"?" active-plan":"");
+  document.getElementById("tab-actual").className="tab-btn"+(t==="actual"?" active-actual":"");
+  document.getElementById("tab-plan-content").classList.toggle("hidden",t!=="plan");
+  document.getElementById("tab-actual-content").classList.toggle("hidden",t!=="actual");
+}
+
+// ─── Render Functions ─────────────────────────────────────────
+function renderList() {
+  const sites=loadSites();
+  const q=(document.getElementById("search-input")||{}).value||"";
+  const filtered=sites.filter(s=>!q||[s.name,s.address,s.manager].some(v=>(v||"").includes(q)));
+  const totalW=sites.reduce((n,s)=>n+(s.workers?.length||0),0);
+  document.getElementById("list-site-count").textContent=sites.length+"現場";
+  document.getElementById("list-worker-count").textContent=totalW+"名";
+  const c=document.getElementById("site-list-container");
+  const empty=document.getElementById("empty-state");
+  if(filtered.length===0&&sites.length===0){c.innerHTML="";empty.classList.remove("hidden");return;}
+  empty.classList.add("hidden");
+  const now=new Date();
+  c.innerHTML=filtered.map((s,i)=>{
+    const wc=s.workers?.length||0;
+    let mn=0;
+    for(let d=1;d<=daysInMonth(now.getFullYear(),now.getMonth());d++){
+      const log=s.dayLogs?.[dkey(now.getFullYear(),now.getMonth(),d)];
+      if(log?.workerStatus) Object.values(log.workerStatus).forEach(st=>{if(st==="present")mn+=1;else if(st==="half")mn+=.5});
+    }
+    const bar=wc>0?`<div style="height:3px;border-radius:3px;margin-bottom:11px;background:linear-gradient(90deg,${s.workers.map(w=>w.color).join(",")})"></div>`:"";
+    const dots=wc>0?`<div style="display:flex;gap:2px;margin-bottom:10px">${s.workers.slice(0,8).map(w=>`<div title="${w.name}" style="width:24px;height:24px;border-radius:8px;background:${w.color};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff">${workerIcon(w)}</div>`).join("")}${wc>8?`<span style="font-size:11px;color:#8892AD;align-self:center;margin-left:2px">+${wc-8}</span>`:""}</div>`:"";
+    return `<div class="card" onclick="goDetail('${s.id}')" style="padding:15px;margin-bottom:10px;cursor:pointer;animation:fadeUp .3s ${i*.05}s both;overflow:hidden">
+      ${bar}
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+        <div style="flex:1;min-width:0">
+          <h3 style="font-size:14px;font-weight:700;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${s.name||"新規現場（未入力）"}</h3>
+          ${s.address?`<div style="display:flex;align-items:center;gap:3px;margin-top:4px"><svg width="11" height="11" fill="none" stroke="#8892AD" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span style="font-size:11px;color:#8892AD">${s.address}</span></div>`:""}
+        </div>
+        <svg width="17" height="17" fill="none" stroke="#B0BAC8" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24" style="flex-shrink:0;margin-left:8px"><polyline points="9,18 15,12 9,6"/></svg>
+      </div>
+      ${dots}
+      <div style="display:flex;gap:7px;padding-top:9px;border-top:1px solid #EEF0F8">
+        <span class="chip" style="color:#5A6478;background:#F0F2FB;font-size:11px">${wc}名</span>
+        <span class="chip" style="color:#4F46E5;background:#EEF2FF;font-size:11px">今月 ${mn} 人工</span>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function renderDetail() {
+  const s=getSite(); if(!s) return;
+  document.getElementById("detail-title").textContent=s.name||"新規現場";
+  const addrEl=document.getElementById("detail-address");
+  addrEl.textContent=s.address||""; addrEl.style.display=s.address?"flex":"none";
+  document.getElementById("edit-btn").classList.toggle("hidden",editMode);
+  document.getElementById("save-btn").classList.toggle("hidden",!editMode);
+  document.getElementById("detail-worker-count").textContent=s.workers?.length||0;
+
+  const form=document.getElementById("site-info-form");
+  if(editMode){
+    // Edit mode: compact form
+    const esc = v => (v||"").replace(/"/g,'&quot;');
+    form.innerHTML=`
+      <div><div class="label">現場名</div><input type="text" id="field-name" class="field-input" value="${esc(s.name)}" oninput="autoSaveField('name',this.value)"></div>
+      <div><div class="label">住所</div><input type="text" id="field-address" class="field-input" value="${esc(s.address)}" oninput="autoSaveField('address',this.value)"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><div class="label">元請会社</div><input type="text" id="field-generalContractor" class="field-input" value="${esc(s.generalContractor)}" oninput="autoSaveField('generalContractor',this.value)"></div>
+        <div><div class="label">元請担当者</div><input type="text" id="field-gcManager" class="field-input" value="${esc(s.gcManager)}" oninput="autoSaveField('gcManager',this.value)"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><div class="label">自社担当者</div><input type="text" id="field-manager" class="field-input" value="${esc(s.manager)}" oninput="autoSaveField('manager',this.value)"></div>
+        <div><div class="label">電話番号</div><input type="tel" id="field-phone" class="field-input" value="${esc(s.phone)}" oninput="autoSaveField('phone',this.value)"></div>
+      </div>
+      <div><div class="label">備考</div><textarea id="field-notes" class="field-input" rows="2" oninput="autoSaveField('notes',this.value)">${s.notes||""}</textarea></div>`;
+  } else {
+    // View mode: compact, actionable
+    const addr = s.address||"";
+    const phone = s.phone||"";
+    const gc = s.generalContractor||"";
+    const gcm = s.gcManager||"";
+    const mgr = s.manager||"";
+    const addrLink = addr ? `<a href="https://www.google.com/maps/search/${encodeURIComponent(addr)}" target="_blank" rel="noopener" style="color:#2563EB;text-decoration:none;font-size:13px;display:flex;align-items:center;gap:4px">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${addr}</a>` : `<span style="color:#B0BAC8;font-size:13px">—</span>`;
+    const phoneLink = phone ? `<a href="tel:${phone.replace(/[^\d+]/g,'')}" style="color:#2563EB;text-decoration:none;font-size:13px;display:flex;align-items:center;gap:4px">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>${phone}</a>` : `<span style="color:#B0BAC8;font-size:13px">—</span>`;
+    form.innerHTML=`
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div><div class="label">住所</div>${addrLink}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div><div class="label">元請会社</div><span style="font-size:13px;color:${gc?"#1A2240":"#B0BAC8"}">${gc||"—"}</span></div>
+          <div><div class="label">元請担当者</div><span style="font-size:13px;color:${gcm?"#1A2240":"#B0BAC8"}">${gcm||"—"}</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div><div class="label">自社担当者</div><span style="font-size:13px;color:${mgr?"#1A2240":"#B0BAC8"}">${mgr||"—"}</span></div>
+          <div><div class="label">電話番号</div>${phoneLink}</div>
+        </div>
+        ${s.notes?`<div><div class="label">備考</div><p style="font-size:12px;color:#5A6478;margin:0;white-space:pre-wrap">${s.notes}</p></div>`:""}
+      </div>`;
+  }
+
+  const dw=document.getElementById("detail-workers");
+  const sw = sortedWorkers(s);
+  if(sw.length===0){
+    // Show quick-add for default members
+    const existing = new Set((s.workers||[]).map(w=>w.name));
+    const missing = DEFAULT_WORKERS.filter(dw=>!existing.has(dw.name));
+    dw.innerHTML=`<div style="padding:14px;text-align:center">
+      <p style="color:#8892AD;font-size:12px;margin:0 0 10px">「＋追加」または下のボタンでメンバーを登録</p>
+      ${missing.length>0?`<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center">${missing.map(dw=>`
+        <button onclick="addDefaultWorker('${dw.id}')" style="display:flex;align-items:center;gap:5px;padding:6px 12px 6px 6px;border-radius:99px;border:1.5px dashed ${dw.color}88;background:${dw.color}08;cursor:pointer;font-size:12px;font-weight:600;color:#1A2240">
+          <span style="width:20px;height:20px;border-radius:6px;background:${dw.color};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff">${dw.name.charAt(0)}</span>
+          ${dw.name}
+        </button>`).join("")}</div>`:""}
+    </div>`;
+  } else {
+    dw.innerHTML=`<div style="display:flex;flex-direction:column;gap:0">${sw.map(w=>{
+      const starFill = w.starred ? "#F59E0B" : "none";
+      const starStroke = w.starred ? "#F59E0B" : "#D0D4E8";
+      return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #F0F2F8">
+        <button class="star-btn" onclick="toggleStarred('${w.id}');renderDetail()">
+          <svg width="14" height="14" fill="${starFill}" stroke="${starStroke}" stroke-width="2" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+        </button>
+        <div style="width:26px;height:26px;border-radius:8px;background:${w.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;flex-shrink:0">${workerIcon(w)}</div>
+        <span style="flex:1;font-size:13px;font-weight:600">${w.name}</span>
+        <button onclick="openEditWorker('${w.id}')" style="background:none;border:none;cursor:pointer;color:#8892AD;padding:4px;font-size:11px">編集</button>
+        <button onclick="removeWorker('${w.id}')" style="background:none;border:none;cursor:pointer;color:#DC2626;padding:4px;font-size:11px">削除</button>
+      </div>`;
+    }).join("")}</div>`;
+  }
+}
+
+function autoSaveField(key, val) {
+  updateSite(s => { s[key] = val; });
+  // Update header
+  if(key==="name") document.getElementById("detail-title").textContent=val||"新規現場";
+  if(key==="address"){const el=document.getElementById("detail-address");el.textContent=val;el.style.display=val?"flex":"none";}
+}
+
+function renderCalendar() {
+  const s=getSite(); if(!s) return;
+  document.getElementById("cal-site-name").textContent=s.name||"現場";
+  document.getElementById("cal-worker-count").textContent=s.workers?.length||0;
+  const dim=daysInMonth(calYear,calMonth);
+  let total=0; for(let d=1;d<=dim;d++) total+=dayNinku(d);
+  document.getElementById("month-label").textContent=`${calYear}年 ${calMonth+1}月`;
+  document.getElementById("month-total").innerHTML=`合計 <strong style="color:#4F46E5">${total}</strong> 人工`;
+  renderCalendarGrid();
+  renderEventList();
+  if(selectedDay){document.getElementById("day-detail").classList.remove("hidden");renderDayDetail();}
+  else document.getElementById("day-detail").classList.add("hidden");
+  renderWorkersList();
+}
+
+function renderEventList() {
+  const s = getSite(); if(!s) return;
+  const events = (s.events || []).filter(ev => {
+    // Show events that overlap with current month
+    const monthStart = dkey(calYear, calMonth, 1);
+    const monthEnd = dkey(calYear, calMonth, daysInMonth(calYear, calMonth));
+    return ev.start <= monthEnd && ev.end >= monthStart;
+  }).sort((a,b) => a.start.localeCompare(b.start));
+
+  const body = document.getElementById("event-list-body");
+  if(events.length === 0) {
+    body.innerHTML = `<div style="padding:12px 16px;font-size:11px;color:#8892AD;text-align:center">この月には工程が登録されていません</div>`;
+    return;
+  }
+  body.innerHTML = events.map(ev => {
+    const sDay = parseInt(ev.start.split("-")[2]);
+    const eDay = parseInt(ev.end.split("-")[2]);
+    const sMonth = parseInt(ev.start.split("-")[1]);
+    const eMonth = parseInt(ev.end.split("-")[1]);
+    const rangeText = sMonth === eMonth ? `${sDay}日〜${eDay}日` : `${sMonth}/${sDay}〜${eMonth}/${eDay}`;
+    return `<div onclick="showEventModal('${ev.id}')" style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid #EEF0F8;cursor:pointer">
+      <div style="width:4px;height:24px;border-radius:2px;background:${ev.color};flex-shrink:0"></div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ev.title || "工程"}</div>
+        <div style="font-size:10px;color:#8892AD;margin-top:1px">${rangeText}</div>
+      </div>
+      <svg width="14" height="14" fill="none" stroke="#B0BAC8" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+    </div>`;
+  }).join("");
+}
+
+function renderCalendarGrid() {
+  const s=getSite(); if(!s) return;
+  const dim=daysInMonth(calYear,calMonth), fd=firstDow(calYear,calMonth);
+  const today=new Date();
+  const events = (s.events||[]).sort((a,b) => {
+    const ds = a.start.localeCompare(b.start);
+    return ds !== 0 ? ds : b.end.localeCompare(a.end); // longer events first
+  });
+  const MAX_BAR_ROWS = 3; // max event bar rows per week
+
+  // Build weeks array: each week = array of 7 {day, dateStr} or null
+  const weeks = [];
+  let weekDays = [];
+  for(let i=0;i<fd;i++) weekDays.push(null);
+  for(let d=1;d<=dim;d++){
+    weekDays.push({ day: d, dateStr: dkey(calYear,calMonth,d) });
+    if(weekDays.length===7){ weeks.push(weekDays); weekDays=[]; }
+  }
+  if(weekDays.length>0){
+    while(weekDays.length<7) weekDays.push(null);
+    weeks.push(weekDays);
+  }
+
+  let html = "";
+  for(const week of weeks) {
+    // Day number row
+    let numsHTML = "";
+    for(let c=0;c<7;c++){
+      const cell = week[c];
+      if(!cell){
+        numsHTML += `<div class="day-cell" style="border-right:${c<6?'1px solid #F4F5FA':'none'}"></div>`;
+        continue;
+      }
+      const d = cell.day, dow = new Date(calYear,calMonth,d).getDay();
+      const isSel = selectedDay === d;
+      const isT = d===today.getDate()&&calMonth===today.getMonth()&&calYear===today.getFullYear();
+      const dowCls = dow===0?" sun":dow===6?" sat":"";
+      const todayCls = isT ? " today" : "";
+      const log = getDayLog(d);
+      const plannedH = Math.max(log.plannedHeadcount||0, dayPlanCount(d));
+      let actualH = 0;
+      if(log.workerStatus) Object.values(log.workerStatus).forEach(st=>{if(st==="present"||st==="half")actualH++;});
+      const hasMemo = !!log.memo;
+
+      // Indicators: plan (blue num) or actual (red badge), memo (orange dot)
+      let indHTML = "";
+      const parts = [];
+      if(actualH > 0) parts.push(`<span class="actual-n">${actualH}</span>`);
+      else if(plannedH > 0) parts.push(`<span class="plan-n">${plannedH}</span>`);
+      if(hasMemo) parts.push(`<span class="dot" style="background:#D97706"></span>`);
+      if(parts.length) indHTML = `<div class="day-ind">${parts.join("")}</div>`;
+
+      numsHTML += `<div class="day-cell${isSel?" selected":""}" onclick="selectDay(${d})">
+        <span class="dn${todayCls}${dowCls}">${d}</span>
+        ${indHTML}
+      </div>`;
+    }
+
+    // Event bars: assign events to rows for this week
+    const weekStart = week.find(c=>c)?.dateStr || "";
+    const weekEnd = week.filter(c=>c).pop()?.dateStr || "";
+    const weekEvents = events.filter(ev => ev.start <= weekEnd && ev.end >= weekStart);
+
+    // Assign each event to a row (greedy)
+    const rowEnds = []; // rowEnds[r] = last column occupied in row r
+    const placements = []; // { ev, row, startCol, endCol }
+    for(const ev of weekEvents){
+      // Calculate columns (0-based)
+      let startCol = 0, endCol = 6;
+      for(let c=0;c<7;c++){
+        if(week[c] && week[c].dateStr >= ev.start && startCol === 0 && (c===0||!week[c-1]||week[c-1].dateStr < ev.start)) startCol = c;
+      }
+      // More precise: find first and last column
+      startCol = -1; endCol = -1;
+      for(let c=0;c<7;c++){
+        if(!week[c]) continue;
+        if(week[c].dateStr >= ev.start && week[c].dateStr <= ev.end){
+          if(startCol===-1) startCol = c;
+          endCol = c;
+        }
+      }
+      if(startCol===-1) continue;
+
+      // Find first row where this event fits
+      let row = 0;
+      while(row < MAX_BAR_ROWS && rowEnds[row] !== undefined && rowEnds[row] >= startCol) row++;
+      if(row >= MAX_BAR_ROWS) continue; // overflow — will show "+N"
+      rowEnds[row] = endCol;
+      placements.push({ ev, row, startCol, endCol });
+    }
+
+    // Render bar rows
+    const barRowCount = Math.min(placements.reduce((mx,p)=>Math.max(mx,p.row+1),0), MAX_BAR_ROWS);
+    let barsHTML = "";
+    for(let r=0;r<barRowCount;r++){
+      let rowHTML = "";
+      const rowPlacements = placements.filter(p=>p.row===r).sort((a,b)=>a.startCol-b.startCol);
+      for(const p of rowPlacements){
+        const span = p.endCol - p.startCol + 1;
+        const contL = p.ev.start < (week[p.startCol]?.dateStr||"");
+        const contR = p.ev.end > (week[p.endCol]?.dateStr||"");
+        const cls = "ev-bar" + (contL?" cont-l":"") + (contR?" cont-r":"");
+        const titleEsc = (p.ev.title||"").replace(/&/g,"&amp;").replace(/</g,"&lt;");
+        rowHTML += `<div class="${cls}" style="grid-column:${p.startCol+1}/span ${span};background:${p.ev.color}" onclick="event.stopPropagation();showEventModal('${p.ev.id}')" title="${titleEsc}">${titleEsc}</div>`;
+      }
+      barsHTML += `<div class="bar-row">${rowHTML}</div>`;
+    }
+
+    // Overflow count per day (events beyond MAX_BAR_ROWS)
+    let overflowHTML = "";
+    const overflowCounts = new Array(7).fill(0);
+    for(const ev of weekEvents){
+      for(let c=0;c<7;c++){
+        if(!week[c]) continue;
+        if(week[c].dateStr >= ev.start && week[c].dateStr <= ev.end){
+          if(!placements.some(p=>p.ev.id===ev.id)) overflowCounts[c]++;
+        }
+      }
+    }
+    if(overflowCounts.some(n=>n>0)){
+      overflowHTML = `<div class="ev-more-row">${overflowCounts.map((n,c)=>
+        `<div class="ev-more-cell">${n>0?"+"+n:""}</div>`
+      ).join("")}</div>`;
+    }
+
+    html += `<div class="week-row">
+      <div class="week-nums">${numsHTML}</div>
+      <div class="week-bars">${barsHTML}${overflowHTML}</div>
+    </div>`;
+  }
+  document.getElementById("cal-grid").innerHTML=html;
+}
+
+const STATUS_CFG = {
+  present:{label:"出勤",color:"#059669",bg:"#ECFDF5",ring:"#D1FAE5"},
+  half:{label:"半日",color:"#D97706",bg:"#FFFBEB",ring:"#FEF3C7"},
+  absent:{label:"欠勤",color:"#DC2626",bg:"#FEF2F2",ring:"#FEE2E2"},
+  "":{label:"未設定",color:"#94A3B8",bg:"#F8FAFC",ring:"#E2E8F0"},
+};
+
+function renderDayDetail() {
+  if(!selectedDay) return;
+  const s=getSite(); if(!s) return;
+  const log=getDayLog(selectedDay);
+  const workers=sortedWorkers(s);
+  const wd=jpDay(calYear,calMonth,selectedDay);
+  document.getElementById("day-badge").textContent=selectedDay;
+  document.getElementById("day-label").textContent=`${calMonth+1}月${selectedDay}日（${wd}）`;
+
+  const sp=workers.filter(w=>log.workerStatus?.[w.id]==="present").length;
+  const sh=workers.filter(w=>log.workerStatus?.[w.id]==="half").length;
+  const pcMembers=dayPlanCount(selectedDay);
+  const pcHeadcount=log.plannedHeadcount||0;
+  // 予定人数: plannedHeadcount（数字入力）と planWorkers（メンバー指定）の大きい方を表示
+  const planDisplay = Math.max(pcHeadcount, pcMembers);
+  const stats=[{n:planDisplay,l:"予定",c:"#2563EB",bg:"#EFF6FF"},{n:sp,l:"出勤",c:"#059669",bg:"#ECFDF5"},{n:sh,l:"半日",c:"#D97706",bg:"#FFFBEB"},{n:sp+sh*.5,l:"人工計",c:"#4F46E5",bg:"#EEF2FF"}];
+  document.getElementById("day-stats").innerHTML=stats.map((st,i)=>`<div style="padding:12px 4px;text-align:center;${i<3?"border-right:1px solid #EEF0F8;":""}background:${st.bg}"><div style="font-size:21px;font-weight:900;color:${st.c};letter-spacing:-.5px">${st.n}</div><div style="font-size:9px;color:#8892AD;font-weight:700;letter-spacing:.4px;margin-top:1px">${st.l}</div></div>`).join("");
+
+  // ─── Plan tab ─────────────────────────────────────────────
+  const plannedMembers = workers.filter(w => log.planWorkers?.[w.id] === "planned");
+  const unplannedMembers = workers.filter(w => log.planWorkers?.[w.id] !== "planned");
+
+  let planMembersHTML;
+  if(workers.length === 0) {
+    planMembersHTML = `<p style="font-size:12px;color:#8892AD;margin:8px 0 0">下のリストからメンバーを登録してください</p>`;
+  } else if(plannedMembers.length === 0) {
+    planMembersHTML = `<p style="font-size:11px;color:#B0BAC8;margin:6px 0 0">まだ予定者が追加されていません</p>`;
+  } else {
+    planMembersHTML = `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:7px">${plannedMembers.map(w => `
+      <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 5px 5px 5px;border-radius:99px;border:1.5px solid ${w.color}55;background:${w.color}12;font-size:12px;font-weight:600;color:#1A2240">
+        <span style="width:22px;height:22px;border-radius:7px;background:${w.color};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff">${workerIcon(w)}</span>
+        ${w.name}
+        <button onclick="removePlanMember('${w.id}')" title="削除" style="background:none;border:none;cursor:pointer;color:${w.color};padding:0 4px;display:flex;align-items:center">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </span>`).join("")}</div>`;
+  }
+
+  // Plan picker (inline, multi-select)
+  let planPickerHTML = "";
+  if(workers.length > 0) {
+    if(planPickerOpen) {
+      const selCount = planPickerSelected.size;
+      // 彩心堂メンバーで未追加の人
+      const starredUnplanned = unplannedMembers.filter(w=>w.starred);
+      const quickAllBtn = starredUnplanned.length >= 2
+        ? `<button onclick="${starredUnplanned.map(w=>`togglePlanPickerItem('${w.id}')`).join(';')};renderDayDetail()" style="display:inline-flex;align-items:center;gap:4px;padding:5px 11px;border-radius:99px;border:1.5px solid #F59E0B;background:#FFFBEB;font-size:11px;font-weight:700;color:#B45309;cursor:pointer">★ 主要メンバー全員</button>` : "";
+      planPickerHTML = unplannedMembers.length === 0
+        ? `<div style="margin-top:8px;padding:10px;background:#F4F5FB;border-radius:10px;font-size:11px;color:#8892AD;text-align:center">全員追加済みです <button onclick="togglePlanPicker()" style="background:none;border:none;color:#4F46E5;font-weight:700;cursor:pointer;margin-left:6px">閉じる</button></div>`
+        : `<div style="margin-top:8px;padding:10px;background:#F4F5FB;border-radius:10px;border:1px dashed #C7D2FE">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+              <span style="font-size:10px;font-weight:700;color:#5A6478;letter-spacing:.4px">タップで選択（複数OK）</span>
+              <button onclick="togglePlanPicker()" style="background:none;border:none;color:#8892AD;font-size:11px;font-weight:600;cursor:pointer">閉じる</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">${quickAllBtn}${unplannedMembers.map(w => {
+              const isSel = planPickerSelected.has(w.id);
+              return `<button onclick="togglePlanPickerItem('${w.id}')" style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px 5px 5px;border-radius:99px;border:2px solid ${isSel?w.color:"#E4E7F2"};background:${isSel?w.color+"15":"#fff"};font-size:12px;font-weight:600;color:#1A2240;cursor:pointer;transition:all .12s">
+                <span style="width:22px;height:22px;border-radius:7px;background:${isSel?w.color:"#D0D4E8"};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff">${isSel?'✓':workerIcon(w)}</span>
+                ${w.name}
+              </button>`;
+            }).join("")}</div>
+            ${selCount > 0 ? `<button onclick="commitPlanPicker()" style="margin-top:10px;width:100%;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,#4F46E5,#7C3AED);color:#fff;font-size:13px;font-weight:700;cursor:pointer">${selCount}名を予定に追加</button>` : ""}
+          </div>`;
+    } else {
+      planPickerHTML = `<button onclick="togglePlanPicker()" style="margin-top:8px;display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:9px;border:1.5px dashed #C7D2FE;background:#EEF2FF;color:#4F46E5;font-size:12px;font-weight:700;cursor:pointer">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        メンバーを追加
+      </button>`;
+    }
+  }
+
+  const headcountVal = log.plannedHeadcount || "";
+  document.getElementById("tab-plan-content").innerHTML=`
+    <div style="padding:12px 16px;border-bottom:1px solid #EEF0F8">
+      <div class="label">予定人数 <span style="font-size:9px;color:#B0BAC8;font-weight:400;letter-spacing:0">（誰が入るか未定の場合）</span></div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+        <input type="number" min="0" max="50" id="planned-headcount-input" class="field-input field-input-plan" value="${headcountVal}" placeholder="0" style="width:80px;text-align:center;font-size:15px;font-weight:700" oninput="savePlannedHeadcount(this.value)">
+        <span style="font-size:12px;color:#5A6478;font-weight:600">名</span>
+      </div>
+    </div>
+    <div style="padding:12px 16px;border-bottom:1px solid #EEF0F8">
+      <div class="label">入場予定者</div>
+      ${planMembersHTML}
+      ${planPickerHTML}
+    </div>
+    <div style="padding:14px">
+      <div class="label">工程予定メモ</div>
+      <textarea class="field-input field-input-plan" rows="2" placeholder="予定している作業内容を入力（例：LGS下地組み、ボード貼り）..." oninput="saveMemo('plan',this.value)">${log.planMemo||""}</textarea>
+    </div>`;
+
+  // ─── Actual tab ───────────────────────────────────────────
+  const actualMembers = workers.filter(w => {
+    const st = log.workerStatus?.[w.id];
+    return st === "present" || st === "half" || st === "absent";
+  });
+  const unactualMembers = workers.filter(w => {
+    const st = log.workerStatus?.[w.id];
+    return st !== "present" && st !== "half" && st !== "absent";
+  });
+
+  let actualMembersHTML;
+  if(workers.length === 0) {
+    actualMembersHTML = `<p style="font-size:12px;color:#8892AD;padding:16px;margin:0">下のリストからメンバーを登録してください</p>`;
+  } else if(actualMembers.length === 0) {
+    actualMembersHTML = `<p style="font-size:11px;color:#B0BAC8;padding:14px 16px 4px;margin:0">まだ出勤メンバーが追加されていません</p>`;
+  } else {
+    actualMembersHTML = actualMembers.map(w => {
+      const st = log.workerStatus[w.id];
+      // Red badge: 「出」for present, 「半日」for half, 「欠」for absent
+      const badgeLabel = st === "present" ? "出" : st === "half" ? "半日" : "欠";
+      const badgeBg = st === "absent" ? "#94A3B8" : "#DC2626";
+      return `<div class="worker-row" style="border-left:3px solid ${w.color};background:${st==="present"?w.color+"06":"transparent"}">
+        <div class="worker-avatar" style="background:${w.color}">${workerIcon(w)}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:600">${w.name}</div>
+        </div>
+        <button onclick="toggleActualStatus('${w.id}')" class="red-badge" style="background:${badgeBg};cursor:pointer;border:none">${badgeLabel}</button>
+        <button onclick="removeActualMember('${w.id}')" title="リストから削除" style="background:none;border:none;cursor:pointer;color:#B0BAC8;padding:6px;border-radius:6px;display:flex;align-items:center">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>`;
+    }).join("");
+  }
+
+  // Actual picker (inline, multi-select)
+  let actualPickerHTML = "";
+  if(workers.length > 0) {
+    if(actualPickerOpen) {
+      const aSelCount = actualPickerSelected.size;
+      const starredUnactual = unactualMembers.filter(w=>w.starred);
+      const quickAllBtnA = starredUnactual.length >= 2
+        ? `<button onclick="${starredUnactual.map(w=>`toggleActualPickerItem('${w.id}')`).join(';')};renderDayDetail()" style="display:inline-flex;align-items:center;gap:4px;padding:5px 11px;border-radius:99px;border:1.5px solid #F59E0B;background:#FFFBEB;font-size:11px;font-weight:700;color:#B45309;cursor:pointer">★ 主要メンバー全員</button>` : "";
+      actualPickerHTML = unactualMembers.length === 0
+        ? `<div style="margin:10px 14px 0;padding:10px;background:#F4F5FB;border-radius:10px;font-size:11px;color:#8892AD;text-align:center">全員追加済みです <button onclick="toggleActualPicker()" style="background:none;border:none;color:#059669;font-weight:700;cursor:pointer;margin-left:6px">閉じる</button></div>`
+        : `<div style="margin:10px 14px 0;padding:10px;background:#F0FDF4;border-radius:10px;border:1px dashed #BBF7D0">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+              <span style="font-size:10px;font-weight:700;color:#5A6478;letter-spacing:.4px">タップで選択（複数OK）</span>
+              <button onclick="toggleActualPicker()" style="background:none;border:none;color:#8892AD;font-size:11px;font-weight:600;cursor:pointer">閉じる</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">${quickAllBtnA}${unactualMembers.map(w => {
+              const isSel = actualPickerSelected.has(w.id);
+              return `<button onclick="toggleActualPickerItem('${w.id}')" style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px 5px 5px;border-radius:99px;border:2px solid ${isSel?w.color:"#E4E7F2"};background:${isSel?w.color+"15":"#fff"};font-size:12px;font-weight:600;color:#1A2240;cursor:pointer;transition:all .12s">
+                <span style="width:22px;height:22px;border-radius:7px;background:${isSel?w.color:"#D0D4E8"};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff">${isSel?'✓':workerIcon(w)}</span>
+                ${w.name}
+              </button>`;
+            }).join("")}</div>
+            ${aSelCount > 0 ? `<button onclick="commitActualPicker()" style="margin-top:10px;width:100%;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,#059669,#0D9488);color:#fff;font-size:13px;font-weight:700;cursor:pointer">${aSelCount}名を出勤に追加</button>` : ""}
+          </div>`;
+    } else {
+      actualPickerHTML = `<div style="padding:10px 14px 0">
+        <button onclick="toggleActualPicker()" style="display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:9px;border:1.5px dashed #BBF7D0;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;cursor:pointer">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          メンバーを追加
+        </button>
+      </div>`;
+    }
+  }
+
+  document.getElementById("tab-actual-content").innerHTML=`
+    <div>${actualMembersHTML}</div>
+    ${actualPickerHTML}
+    <div style="padding:14px;border-top:1px solid #EEF0F8;margin-top:10px">
+      <div class="label">作業メモ（実績）</div>
+      <textarea class="field-input field-input-actual" rows="2" placeholder="実際に行った作業内容を記録..." oninput="saveMemo('actual',this.value)">${log.memo||""}</textarea>
+    </div>`;
+}
+
+function renderWorkersList() {
+  const s=getSite(); if(!s) return;
+  const workers=sortedWorkers(s);
+  document.getElementById("cal-worker-count").textContent=workers.length;
+  const hint=document.getElementById("workers-hint");
+  if(!selectedDay&&workers.length>0){hint.textContent="日付をタップ → 予定・実績を入力できます ／ ★ で主要メンバーを上に固定";hint.style.display="";}
+  else hint.style.display="none";
+
+  const list=document.getElementById("workers-list");
+  if(workers.length===0){list.innerHTML=`<div style="text-align:center;padding:24px 0"><p style="font-size:12px;color:#8892AD;margin:0">「＋ 追加」からメンバーを登録してください</p></div>`;return;}
+  list.innerHTML=workers.map((w,i)=>{
+    const starFill = w.starred ? "#F59E0B" : "none";
+    const starStroke = w.starred ? "#F59E0B" : "#B0BAC8";
+    const starTitle = w.starred ? "主要メンバー解除" : "主要メンバーに設定";
+    return `
+    <div class="worker-row" style="border-left:3px solid ${w.color};position:relative;${w.starred?"background:#FFFBEB":""}">
+      <button class="star-btn" onclick="toggleStarred('${w.id}')" title="${starTitle}">
+        <svg width="16" height="16" fill="${starFill}" stroke="${starStroke}" stroke-width="2" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+      </button>
+      <div class="worker-avatar" style="background:${w.color}">${workerIcon(w)}</div>
+      <span style="flex:1;font-size:13px;font-weight:600">${w.name}</span>
+      <button onclick="toggleWorkerMenu('${w.id}')" style="background:none;border:none;cursor:pointer;color:#B0BAC8;padding:4px;border-radius:6px">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+      </button>
+      <div id="wmenu-${w.id}" class="card scale-in hidden" style="position:absolute;right:14px;top:100%;margin-top:3px;padding:3px;z-index:50;min-width:120px">
+        <button onclick="openEditWorker('${w.id}')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;font-size:12px;color:#4F46E5;background:none;border:none;cursor:pointer;border-radius:7px;width:100%;white-space:nowrap">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>編集
+        </button>
+        <button onclick="removeWorker('${w.id}')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;font-size:12px;color:#DC2626;background:none;border:none;cursor:pointer;border-radius:7px;width:100%;white-space:nowrap">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>削除
+        </button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+// ─── Add / Edit Member Modal ──────────────────────────────────
+function showAddWorkerModal(editWorker) {
+  const s=getSite(); if(!s) return;
+  editingWorkerId = editWorker ? editWorker.id : null;
+  const usedColors=s.workers.filter(w=>!editWorker||w.id!==editWorker.id).map(w=>w.color);
+  const avail=WORKER_COLORS.filter(c=>!usedColors.includes(c));
+  selectedWorkerColor=editWorker ? editWorker.color : (avail[0]||WORKER_COLORS[0]);
+
+  // モードによってタイトル・ボタンを変更
+  document.getElementById("modal-title").textContent = editWorker ? "メンバーを編集" : "メンバーを追加";
+  document.getElementById("add-worker-btn").textContent = editWorker ? "保存する" : "追加する";
+
+  // 値のセット
+  document.getElementById("new-worker-name").value = editWorker ? editWorker.name : "";
+  document.getElementById("new-worker-icon").value = editWorker ? (editWorker.icon||"") : "";
+  document.getElementById("worker-preview").style.display="none";
+  document.getElementById("add-worker-btn").style.opacity = editWorker ? "1" : "0.4";
+  document.getElementById("add-worker-btn").style.cursor = editWorker ? "pointer" : "not-allowed";
+  if(editWorker) document.getElementById("add-worker-btn").style.background="linear-gradient(135deg,#4F46E5,#7C3AED)";
+
+  renderColorPicker(usedColors);
+  document.getElementById("add-worker-modal").classList.remove("hidden");
+  setTimeout(()=>document.getElementById("new-worker-name").focus(),100);
+  updateWorkerPreview();
+}
+
+function renderColorPicker(usedColors) {
+  const cp=document.getElementById("color-picker");
+  cp.innerHTML=WORKER_COLORS.map(c=>{
+    const used=usedColors.includes(c), sel=c===selectedWorkerColor;
+    return `<button class="color-swatch" onclick="selectColor('${c}',${used})" style="background:${c};opacity:${used?.18:1};box-shadow:${sel?`0 0 0 2.5px #fff, 0 0 0 4px ${c}`:`0 1px 4px ${c}28`};transform:${sel?"scale(1.15)":"scale(1)"}${used?";cursor:not-allowed":""}">
+      ${sel?`<svg width="14" height="14" fill="none" stroke="#fff" stroke-width="3" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>`:""}
+    </button>`;
+  }).join("");
+}
+
+function hideAddWorkerModal() {
+  document.getElementById("add-worker-modal").classList.add("hidden");
+  editingWorkerId=null;
+}
+
+function selectColor(c, used) {
+  if(used) return;
+  selectedWorkerColor=c;
+  const s=getSite(); if(!s) return;
+  const usedColors=s.workers.filter(w=>!editingWorkerId||w.id!==editingWorkerId).map(w=>w.color);
+  renderColorPicker(usedColors);
+  updateWorkerPreview();
+}
+
+function updateWorkerPreview() {
+  const name=document.getElementById("new-worker-name").value.trim();
+  const iconVal=document.getElementById("new-worker-icon").value.trim();
+  const displayIcon = iconVal || (name ? name.charAt(0) : "?");
+  // アイコンプレビューボックス更新
+  const iconBox=document.getElementById("icon-preview-box");
+  iconBox.textContent=displayIcon;
+  iconBox.style.background=selectedWorkerColor;
+
+  const prev=document.getElementById("worker-preview");
+  const btn=document.getElementById("add-worker-btn");
+  if(name){
+    prev.style.display="flex";
+    document.getElementById("preview-avatar").style.background=selectedWorkerColor;
+    document.getElementById("preview-avatar").textContent=displayIcon;
+    document.getElementById("preview-name").textContent=name;
+    btn.style.opacity="1"; btn.style.cursor="pointer";
+    btn.style.background="linear-gradient(135deg,#4F46E5,#7C3AED)";
+  } else {
+    prev.style.display="none";
+    btn.style.opacity="0.4"; btn.style.cursor="not-allowed";
+  }
+}
+
+// ─── PDF Export ───────────────────────────────────────────────
+function escHtml(s){ if(s==null)return""; return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
+
+function exportPDF() {
+  const s=getSite(); if(!s) return;
+  const sw=sortedWorkers(s), days=daysInMonth(calYear,calMonth);
+  // Only include workers who have at least one actual entry this month
+  const activeWorkers = sw.filter(w => {
+    for(let d=1;d<=days;d++){
+      const st=s.dayLogs?.[dkey(calYear,calMonth,d)]?.workerStatus?.[w.id]||"";
+      if(st==="present"||st==="half") return true;
+    }
+    return false;
+  });
+
+  // Per-worker totals
+  const wTotals = activeWorkers.map(w => {
+    let n=0;
+    for(let i=1;i<=days;i++){
+      const st=s.dayLogs?.[dkey(calYear,calMonth,i)]?.workerStatus?.[w.id]||"";
+      if(st==="present") n+=1; else if(st==="half") n+=0.5;
+    }
+    return n;
+  });
+  const grandTotal = wTotals.reduce((a,b)=>a+b, 0);
+
+  // Worker header columns
+  const wHeaders = activeWorkers.map(w =>
+    `<th class="wn" style="background:${w.color}">${escHtml(w.name)}</th>`
+  ).join("");
+
+  // Daily rows — actual only
+  let rows="";
+  for(let d=1;d<=days;d++){
+    const k=dkey(calYear,calMonth,d), log=s.dayLogs?.[k]||{}, wd=jpDay(calYear,calMonth,d);
+    const dow=new Date(calYear,calMonth,d).getDay();
+    const isSun=dow===0, isSat=dow===6;
+    const bg=isSun?"#FEF2F2":isSat?"#EFF6FF":"#fff";
+    const dc=isSun?"#DC2626":isSat?"#2563EB":"#334155";
+
+    let dayNk=0;
+    const wCells = activeWorkers.map(w => {
+      const st=log.workerStatus?.[w.id]||"";
+      if(st==="present"){ dayNk+=1; return `<td class="sts">○</td>`; }
+      if(st==="half"){ dayNk+=0.5; return `<td class="sts hf">△</td>`; }
+      return `<td class="sts no"></td>`;
+    }).join("");
+
+    const memo = escHtml(log.memo||"");
+    rows+=`<tr style="background:${bg}">
+      <td class="day">${d}</td>
+      <td class="dow" style="color:${dc}">${wd}</td>
+      ${wCells}
+      <td class="nk">${dayNk>0?dayNk:""}</td>
+      <td class="memo">${memo}</td>
+    </tr>`;
+  }
+
+  // Footer totals
+  const wFootCells = wTotals.map((t,i) =>
+    `<td class="sts" style="font-weight:800;font-size:7.5px;color:#1E293B;background:${activeWorkers[i].color}12">${t}</td>`
+  ).join("");
+
+  // Summary table
+  const summaryRows = activeWorkers.map((w,i) => {
+    let pDays=0, hDays=0;
+    for(let d=1;d<=days;d++){
+      const st=s.dayLogs?.[dkey(calYear,calMonth,d)]?.workerStatus?.[w.id]||"";
+      if(st==="present") pDays++;
+      else if(st==="half") hDays++;
+    }
+    return `<tr>
+      <td class="nm"><span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:${w.color};margin-right:3px;vertical-align:middle"></span>${escHtml(w.name)}</td>
+      <td class="ct">${pDays}</td>
+      <td class="ct">${hDays}</td>
+      <td class="tt">${wTotals[i]}</td>
+    </tr>`;
+  }).join("");
+
+  const gc = s.generalContractor||"";
+  const gcm = s.gcManager||"";
+
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${escHtml(s.name||"現場")} ${calYear}年${calMonth+1}月 出面表</title><style>
+@page { size: A4 landscape; margin: 8mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Hiragino Sans","Hiragino Kaku Gothic ProN","Meiryo",sans-serif; color:#1E293B; font-size:8px; width:281mm; }
+/* Header */
+h1 { font-size:14px; font-weight:800; margin:0 0 1px; }
+.period { font-size:10px; color:#475569; font-weight:700; }
+.info-row { display:table; width:100%; margin:4px 0 6px; padding:3px 0; border-top:2px solid #1E293B; border-bottom:1px solid #CBD5E1; font-size:8px; }
+.info-row span { margin-right:14px; }
+.info-row b { color:#94A3B8; font-weight:600; font-size:7px; margin-right:3px; }
+/* Two-column wrapper — uses table for print reliability */
+.cols { display:table; width:100%; table-layout:fixed; }
+.col-main { display:table-cell; vertical-align:top; padding-right:8px; }
+.col-side { display:table-cell; vertical-align:top; width:130px; }
+/* Main attendance table */
+table.att { width:100%; border-collapse:collapse; font-size:7.5px; }
+table.att th, table.att td { border:1px solid #CBD5E1; padding:1.5px 2px; }
+table.att thead th { background:#1E293B; color:#fff; font-weight:600; text-align:center; font-size:7px; white-space:nowrap; }
+table.att thead th.wn { writing-mode:vertical-rl; text-orientation:mixed; padding:4px 1px; font-size:7.5px; letter-spacing:.5px; min-width:18px; }
+table.att td.day { text-align:center; font-weight:700; width:16px; }
+table.att td.dow { text-align:center; font-weight:700; width:14px; }
+table.att td.sts { text-align:center; font-size:10px; font-weight:700; color:#059669; width:20px; padding:0; }
+table.att td.sts.hf { color:#D97706; }
+table.att td.sts.no { color:#E5E7EB; font-size:7px; }
+table.att td.nk { text-align:center; font-weight:800; width:20px; color:#4338CA; font-size:8px; }
+table.att td.memo { font-size:6.5px; color:#64748B; padding:1px 3px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; max-width:60px; }
+table.att tfoot td { background:#F1F5F9; font-weight:800; text-align:center; }
+/* Summary panel */
+.sum-card { border:1.5px solid #CBD5E1; border-radius:4px; padding:8px 6px; text-align:center; margin-bottom:6px; }
+.sum-card .big { font-size:26px; font-weight:900; color:#4338CA; line-height:1; }
+.sum-card .lbl { font-size:7px; color:#94A3B8; font-weight:700; margin-top:2px; }
+table.stbl { width:100%; border-collapse:collapse; font-size:7.5px; }
+table.stbl th { background:#F1F5F9; padding:2px 3px; border:1px solid #E2E8F0; font-weight:700; text-align:center; color:#64748B; font-size:6.5px; }
+table.stbl td { padding:2px 3px; border:1px solid #E2E8F0; }
+table.stbl td.nm { white-space:nowrap; }
+table.stbl td.ct { text-align:center; font-weight:700; }
+table.stbl td.tt { text-align:center; font-weight:900; color:#4338CA; }
+/* Footer */
+.foot { font-size:7px; color:#94A3B8; margin-top:4px; padding-top:2px; border-top:1px solid #E2E8F0; overflow:hidden; }
+.foot span { float:left; }
+.foot span:last-child { float:right; }
+</style></head><body>
+<h1>${escHtml(s.name||"現場")}</h1>
+<span class="period">${calYear}年${calMonth+1}月 出面表</span>
+<div class="info-row">
+  <span><b>現場名</b>${escHtml(s.name||"—")}</span>
+  <span><b>元請会社</b>${escHtml(gc||"—")}</span>
+  <span><b>元請担当</b>${escHtml(gcm||"—")}</span>
+  <span><b>TEL</b>${escHtml(s.phone||"—")}</span>
+  <span><b>住所</b>${escHtml(s.address||"—")}</span>
+</div>
+<div class="cols">
+<div class="col-main">
+  <table class="att">
+    <thead><tr>
+      <th>日</th><th>曜</th>
+      ${wHeaders}
+      <th style="width:20px">人工</th><th style="width:60px">メモ</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+    <tfoot><tr>
+      <td colspan="2" style="font-size:7px">合計</td>
+      ${wFootCells}
+      <td style="font-weight:900;color:#4338CA;font-size:8px">${grandTotal}</td>
+      <td></td>
+    </tr></tfoot>
+  </table>
+</div>
+<div class="col-side">
+  <div class="sum-card">
+    <div class="big">${grandTotal}</div>
+    <div class="lbl">月間合計人工</div>
+  </div>
+  <table class="stbl">
+    <thead><tr><th>氏名</th><th style="width:22px">出勤</th><th style="width:22px">半日</th><th style="width:26px">人工</th></tr></thead>
+    <tbody>${summaryRows}</tbody>
+  </table>
+</div>
+</div>
+<div class="foot">
+  <span>○ 出勤（1人工）／ △ 半日（0.5人工）</span>
+  <span>出力日: ${new Date().toLocaleDateString("ja-JP")}　彩心堂</span>
+</div>
+</body></html>`;
+  const win = window.open("", "_blank");
+  if(!win){ alert("ポップアップがブロックされました。許可してください。"); return; }
+  win.document.open();
+  win.document.write(html);
+  win.document.close();
+  win.onload = () => { setTimeout(() => win.print(), 200); };
+}
+
+// ─── Init ─────────────────────────────────────────────────────
+document.addEventListener("DOMContentLoaded",()=>{
+  // Register Service Worker for PWA
+  if("serviceWorker" in navigator){
+    navigator.serviceWorker.register("./sw.js").catch(()=>{});
+  }
+  initDemoData();
+  document.getElementById("search-input").addEventListener("input",renderList);
+  document.addEventListener("click",e=>{
+    if(openMenu && !e.target.closest(`#wmenu-${openMenu}`) && !e.target.closest(`[onclick="toggleWorkerMenu('${openMenu}')"]`)){
+      closeWorkerMenu();
+    }
+  });
+  initSwipe();
+  renderList();
+  showView("list");
+});
+</script>
+</body>
+</html>
