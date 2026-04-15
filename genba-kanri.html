@@ -10,6 +10,8 @@
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="512x512" href="./assets/icon-512.png">
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 <title>彩心堂 現場管理</title>
 <style>
 /* ═══ RESET & BASE ═══ */
@@ -78,31 +80,51 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
 .summary-bar .num{font-size:24px;font-weight:900;color:#4F46E5}
 .summary-bar .lbl{font-size:11px;color:#94A3B8;font-weight:600}
 
-/* ═══ CALENDAR (iOS-style) ═══ */
-.cal-card{overflow:hidden}
-.dow-row{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid #E8EAF2}
-.dow-hd{padding:10px 0;text-align:center;font-size:12px;font-weight:600;color:#94A3B8}
-.week-row{border-bottom:1px solid #F0F2F8;min-height:86px;display:flex;flex-direction:column}
-.week-row:last-child{border-bottom:none}
-.week-nums{display:grid;grid-template-columns:repeat(7,1fr)}
-.day-c{padding:6px 3px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:flex-end;gap:2px;min-height:40px;border-right:1px solid #F4F5FA}
-.day-c:last-child{border-right:none}
-.day-c:active{background:#EEF2FF}
-.day-c.sel{background:#EEF2FF}
-.day-c .dn{font-size:13px;font-weight:700;color:#64748B;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%}
-.day-c.sel .dn{background:#4F46E5;color:#fff !important}
-.day-c .dn.today{background:#4F46E5;color:#fff !important;font-weight:800}
-.day-c .dn.sun{color:#DC2626}
-.day-c .dn.sat{color:#2563EB}
-.day-c .ind{display:flex;align-items:center;gap:2px}
-.day-c .pn{font-size:11px;font-weight:800;color:#2563EB}
-.day-c .an{min-width:18px;height:18px;border-radius:50%;background:#DC2626;color:#fff;font-size:10px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
-.day-c .dot{width:5px;height:5px;border-radius:50%}
-.week-bars{flex:1;display:flex;flex-direction:column;gap:2px;padding:2px 0 3px}
-.bar-row{display:grid;grid-template-columns:repeat(7,1fr)}
-.ev-bar{height:20px;font-size:11px;font-weight:600;color:#fff;padding:0 6px;display:flex;align-items:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;cursor:pointer;border-radius:4px;margin:0 2px}
-.ev-bar.cl{border-top-left-radius:0;border-bottom-left-radius:0;margin-left:0}
-.ev-bar.cr{border-top-right-radius:0;border-bottom-right-radius:0;margin-right:0}
+/* ═══ FULLCALENDAR CUSTOMIZATION ═══ */
+#fc-container{background:#fff;border-radius:16px;border:1px solid #E8EAF2;box-shadow:0 1px 3px rgba(20,30,80,.04);overflow:hidden;padding:8px}
+#fc-container .fc{font-family:inherit;font-size:13px}
+#fc-container .fc .fc-toolbar{margin-bottom:8px;padding:0 4px}
+#fc-container .fc .fc-toolbar-title{font-size:18px;font-weight:800;color:#1A2240}
+#fc-container .fc .fc-button{background:#4F46E5;border:none;border-radius:10px;font-size:13px;font-weight:600;padding:6px 14px;box-shadow:none;text-transform:none}
+#fc-container .fc .fc-button:hover{background:#4338CA}
+#fc-container .fc .fc-button-active{background:#3730A3}
+#fc-container .fc .fc-button-group .fc-button{border-radius:10px;margin:0 2px}
+#fc-container .fc .fc-today-button{background:rgba(79,70,229,.12);color:#4F46E5;font-weight:700}
+#fc-container .fc .fc-today-button:hover{background:rgba(79,70,229,.2)}
+#fc-container .fc .fc-today-button:disabled{opacity:.4}
+#fc-container .fc .fc-prev-button,#fc-container .fc .fc-next-button{background:none;color:#64748B;padding:6px 8px}
+#fc-container .fc .fc-prev-button:hover,#fc-container .fc .fc-next-button:hover{background:#F1F5F9;color:#1A2240}
+#fc-container .fc .fc-daygrid-day{min-height:70px;cursor:pointer}
+#fc-container .fc .fc-daygrid-day:active{background:#EEF2FF}
+#fc-container .fc .fc-daygrid-day-number{font-size:13px;font-weight:700;color:#64748B;padding:4px 6px}
+#fc-container .fc .fc-day-today{background:#EEF2FF !important}
+#fc-container .fc .fc-day-today .fc-daygrid-day-number{background:#4F46E5;color:#fff;border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;padding:0}
+#fc-container .fc .fc-day-sun .fc-daygrid-day-number{color:#DC2626}
+#fc-container .fc .fc-day-sat .fc-daygrid-day-number{color:#2563EB}
+#fc-container .fc .fc-daygrid-event{border-radius:4px;border:none;font-size:11px;font-weight:600;padding:1px 6px;margin:1px 2px}
+#fc-container .fc .fc-daygrid-dot-event{padding:2px 4px}
+#fc-container .fc .fc-col-header-cell{font-size:12px;font-weight:600;color:#94A3B8;padding:8px 0;border-bottom:1px solid #E8EAF2}
+#fc-container .fc .fc-col-header-cell.fc-day-sun{color:#DC2626}
+#fc-container .fc .fc-col-header-cell.fc-day-sat{color:#2563EB}
+#fc-container .fc .fc-scrollgrid{border:none}
+#fc-container .fc td,#fc-container .fc th{border-color:#F0F2F8}
+#fc-container .fc .fc-daygrid-day-bottom{padding:2px 4px}
+.fc-ninku-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:800;line-height:1}
+.fc-ninku-actual{background:#DC2626;color:#fff}
+.fc-ninku-plan{background:none;color:#2563EB;font-weight:800;font-size:11px}
+.fc-memo-dot{width:5px;height:5px;border-radius:50%;background:#D97706;display:inline-block;margin-left:2px;vertical-align:middle}
+
+/* ═══ DAY DETAIL PANEL ═══ */
+.day-panel-bg{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:200;display:flex;align-items:flex-end;justify-content:center}
+.day-panel-bg.hidden{display:none!important}
+.day-panel{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:540px;padding:8px 20px calc(env(safe-area-inset-bottom,0px) + 24px);max-height:80vh;overflow-y:auto;animation:slideUp .25s ease}
+.day-panel .dp-handle{width:36px;height:5px;border-radius:3px;background:#E2E8F0;margin:0 auto 12px}
+.day-panel .dp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.day-panel .dp-title{font-size:18px;font-weight:800;color:#1A2240}
+.day-panel .dp-nav{display:flex;gap:8px}
+.day-panel .dp-tabs{display:flex;gap:4px;margin-bottom:14px;background:#F1F5F9;border-radius:10px;padding:3px}
+.day-panel .dp-tab{flex:1;text-align:center;padding:8px;border-radius:8px;font-size:14px;font-weight:700;color:#64748B;cursor:pointer;border:none;background:none}
+.day-panel .dp-tab.active{background:#fff;color:#4F46E5;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 
 /* ═══ MODAL ═══ */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:200;display:flex;align-items:flex-end;justify-content:center}
@@ -134,6 +156,11 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
 .site-card-memo textarea{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #E2E8F0;background:#F8FAFC;font-size:14px;resize:none;min-height:40px;line-height:1.4}
 .site-card-memo textarea:focus{border-color:#4F46E5;background:#fff;box-shadow:0 0 0 3px #EEF2FF;outline:none}
 
+/* ═══ DATE TOGGLE ═══ */
+.date-toggle{display:inline-flex;gap:2px;background:#1E293B;border-radius:8px;padding:2px;margin-top:6px}
+.date-toggle button{padding:5px 14px;border-radius:6px;font-size:12px;font-weight:700;color:rgba(255,255,255,.5);border:none;background:none;cursor:pointer}
+.date-toggle button.active{background:rgba(255,255,255,.15);color:#fff}
+
 /* ═══ ANIMATIONS ═══ */
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
@@ -157,6 +184,10 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
       <div>
         <h1>彩心堂</h1>
         <div class="sub" id="home-date"></div>
+        <div class="date-toggle">
+          <button class="active" onclick="setDashDate(0)">今日</button>
+          <button onclick="setDashDate(1)">明日</button>
+        </div>
       </div>
       <button class="btn btn-sm btn-primary" onclick="addSite()" style="font-size:13px;min-height:36px;padding:8px 14px">+ 新規現場</button>
     </div>
@@ -169,34 +200,44 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
   <div class="top-header">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div>
-        <h1 id="cal-title">カレンダー</h1>
+        <h1 id="cal-title" style="cursor:pointer" onclick="showSiteSwitch()">カレンダー <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24" style="vertical-align:middle;opacity:.6"><polyline points="6,9 12,15 18,9"/></svg></h1>
         <div class="sub" id="cal-sub"></div>
       </div>
       <div style="display:flex;gap:6px">
-        <button class="btn btn-sm" style="background:rgba(255,255,255,.12);color:#fff" onclick="goCalToday()">今日</button>
         <button class="btn btn-sm" style="background:rgba(255,255,255,.12);color:#fff" onclick="exportPDF()">PDF</button>
+        <button class="btn btn-sm" style="background:rgba(255,255,255,.12);color:#fff" onclick="exportCSV()">CSV</button>
+        <button class="btn btn-sm" style="background:rgba(255,255,255,.12);color:#fff" onclick="showEventModal()">+ 工程</button>
       </div>
     </div>
   </div>
   <div class="container">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-      <button class="btn btn-ghost" onclick="calPrev()" style="padding:10px"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg></button>
-      <div id="cal-month" style="font-size:18px;font-weight:800;text-align:center"></div>
-      <button class="btn btn-ghost" onclick="calNext()" style="padding:10px"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg></button>
-    </div>
-    <div class="card cal-card">
-      <div class="dow-row">
-        <div class="dow-hd" style="color:#DC2626">日</div><div class="dow-hd">月</div><div class="dow-hd">火</div><div class="dow-hd">水</div><div class="dow-hd">木</div><div class="dow-hd">金</div><div class="dow-hd" style="color:#2563EB">土</div>
-      </div>
-      <div id="cal-grid"></div>
-    </div>
+    <div id="fc-container"></div>
     <div id="cal-events" class="card" style="margin-top:14px">
       <div class="card-hd">
-        <span class="title">工程</span>
+        <span class="title">工程一覧</span>
         <button class="btn btn-sm btn-primary" onclick="showEventModal()">+ 追加</button>
       </div>
       <div id="cal-event-list"></div>
     </div>
+  </div>
+</div>
+
+<!-- ═══ DAY DETAIL PANEL ═══ -->
+<div id="day-panel-bg" class="day-panel-bg hidden">
+  <div class="day-panel">
+    <div class="dp-handle"></div>
+    <div class="dp-header">
+      <div class="dp-title" id="dp-title"></div>
+      <div class="dp-nav">
+        <button class="btn btn-ghost btn-sm" onclick="dpPrev()"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg></button>
+        <button class="btn btn-ghost btn-sm" onclick="dpNext()"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg></button>
+      </div>
+    </div>
+    <div class="dp-tabs">
+      <button class="dp-tab active" onclick="dpSwitchTab('actual',this)">実績</button>
+      <button class="dp-tab" onclick="dpSwitchTab('plan',this)">予定</button>
+    </div>
+    <div id="dp-content"></div>
   </div>
 </div>
 
@@ -387,14 +428,24 @@ function switchTab(t){
 }
 
 // ─── HOME SCREEN (Dashboard) ─────────────────────────────────
-function todayKey(){const n=new Date();return dkey(n.getFullYear(),n.getMonth(),n.getDate())}
+let dashDateOffset=0;
+
+function setDashDate(offset){
+  dashDateOffset=offset;
+  document.querySelectorAll(".date-toggle button").forEach((b,i)=>b.classList.toggle("active",i===offset));
+  renderToday();
+}
+
+function dashDate(){const n=new Date();n.setDate(n.getDate()+dashDateOffset);return n}
+function todayKey(){const n=dashDate();return dkey(n.getFullYear(),n.getMonth(),n.getDate())}
 
 function renderToday(){
   const sites=loadSites();
-  const now=new Date(),y=now.getFullYear(),m=now.getMonth(),d=now.getDate();
+  const now=dashDate(),y=now.getFullYear(),m=now.getMonth(),d=now.getDate();
   const dk=todayKey();
 
-  document.getElementById("home-date").textContent=`${y}年${m+1}月${d}日（${jpDay(y,m,d)}）`;
+  const label=dashDateOffset===0?"今日":"明日";
+  document.getElementById("home-date").textContent=`${y}年${m+1}月${d}日（${jpDay(y,m,d)}）${dashDateOffset?` — ${label}`:""}`;
 
   const container=document.getElementById("home-container");
 
@@ -436,7 +487,10 @@ function renderToday(){
     }
 
     // Footer with ninku + copy button
-    const copyBtn=(!hasAny&&workers.length>0)?`<button class="btn btn-outline btn-sm" onclick="copySiteYesterday('${s.id}')" style="font-size:12px;min-height:32px;padding:6px 12px">昨日と同じ</button>`:"";
+    const copyBtn=(!hasAny&&workers.length>0)?`<div style="display:flex;gap:4px">
+      <button class="btn btn-outline btn-sm" onclick="copySiteYesterday('${s.id}')" style="font-size:11px;min-height:30px;padding:5px 8px">昨日と同じ</button>
+      <button class="btn btn-outline btn-sm" onclick="copySiteLastWeek('${s.id}')" style="font-size:11px;min-height:30px;padding:5px 8px">先週同曜日</button>
+    </div>`:"";
 
     // Memo
     const memo=log.memo||"";
@@ -484,7 +538,7 @@ function toggleSiteStatus(siteId,wId){
 }
 
 function copySiteYesterday(siteId){
-  const now=new Date();
+  const now=dashDate();
   let prev=new Date(now);
   do{prev.setDate(prev.getDate()-1)}while(prev.getDay()===0||prev.getDay()===6);
   const pk=dkey(prev.getFullYear(),prev.getMonth(),prev.getDate());
@@ -501,6 +555,24 @@ function copySiteYesterday(siteId){
   renderToday();
 }
 
+function copySiteLastWeek(siteId){
+  const now=dashDate();
+  const prev=new Date(now);
+  prev.setDate(prev.getDate()-7);
+  const pk=dkey(prev.getFullYear(),prev.getMonth(),prev.getDate());
+  const dk=todayKey();
+  const sites=loadSites();
+  const si=sites.findIndex(s=>s.id===siteId);
+  if(si<0)return;
+  const s=sites[si];
+  const prevLog=s.dayLogs?.[pk];
+  if(!prevLog?.workerStatus){alert("先週同曜日のデータがありません");return}
+  if(!s.dayLogs[dk])s.dayLogs[dk]={};
+  s.dayLogs[dk].workerStatus={...prevLog.workerStatus};
+  saveSites(sites);
+  renderToday();
+}
+
 function saveSiteMemo(siteId,val){
   const dk=todayKey();
   const sites=loadSites();
@@ -511,82 +583,135 @@ function saveSiteMemo(siteId,val){
   saveSites(sites);
 }
 
-// ─── CALENDAR SCREEN ─────────────────────────────────────────
-function calPrev(){if(calMonth===0){calYear--;calMonth=11}else calMonth--;renderCalendar()}
-function calNext(){if(calMonth===11){calYear++;calMonth=0}else calMonth++;renderCalendar()}
-function goCalToday(){const n=new Date();calYear=n.getFullYear();calMonth=n.getMonth();renderCalendar()}
+// ─── FULLCALENDAR ────────────────────────────────────────────
+let fcInstance=null;
 
-function renderCalendar(){
-  const s=getSite();if(!s)return;
-  document.getElementById("cal-title").textContent=s.name||"カレンダー";
-  document.getElementById("cal-month").textContent=`${calYear}年 ${calMonth+1}月`;
-  const dim=daysInMonth(calYear,calMonth);
-  let total=0;for(let d=1;d<=dim;d++){const log=s.dayLogs?.[dkey(calYear,calMonth,d)]||{};if(log.workerStatus)Object.values(log.workerStatus).forEach(st=>{if(st==="present")total+=1;else if(st==="half")total+=.5})}
-  document.getElementById("cal-sub").textContent=`合計 ${total} 人工`;
-  renderCalGrid();
-  renderEventList();
+function initFullCalendar(){
+  const el=document.getElementById("fc-container");
+  if(!el)return;
+  if(fcInstance){fcInstance.destroy();fcInstance=null}
+  const s=getSite();
+  if(!s){el.innerHTML=`<div style="padding:40px;text-align:center;color:#94A3B8">現場を選択してください</div>`;return}
+
+  fcInstance=new FullCalendar.Calendar(el,{
+    locale:"ja",
+    initialView:"dayGridMonth",
+    height:"auto",
+    firstDay:0,
+    fixedWeekCount:false,
+    headerToolbar:{
+      left:"prev,next today",
+      center:"title",
+      right:"dayGridMonth,dayGridWeek"
+    },
+    buttonText:{today:"今日",month:"月",week:"週"},
+    dayMaxEventRows:3,
+    events:fcGetEvents(s),
+    editable:true,
+    eventStartEditable:true,
+    eventDurationEditable:true,
+    dateClick:function(info){openDayPanel(info.dateStr)},
+    eventClick:function(info){
+      info.jsEvent.preventDefault();
+      const evId=info.event.extendedProps.siteEventId;
+      if(evId)showEventModal(evId);
+    },
+    eventDrop:function(info){fcHandleEventMove(info)},
+    eventResize:function(info){fcHandleEventResize(info)},
+    dayCellDidMount:function(info){fcRenderDayCell(info)},
+    datesSet:function(info){
+      const mid=new Date((info.start.getTime()+info.end.getTime())/2);
+      calYear=mid.getFullYear();calMonth=mid.getMonth();
+      updateCalSub();
+      renderEventList();
+    }
+  });
+  fcInstance.render();
+  updateCalSub();
 }
 
-function renderCalGrid(){
-  const s=getSite();if(!s)return;
-  const dim=daysInMonth(calYear,calMonth),fd=firstDow(calYear,calMonth),today=new Date();
-  const events=(s.events||[]).sort((a,b)=>a.start.localeCompare(b.start)||(b.end.localeCompare(a.end)));
-  const weeks=[];let wk=[];
-  for(let i=0;i<fd;i++)wk.push(null);
-  for(let d=1;d<=dim;d++){wk.push({day:d,ds:dkey(calYear,calMonth,d)});if(wk.length===7){weeks.push(wk);wk=[]}}
-  if(wk.length>0){while(wk.length<7)wk.push(null);weeks.push(wk)}
+function fcGetEvents(s){
+  if(!s||!s.events)return[];
+  return s.events.map(e=>({
+    id:e.id,
+    title:e.title,
+    start:e.start,
+    end:fcEndDate(e.end),
+    backgroundColor:e.color,
+    borderColor:e.color,
+    extendedProps:{siteEventId:e.id}
+  }));
+}
 
-  let html="";
-  for(const week of weeks){
-    let nums="";
-    for(let c=0;c<7;c++){
-      const cell=week[c];
-      if(!cell){nums+=`<div class="day-c"></div>`;continue}
-      const d=cell.day,dow=new Date(calYear,calMonth,d).getDay();
-      const isT=d===today.getDate()&&calMonth===today.getMonth()&&calYear===today.getFullYear();
-      const dcl=dow===0?" sun":dow===6?" sat":"";
-      const tcl=isT?" today":"";
-      const log=s.dayLogs?.[cell.ds]||{};
-      const planH=Math.max(log.plannedHeadcount||0,(log.planWorkers?Object.values(log.planWorkers).filter(v=>v==="planned").length:0));
-      let actH=0;if(log.workerStatus)Object.values(log.workerStatus).forEach(st=>{if(st==="present"||st==="half")actH++});
-      const hasMemo=!!log.memo;
-      let ind="";
-      const parts=[];
-      if(actH>0)parts.push(`<span class="an">${actH}</span>`);
-      else if(planH>0)parts.push(`<span class="pn">${planH}</span>`);
-      if(hasMemo)parts.push(`<span class="dot" style="background:#D97706"></span>`);
-      if(parts.length)ind=`<div class="ind">${parts.join("")}</div>`;
-      nums+=`<div class="day-c" onclick="openDayFromCal(${d})"><span class="dn${tcl}${dcl}">${d}</span>${ind}</div>`;
-    }
-    // Event bars
-    const wStart=week.find(c=>c)?.ds||"",wEnd=week.filter(c=>c).pop()?.ds||"";
-    const wEvs=events.filter(e=>e.start<=wEnd&&e.end>=wStart);
-    const rows=[];const rowEnds=[];
-    for(const ev of wEvs){
-      let sc=-1,ec=-1;
-      for(let c=0;c<7;c++){if(!week[c])continue;if(week[c].ds>=ev.start&&week[c].ds<=ev.end){if(sc===-1)sc=c;ec=c}}
-      if(sc===-1)continue;
-      let r=0;while(r<3&&rowEnds[r]!==undefined&&rowEnds[r]>=sc)r++;
-      if(r>=3)continue;
-      rowEnds[r]=ec;
-      if(!rows[r])rows[r]=[];
-      rows[r].push({ev,sc,ec});
-    }
-    let bars="";
-    for(let r=0;r<rows.length;r++){
-      if(!rows[r])continue;
-      let rh="";
-      for(const p of rows[r]){
-        const sp=p.ec-p.sc+1;
-        const cl=p.ev.start<(week[p.sc]?.ds||"")&&p.sc>0;
-        const cr=p.ev.end>(week[p.ec]?.ds||"")&&p.ec<6;
-        rh+=`<div class="ev-bar${cl?" cl":""}${cr?" cr":""}" style="grid-column:${p.sc+1}/span ${sp};background:${p.ev.color}" onclick="event.stopPropagation();showEventModal('${p.ev.id}')">${escHtml(p.ev.title)}</div>`;
-      }
-      bars+=`<div class="bar-row">${rh}</div>`;
-    }
-    html+=`<div class="week-row"><div class="week-nums">${nums}</div><div class="week-bars">${bars}</div></div>`;
+// FullCalendar uses exclusive end dates, so add 1 day
+function fcEndDate(dateStr){
+  const d=new Date(dateStr);
+  d.setDate(d.getDate()+1);
+  return d.toISOString().split("T")[0];
+}
+
+function fcHandleEventMove(info){
+  const evId=info.event.extendedProps.siteEventId;
+  const newStart=info.event.startStr;
+  const endD=new Date(info.event.endStr||info.event.startStr);
+  endD.setDate(endD.getDate()-1);
+  const newEnd=endD.toISOString().split("T")[0];
+  updateSite(s=>{
+    const ev=(s.events||[]).find(e=>e.id===evId);
+    if(ev){ev.start=newStart;ev.end=newEnd}
+  });
+  updateCalSub();renderEventList();
+}
+
+function fcHandleEventResize(info){
+  fcHandleEventMove(info);
+}
+
+function fcRenderDayCell(info){
+  const s=getSite();if(!s)return;
+  const ds=info.date.toLocaleDateString("sv-SE");
+  const log=s.dayLogs?.[ds]||{};
+  const planH=Math.max(log.plannedHeadcount||0,(log.planWorkers?Object.values(log.planWorkers).filter(v=>v==="planned").length:0));
+  let actH=0;if(log.workerStatus)Object.values(log.workerStatus).forEach(st=>{if(st==="present"||st==="half")actH++});
+  const hasMemo=!!log.memo;
+
+  const badge=document.createElement("div");
+  badge.style.cssText="display:flex;align-items:center;gap:2px;justify-content:flex-end;padding:0 4px 2px";
+  if(actH>0){
+    const sp=document.createElement("span");
+    sp.className="fc-ninku-badge fc-ninku-actual";
+    sp.textContent=actH;
+    badge.appendChild(sp);
+  }else if(planH>0){
+    const sp=document.createElement("span");
+    sp.className="fc-ninku-badge fc-ninku-plan";
+    sp.textContent=planH;
+    badge.appendChild(sp);
   }
-  document.getElementById("cal-grid").innerHTML=html;
+  if(hasMemo){
+    const dot=document.createElement("span");
+    dot.className="fc-memo-dot";
+    badge.appendChild(dot);
+  }
+  if(actH>0||planH>0||hasMemo){
+    info.el.querySelector(".fc-daygrid-day-frame")?.appendChild(badge);
+  }
+}
+
+function updateCalSub(){
+  const s=getSite();if(!s)return;
+  document.getElementById("cal-title").innerHTML=(s.name||"カレンダー")+' <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24" style="vertical-align:middle;opacity:.6"><polyline points="6,9 12,15 18,9"/></svg>';
+  const dim=daysInMonth(calYear,calMonth);
+  let total=0;
+  for(let d=1;d<=dim;d++){
+    const log=s.dayLogs?.[dkey(calYear,calMonth,d)]||{};
+    if(log.workerStatus)Object.values(log.workerStatus).forEach(st=>{if(st==="present")total+=1;else if(st==="half")total+=.5});
+  }
+  document.getElementById("cal-sub").textContent=`合計 ${total} 人工`;
+}
+
+function renderCalendar(){
+  initFullCalendar();
 }
 
 function renderEventList(){
@@ -602,10 +727,159 @@ function renderEventList(){
     </div>`}).join("");
 }
 
-function openDayFromCal(d){
-  // Switch to Today tab but for a specific date
-  // For now, just switch to today tab
-  switchTab("today");
+// ─── DAY DETAIL PANEL (S1) ──────────────────────────────────
+let dpDate=null;
+let dpTab="actual";
+
+function openDayPanel(dateStr){
+  dpDate=new Date(dateStr+"T00:00:00");
+  dpTab="actual";
+  renderDayPanel();
+  document.getElementById("day-panel-bg").classList.remove("hidden");
+}
+
+function closeDayPanel(){
+  document.getElementById("day-panel-bg").classList.add("hidden");
+  if(fcInstance)fcInstance.refetchEvents();
+  initFullCalendar();
+}
+
+function dpPrev(){dpDate.setDate(dpDate.getDate()-1);renderDayPanel()}
+function dpNext(){dpDate.setDate(dpDate.getDate()+1);renderDayPanel()}
+
+function dpSwitchTab(tab,btn){
+  dpTab=tab;
+  document.querySelectorAll(".dp-tab").forEach(t=>t.classList.remove("active"));
+  btn.classList.add("active");
+  renderDayPanel();
+}
+
+function dpDateStr(){return dpDate.toLocaleDateString("sv-SE")}
+
+function renderDayPanel(){
+  const s=getSite();if(!s)return;
+  const ds=dpDateStr();
+  const d=dpDate;
+  document.getElementById("dp-title").textContent=`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${DAY_JP[d.getDay()]}）`;
+
+  const log=s.dayLogs?.[ds]||{};
+  const workers=sortedWorkers(s);
+  const evs=eventsOnDate(s,ds);
+  const el=document.getElementById("dp-content");
+
+  // Events on this day
+  let evHTML="";
+  if(evs.length>0){
+    evHTML=`<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">${evs.map(e=>`<span style="background:${e.color};color:#fff;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600">${escHtml(e.title)}</span>`).join("")}</div>`;
+  }
+
+  if(dpTab==="actual"){
+    // Actual attendance
+    let nk=0;
+    const membersHTML=workers.length>0?workers.map(w=>{
+      const st=log.workerStatus?.[w.id]||"";
+      if(st==="present")nk+=1;else if(st==="half")nk+=0.5;
+      return`<div class="mc" data-s="${st}" onclick="dpToggleStatus('${w.id}')" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;cursor:pointer;border:1.5px solid transparent;margin-bottom:4px;${st==="present"?"background:#ECFDF5;border-color:#A7F3D0":st==="half"?"background:#FFFBEB;border-color:#FDE68A":st==="absent"?"background:#FEF2F2;border-color:#FECACA":"background:#F8FAFC;border-color:#E2E8F0"}">
+        <div style="width:32px;height:32px;border-radius:10px;background:${w.color};display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff">${workerIcon(w)}</div>
+        <span style="flex:1;font-size:14px;font-weight:600">${escHtml(w.name)}</span>
+        <span style="font-size:13px;font-weight:700;color:${st==="present"?"#059669":st==="half"?"#D97706":st==="absent"?"#DC2626":"#CBD5E1"}">${STATUS_LABEL[st]}</span>
+      </div>`}).join(""):`<div style="color:#94A3B8;font-size:13px;text-align:center;padding:16px">メンバーが登録されていません</div>`;
+
+    el.innerHTML=`${evHTML}
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="font-size:16px;font-weight:800;color:#4F46E5">${nk} <span style="font-size:12px;color:#94A3B8;font-weight:600">人工</span></div>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-outline btn-sm" onclick="dpCopyFrom('yesterday')" style="font-size:11px;min-height:30px;padding:5px 8px">昨日と同じ</button>
+          <button class="btn btn-outline btn-sm" onclick="dpCopyFrom('lastweek')" style="font-size:11px;min-height:30px;padding:5px 8px">先週同曜日</button>
+        </div>
+      </div>
+      ${membersHTML}
+      <div style="margin-top:12px">
+        <div class="label">作業メモ</div>
+        <textarea class="field" placeholder="作業メモ..." oninput="dpSaveMemo(this.value)">${escHtml(log.memo||"")}</textarea>
+      </div>`;
+  }else{
+    // Plan
+    const planH=log.plannedHeadcount||0;
+    const membersHTML=workers.length>0?workers.map(w=>{
+      const planned=log.planWorkers?.[w.id]==="planned";
+      return`<div onclick="dpTogglePlan('${w.id}')" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;cursor:pointer;border:1.5px solid ${planned?"#C7D2FE":"#E2E8F0"};background:${planned?"#EEF2FF":"#F8FAFC"};margin-bottom:4px">
+        <div style="width:32px;height:32px;border-radius:10px;background:${w.color};display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff">${workerIcon(w)}</div>
+        <span style="flex:1;font-size:14px;font-weight:600">${escHtml(w.name)}</span>
+        <span style="font-size:13px;font-weight:700;color:${planned?"#4F46E5":"#CBD5E1"}">${planned?"予定":"—"}</span>
+      </div>`}).join(""):"";
+
+    el.innerHTML=`${evHTML}
+      <div style="margin-bottom:12px">
+        <div class="label">予定人数</div>
+        <input type="number" class="field" value="${planH}" min="0" oninput="dpSavePlanH(this.value)" style="width:100px">
+      </div>
+      ${membersHTML}
+      <div style="margin-top:12px">
+        <div class="label">工程予定メモ</div>
+        <textarea class="field" placeholder="工程予定メモ..." oninput="dpSavePlanMemo(this.value)">${escHtml(log.planMemo||"")}</textarea>
+      </div>`;
+  }
+}
+
+function dpToggleStatus(wId){
+  const ds=dpDateStr();
+  const sites=loadSites();
+  const si=sites.findIndex(s=>s.id===currentSiteId);if(si<0)return;
+  const s=sites[si];
+  if(!s.dayLogs[ds])s.dayLogs[ds]={};
+  if(!s.dayLogs[ds].workerStatus)s.dayLogs[ds].workerStatus={};
+  const cur=s.dayLogs[ds].workerStatus[wId]||"";
+  s.dayLogs[ds].workerStatus[wId]=STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur)+1)%STATUS_CYCLE.length];
+  saveSites(sites);
+  renderDayPanel();
+}
+
+function dpTogglePlan(wId){
+  const ds=dpDateStr();
+  const sites=loadSites();
+  const si=sites.findIndex(s=>s.id===currentSiteId);if(si<0)return;
+  const s=sites[si];
+  if(!s.dayLogs[ds])s.dayLogs[ds]={};
+  if(!s.dayLogs[ds].planWorkers)s.dayLogs[ds].planWorkers={};
+  s.dayLogs[ds].planWorkers[wId]=s.dayLogs[ds].planWorkers[wId]==="planned"?"":"planned";
+  saveSites(sites);
+  renderDayPanel();
+}
+
+function dpSaveMemo(val){
+  const ds=dpDateStr();
+  updateSite(s=>{if(!s.dayLogs[ds])s.dayLogs[ds]={};s.dayLogs[ds].memo=val});
+}
+
+function dpSavePlanMemo(val){
+  const ds=dpDateStr();
+  updateSite(s=>{if(!s.dayLogs[ds])s.dayLogs[ds]={};s.dayLogs[ds].planMemo=val});
+}
+
+function dpSavePlanH(val){
+  const ds=dpDateStr();
+  updateSite(s=>{if(!s.dayLogs[ds])s.dayLogs[ds]={};s.dayLogs[ds].plannedHeadcount=parseInt(val)||0});
+}
+
+function dpCopyFrom(source){
+  const ds=dpDateStr();
+  const target=new Date(dpDate);
+  if(source==="yesterday"){
+    do{target.setDate(target.getDate()-1)}while(target.getDay()===0||target.getDay()===6);
+  }else if(source==="lastweek"){
+    target.setDate(target.getDate()-7);
+  }
+  const srcKey=target.toLocaleDateString("sv-SE");
+  const sites=loadSites();
+  const si=sites.findIndex(s=>s.id===currentSiteId);if(si<0)return;
+  const s=sites[si];
+  const srcLog=s.dayLogs?.[srcKey];
+  if(!srcLog?.workerStatus){alert("コピー元のデータがありません");return}
+  if(!s.dayLogs[ds])s.dayLogs[ds]={};
+  s.dayLogs[ds].workerStatus={...srcLog.workerStatus};
+  saveSites(sites);
+  renderDayPanel();
 }
 
 // ─── SETTINGS SCREEN ─────────────────────────────────────────
@@ -774,12 +1048,12 @@ function saveEventFromModal(){
     if(editingEventId){const e=s.events.find(e=>e.id===editingEventId);if(e){e.title=title;e.start=start;e.end=end;e.color=selectedEventColor}}
     else s.events.push({id:uid(),title,start,end,color:selectedEventColor});
   });
-  hideEventModal();renderCalendar();
+  hideEventModal();initFullCalendar();renderEventList();
 }
 function deleteEventFromModal(){
   if(!confirm("この工程を削除しますか？"))return;
   updateSite(s=>{s.events=(s.events||[]).filter(e=>e.id!==editingEventId)});
-  hideEventModal();renderCalendar();
+  hideEventModal();initFullCalendar();renderEventList();
 }
 
 // ─── PDF EXPORT ──────────────────────────────────────────────
@@ -801,6 +1075,55 @@ function exportPDF(){
   win.onload=()=>{setTimeout(()=>win.print(),200)};
 }
 
+// ─── CSV EXPORT ─────────────────────────────────────────────
+function exportCSV(){
+  const s=getSite();if(!s)return;
+  const sw=sortedWorkers(s),days=daysInMonth(calYear,calMonth);
+  const activeWorkers=sw.filter(w=>{for(let d=1;d<=days;d++){const st=s.dayLogs?.[dkey(calYear,calMonth,d)]?.workerStatus?.[w.id]||"";if(st==="present"||st==="half")return true}return false});
+
+  // Header row
+  const headers=["日","曜日",...activeWorkers.map(w=>w.name),"人工","メモ"];
+  const rows=[headers.map(h=>'"'+h.replace(/"/g,'""')+'"').join(",")];
+
+  // Data rows
+  for(let d=1;d<=days;d++){
+    const k=dkey(calYear,calMonth,d),log=s.dayLogs?.[k]||{};
+    const wd=jpDay(calYear,calMonth,d);
+    let nk=0;
+    const cols=[d,wd];
+    activeWorkers.forEach(w=>{
+      const st=log.workerStatus?.[w.id]||"";
+      if(st==="present"){nk+=1;cols.push("○")}
+      else if(st==="half"){nk+=0.5;cols.push("△")}
+      else if(st==="absent"){cols.push("×")}
+      else{cols.push("")}
+    });
+    cols.push(nk>0?nk:"");
+    cols.push(log.memo||"");
+    rows.push(cols.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(","));
+  }
+
+  // Total row
+  const totals=["合計",""];
+  let gt=0;
+  activeWorkers.forEach(w=>{
+    let n=0;
+    for(let d=1;d<=days;d++){const st=s.dayLogs?.[dkey(calYear,calMonth,d)]?.workerStatus?.[w.id]||"";if(st==="present")n+=1;else if(st==="half")n+=0.5}
+    totals.push(n);gt+=n;
+  });
+  totals.push(gt,"");
+  rows.push(totals.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(","));
+
+  const bom="\uFEFF";
+  const blob=new Blob([bom+rows.join("\n")],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=`${s.name||"現場"}_${calYear}年${calMonth+1}月_出面表.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 // ─── INIT ────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded",()=>{
   if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
@@ -810,6 +1133,8 @@ document.addEventListener("DOMContentLoaded",()=>{
   switchTab("today");
   // Close modals on background tap
   document.querySelectorAll(".modal-bg").forEach(m=>{m.addEventListener("click",e=>{if(e.target===m)m.classList.add("hidden")})});
+  // Close day panel on background tap
+  document.getElementById("day-panel-bg").addEventListener("click",e=>{if(e.target.id==="day-panel-bg")closeDayPanel()});
 });
 </script>
 </body>

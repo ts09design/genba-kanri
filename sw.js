@@ -1,9 +1,11 @@
-const CACHE_NAME = 'genba-kanri-v1';
+const CACHE_NAME = 'genba-kanri-v2';
 const ASSETS = [
   './genba-kanri.html',
   './manifest.json',
   './assets/icon.png',
-  './assets/adaptive-icon.png'
+  './assets/adaptive-icon.png',
+  'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css',
+  'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'
 ];
 
 // Install — cache core assets
