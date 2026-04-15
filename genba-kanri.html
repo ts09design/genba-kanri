@@ -112,6 +112,28 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
 .color-dot{width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
 .color-dot:active{transform:scale(.9)}
 
+/* ═══ SITE CARD (Dashboard) ═══ */
+.site-card{background:#fff;border-radius:16px;border:1px solid #E8EAF2;box-shadow:0 1px 3px rgba(20,30,80,.04);overflow:hidden;margin-bottom:14px}
+.site-card-hd{padding:14px 16px 10px;display:flex;align-items:flex-start;justify-content:space-between;cursor:pointer}
+.site-card-hd h3{font-size:16px;font-weight:800;margin:0;color:#1A2240}
+.site-card-ev{margin:0 16px 8px;display:flex;gap:6px;flex-wrap:wrap}
+.site-card-ev span{font-size:11px;font-weight:600;color:#fff;padding:3px 10px;border-radius:6px}
+.site-card-members{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 10px}
+.site-card-members .mc{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:10px;cursor:pointer;min-height:40px;border:1.5px solid transparent;transition:all .12s}
+.site-card-members .mc:active{transform:scale(.95)}
+.site-card-members .mc .av{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0}
+.site-card-members .mc .st{font-size:12px;font-weight:700}
+.mc[data-s="present"]{background:#ECFDF5;border-color:#A7F3D0}.mc[data-s="present"] .st{color:#059669}
+.mc[data-s="half"]{background:#FFFBEB;border-color:#FDE68A}.mc[data-s="half"] .st{color:#D97706}
+.mc[data-s="absent"]{background:#FEF2F2;border-color:#FECACA}.mc[data-s="absent"] .st{color:#DC2626}
+.mc[data-s=""]{background:#F8FAFC;border-color:#E2E8F0}.mc[data-s=""] .st{color:#CBD5E1}
+.site-card-foot{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-top:1px solid #F0F2F8;background:#FAFBFF}
+.site-card-foot .nk{font-size:18px;font-weight:900;color:#4F46E5}
+.site-card-foot .nk-label{font-size:11px;color:#94A3B8;font-weight:600}
+.site-card-memo{padding:8px 16px 12px}
+.site-card-memo textarea{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #E2E8F0;background:#F8FAFC;font-size:14px;resize:none;min-height:40px;line-height:1.4}
+.site-card-memo textarea:focus{border-color:#4F46E5;background:#fff;box-shadow:0 0 0 3px #EEF2FF;outline:none}
+
 /* ═══ ANIMATIONS ═══ */
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
@@ -128,24 +150,18 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
 <body>
 <div class="app">
 
-<!-- ═══ TAB 1: TODAY ═══ -->
+<!-- ═══ TAB 1: HOME (Dashboard) ═══ -->
 <div id="view-today" class="view">
   <div class="top-header">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div>
-        <h1 id="today-site-name">現場管理</h1>
-        <div class="sub" id="today-date"></div>
+        <h1>彩心堂</h1>
+        <div class="sub" id="home-date"></div>
       </div>
-      <button class="btn btn-sm" style="background:rgba(255,255,255,.12);color:#fff" id="site-switch-btn" onclick="showSiteSwitch()">切替</button>
+      <button class="btn btn-sm btn-primary" onclick="addSite()" style="font-size:13px;min-height:36px;padding:8px 14px">+ 新規現場</button>
     </div>
-    <div id="today-event" style="margin-top:8px"></div>
   </div>
-  <div class="container">
-    <div id="today-summary" class="summary-bar"></div>
-    <div id="today-members" class="member-grid"></div>
-    <div id="today-actions" style="margin:10px 0"></div>
-    <div id="today-memo" style="margin-top:8px"></div>
-  </div>
+  <div class="container" id="home-container"></div>
 </div>
 
 <!-- ═══ TAB 2: CALENDAR ═══ -->
@@ -211,8 +227,8 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
 <!-- ═══ BOTTOM TAB BAR ═══ -->
 <div class="tab-bar-bottom">
   <button id="tab-today" onclick="switchTab('today')" class="active">
-    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><text x="12" y="18" text-anchor="middle" fill="currentColor" stroke="none" font-size="8" font-weight="800">今</text></svg>
-    今日
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+    ホーム
   </button>
   <button id="tab-calendar" onclick="switchTab('calendar')">
     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -370,100 +386,129 @@ function switchTab(t){
   else if(t==="settings")renderSettings();
 }
 
-// ─── TODAY SCREEN ────────────────────────────────────────────
+// ─── HOME SCREEN (Dashboard) ─────────────────────────────────
 function todayKey(){const n=new Date();return dkey(n.getFullYear(),n.getMonth(),n.getDate())}
 
 function renderToday(){
-  const s=getSite();
-  if(!s){document.getElementById("today-site-name").textContent="現場を選択してください";return}
+  const sites=loadSites();
   const now=new Date(),y=now.getFullYear(),m=now.getMonth(),d=now.getDate();
-  const dk=todayKey(),log=s.dayLogs?.[dk]||{};
-  const workers=sortedWorkers(s);
+  const dk=todayKey();
 
-  // Header
-  document.getElementById("today-site-name").textContent=s.name||"現場名未設定";
-  document.getElementById("today-date").textContent=`${y}年${m+1}月${d}日（${jpDay(y,m,d)}）`;
+  document.getElementById("home-date").textContent=`${y}年${m+1}月${d}日（${jpDay(y,m,d)}）`;
 
-  // Today's event
-  const evs=eventsOnDate(s,dk);
-  document.getElementById("today-event").innerHTML=evs.length>0
-    ?evs.map(e=>`<div style="background:${e.color};color:#fff;padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700;margin-top:4px">${escHtml(e.title)}</div>`).join("")
-    :"";
+  const container=document.getElementById("home-container");
 
-  // Summary
-  let nk=0,cnt=0;
-  workers.forEach(w=>{const st=log.workerStatus?.[w.id]||"";if(st==="present"){nk+=1;cnt++}else if(st==="half"){nk+=0.5;cnt++}});
-  const planH=log.plannedHeadcount||0;
-  document.getElementById("today-summary").innerHTML=`
-    <div style="text-align:center"><div class="num">${nk}</div><div class="lbl">人工</div></div>
-    <div style="text-align:center"><div class="num" style="color:#059669">${cnt}</div><div class="lbl">出勤</div></div>
-    ${planH>0?`<div style="text-align:center"><div class="num" style="color:#2563EB">${planH}</div><div class="lbl">予定</div></div>`:""}
-  `;
+  if(sites.length===0){
+    container.innerHTML=`<div style="text-align:center;padding:60px 20px">
+      <div style="font-size:48px;margin-bottom:16px">🏗️</div>
+      <h2 style="font-size:18px;font-weight:800;margin:0 0 8px">現場を追加しましょう</h2>
+      <p style="color:#94A3B8;font-size:14px;margin:0 0 20px">右上の「+ 新規現場」ボタンから<br>最初の現場を登録してください</p>
+    </div>`;
+    return;
+  }
 
-  // Member cards
-  let cardsHTML="";
-  workers.forEach(w=>{
-    const st=log.workerStatus?.[w.id]||"";
-    cardsHTML+=`<div class="m-card" data-st="${st}" onclick="toggleTodayStatus('${w.id}')">
-      <div class="avatar" style="background:${w.color}">${workerIcon(w)}</div>
-      <div class="name">${w.name}</div>
-      <div class="status">${STATUS_LABEL[st]}</div>
+  let html="";
+  sites.forEach(s=>{
+    const log=s.dayLogs?.[dk]||{};
+    const workers=sortedWorkers(s);
+    const evs=eventsOnDate(s,dk);
+
+    // Calc today's ninku
+    let nk=0,cnt=0;
+    workers.forEach(w=>{const st=log.workerStatus?.[w.id]||"";if(st==="present"){nk+=1;cnt++}else if(st==="half"){nk+=0.5;cnt++}});
+    const hasAny=workers.some(w=>{const st=log.workerStatus?.[w.id]||"";return st==="present"||st==="half"||st==="absent"});
+
+    // Event bar
+    const evHTML=evs.length>0?`<div class="site-card-ev">${evs.map(e=>`<span style="background:${e.color}">${escHtml(e.title)}</span>`).join("")}</div>`:"";
+
+    // Member chips (inline attendance)
+    let membersHTML="";
+    if(workers.length>0){
+      membersHTML=`<div class="site-card-members">${workers.map(w=>{
+        const st=log.workerStatus?.[w.id]||"";
+        return`<div class="mc" data-s="${st}" onclick="toggleSiteStatus('${s.id}','${w.id}')">
+          <div class="av" style="background:${w.color}">${workerIcon(w)}</div>
+          <span class="st">${STATUS_LABEL[st]}</span>
+        </div>`;
+      }).join("")}</div>`;
+    } else {
+      membersHTML=`<div style="padding:8px 16px"><button class="btn btn-outline btn-sm" style="width:100%" onclick="currentSiteId='${s.id}';switchTab('settings')">メンバーを追加</button></div>`;
+    }
+
+    // Footer with ninku + copy button
+    const copyBtn=(!hasAny&&workers.length>0)?`<button class="btn btn-outline btn-sm" onclick="copySiteYesterday('${s.id}')" style="font-size:12px;min-height:32px;padding:6px 12px">昨日と同じ</button>`:"";
+
+    // Memo
+    const memo=log.memo||"";
+    const memoHTML=`<div class="site-card-memo">
+      <textarea placeholder="作業メモ..." oninput="saveSiteMemo('${s.id}',this.value)">${escHtml(memo)}</textarea>
+    </div>`;
+
+    html+=`<div class="site-card fade-in">
+      <div class="site-card-hd" onclick="currentSiteId='${s.id}';switchTab('calendar')">
+        <div>
+          <h3>${escHtml(s.name||"新規現場")}</h3>
+          ${s.generalContractor?`<div style="font-size:12px;color:#94A3B8;margin-top:2px">${escHtml(s.generalContractor)}</div>`:""}
+        </div>
+        <svg width="18" height="18" fill="none" stroke="#B0BAC8" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+      </div>
+      ${evHTML}
+      ${membersHTML}
+      <div class="site-card-foot">
+        <div>
+          <span class="nk">${nk}</span>
+          <span class="nk-label"> 人工</span>
+          ${cnt>0?`<span style="font-size:12px;color:#64748B;margin-left:8px">${cnt}名出勤</span>`:""}
+        </div>
+        ${copyBtn}
+      </div>
+      ${memoHTML}
     </div>`;
   });
-  // Add member card
-  cardsHTML+=`<div class="m-card" data-st="" onclick="showWorkerModal()" style="border-style:dashed;align-items:center;justify-content:center">
-    <svg width="24" height="24" fill="none" stroke="#94A3B8" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-    <div class="name" style="color:#94A3B8">追加</div>
-  </div>`;
-  document.getElementById("today-members").innerHTML=cardsHTML;
 
-  // Actions
-  const hasAny=workers.some(w=>{const st=log.workerStatus?.[w.id]||"";return st==="present"||st==="half"||st==="absent"});
-  let actHTML="";
-  if(!hasAny&&workers.length>0){
-    actHTML+=`<button class="btn btn-outline" style="width:100%" onclick="copyYesterday()">昨日と同じメンバーで出勤</button>`;
-  }
-  document.getElementById("today-actions").innerHTML=actHTML;
-
-  // Memo
-  const memo=log.memo||"";
-  document.getElementById("today-memo").innerHTML=`
-    <div class="label">作業メモ</div>
-    <textarea class="field" placeholder="今日の作業内容..." oninput="saveTodayMemo(this.value)">${escHtml(memo)}</textarea>`;
+  container.innerHTML=html;
 }
 
-function toggleTodayStatus(wId){
+function toggleSiteStatus(siteId,wId){
   const dk=todayKey();
-  updateSite(s=>{
-    if(!s.dayLogs[dk])s.dayLogs[dk]={};
-    if(!s.dayLogs[dk].workerStatus)s.dayLogs[dk].workerStatus={};
-    const cur=s.dayLogs[dk].workerStatus[wId]||"";
-    const next=STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur)+1)%STATUS_CYCLE.length];
-    s.dayLogs[dk].workerStatus[wId]=next;
-  });
+  const sites=loadSites();
+  const si=sites.findIndex(s=>s.id===siteId);
+  if(si<0)return;
+  const s=sites[si];
+  if(!s.dayLogs[dk])s.dayLogs[dk]={};
+  if(!s.dayLogs[dk].workerStatus)s.dayLogs[dk].workerStatus={};
+  const cur=s.dayLogs[dk].workerStatus[wId]||"";
+  s.dayLogs[dk].workerStatus[wId]=STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur)+1)%STATUS_CYCLE.length];
+  saveSites(sites);
   renderToday();
 }
 
-function copyYesterday(){
+function copySiteYesterday(siteId){
   const now=new Date();
   let prev=new Date(now);
-  // Find last workday
   do{prev.setDate(prev.getDate()-1)}while(prev.getDay()===0||prev.getDay()===6);
   const pk=dkey(prev.getFullYear(),prev.getMonth(),prev.getDate());
-  const s=getSite();if(!s)return;
+  const dk=todayKey();
+  const sites=loadSites();
+  const si=sites.findIndex(s=>s.id===siteId);
+  if(si<0)return;
+  const s=sites[si];
   const prevLog=s.dayLogs?.[pk];
   if(!prevLog?.workerStatus){alert("昨日のデータがありません");return}
-  const dk=todayKey();
-  updateSite(s=>{
-    if(!s.dayLogs[dk])s.dayLogs[dk]={};
-    s.dayLogs[dk].workerStatus={...prevLog.workerStatus};
-  });
+  if(!s.dayLogs[dk])s.dayLogs[dk]={};
+  s.dayLogs[dk].workerStatus={...prevLog.workerStatus};
+  saveSites(sites);
   renderToday();
 }
 
-function saveTodayMemo(val){
+function saveSiteMemo(siteId,val){
   const dk=todayKey();
-  updateSite(s=>{if(!s.dayLogs[dk])s.dayLogs[dk]={};s.dayLogs[dk].memo=val});
+  const sites=loadSites();
+  const si=sites.findIndex(s=>s.id===siteId);
+  if(si<0)return;
+  if(!sites[si].dayLogs[dk])sites[si].dayLogs[dk]={};
+  sites[si].dayLogs[dk].memo=val;
+  saveSites(sites);
 }
 
 // ─── CALENDAR SCREEN ─────────────────────────────────────────
@@ -642,11 +687,11 @@ function deleteSite(){
   currentSiteId=sites[0]?.id||null;switchTab("today");
 }
 
-// ─── SITE SWITCH MODAL ──────────────────────────────────────
+// ─── SITE SWITCH (kept for calendar/settings tab) ────────────
 function showSiteSwitch(){
   const sites=loadSites();
   document.getElementById("site-list-modal").innerHTML=sites.map(s=>`
-    <button onclick="currentSiteId='${s.id}';hideSiteSwitch();switchTab('today')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #F0F2F8;width:100%;text-align:left;cursor:pointer;background:${s.id===currentSiteId?"#EEF2FF":"#fff"};border:none;border-radius:0;font-size:15px;font-weight:600;color:#1A2240">
+    <button onclick="currentSiteId='${s.id}';hideSiteSwitch();switchTab(currentTab)" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #F0F2F8;width:100%;text-align:left;cursor:pointer;background:${s.id===currentSiteId?"#EEF2FF":"#fff"};border:none;border-radius:0;font-size:15px;font-weight:600;color:#1A2240">
       <div style="width:8px;height:8px;border-radius:50%;background:${s.id===currentSiteId?"#4F46E5":"#E2E8F0"}"></div>
       ${escHtml(s.name||"新規現場")}
     </button>`).join("");
