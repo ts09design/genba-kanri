@@ -94,27 +94,44 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
 #fc-container .fc .fc-today-button:disabled{opacity:.4}
 #fc-container .fc .fc-prev-button,#fc-container .fc .fc-next-button{background:none;color:#64748B;padding:6px 8px}
 #fc-container .fc .fc-prev-button:hover,#fc-container .fc .fc-next-button:hover{background:#F1F5F9;color:#1A2240}
-#fc-container .fc .fc-daygrid-day{min-height:70px;cursor:pointer}
+#fc-container .fc .fc-daygrid-day{min-height:92px;cursor:pointer}
+#fc-container .fc .fc-daygrid-day-frame{min-height:92px;padding-bottom:2px}
 #fc-container .fc .fc-daygrid-day:active{background:#EEF2FF}
-#fc-container .fc .fc-daygrid-day-number{font-size:13px;font-weight:700;color:#64748B;padding:4px 6px}
-#fc-container .fc .fc-day-today{background:#EEF2FF !important}
-#fc-container .fc .fc-day-today .fc-daygrid-day-number{background:#4F46E5;color:#fff;border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;padding:0}
+#fc-container .fc .fc-daygrid-day-top{flex-direction:row;justify-content:flex-start;padding:2px 0 0 2px}
+#fc-container .fc .fc-daygrid-day-number{font-size:13px;font-weight:700;color:#475569;padding:3px 6px;line-height:1}
+#fc-container .fc .fc-day-today{background:#F5F3FF !important}
+#fc-container .fc .fc-day-today .fc-daygrid-day-number{background:#4F46E5;color:#fff;border-radius:50%;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;padding:0;font-size:12px}
 #fc-container .fc .fc-day-sun .fc-daygrid-day-number{color:#DC2626 !important}
 #fc-container .fc .fc-day-sat .fc-daygrid-day-number{color:#2563EB !important}
 #fc-container .fc .fc-day-holiday .fc-daygrid-day-number{color:#DC2626 !important}
 #fc-container .fc .fc-day-today .fc-daygrid-day-number{color:#fff !important}
-#fc-container .fc .fc-daygrid-event{border-radius:4px;border:none;font-size:11px;font-weight:600;padding:1px 6px;margin:1px 2px}
-#fc-container .fc .fc-daygrid-dot-event{padding:2px 4px}
-#fc-container .fc .fc-col-header-cell{font-size:12px;font-weight:600;color:#94A3B8;padding:8px 0;border-bottom:1px solid #E8EAF2}
+
+/* Google Calendar風イベントバー */
+#fc-container .fc .fc-daygrid-event-harness{margin:1px 0}
+#fc-container .fc .fc-daygrid-event{border-radius:4px;border:none;font-size:12px;font-weight:600;padding:2px 7px;margin:0 2px;line-height:1.3;min-height:20px;box-shadow:0 1px 1px rgba(0,0,0,.04);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#fc-container .fc .fc-daygrid-event .fc-event-title{font-weight:600;letter-spacing:-.1px}
+#fc-container .fc .fc-daygrid-event.fc-event-start{border-top-left-radius:10px;border-bottom-left-radius:10px;padding-left:9px}
+#fc-container .fc .fc-daygrid-event.fc-event-end{border-top-right-radius:10px;border-bottom-right-radius:10px;padding-right:9px}
+#fc-container .fc .fc-daygrid-event:not(.fc-event-start):not(.fc-event-end){border-radius:0}
+#fc-container .fc .fc-daygrid-event:not(.fc-event-start){margin-left:0}
+#fc-container .fc .fc-daygrid-event:not(.fc-event-end){margin-right:0}
+#fc-container .fc .fc-daygrid-event:active{filter:brightness(.92);transform:scale(.98)}
+#fc-container .fc .fc-daygrid-dot-event{padding:2px 6px}
+#fc-container .fc .fc-daygrid-more-link{font-size:11px;font-weight:700;color:#4F46E5;padding:1px 6px;margin:1px 4px;border-radius:4px;background:#EEF2FF}
+#fc-container .fc .fc-daygrid-more-link:hover{background:#E0E7FF}
+
+#fc-container .fc .fc-col-header-cell{font-size:11px;font-weight:700;color:#64748B;padding:10px 0;border-bottom:1px solid #E8EAF2;letter-spacing:.5px}
 #fc-container .fc .fc-col-header-cell.fc-day-sun{color:#DC2626}
 #fc-container .fc .fc-col-header-cell.fc-day-sat{color:#2563EB}
 #fc-container .fc .fc-scrollgrid{border:none}
-#fc-container .fc td,#fc-container .fc th{border-color:#F0F2F8}
+#fc-container .fc td,#fc-container .fc th{border-color:#EEF0F6}
 #fc-container .fc .fc-daygrid-day-bottom{padding:2px 4px}
-.fc-ninku-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:800;line-height:1}
+
+/* 人工バッジ：控えめに、日付番号の横に表示 */
+.fc-ninku-badge{display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 4px;border-radius:8px;font-size:10px;font-weight:800;line-height:1;margin-left:auto;margin-right:4px}
 .fc-ninku-actual{background:#DC2626;color:#fff}
-.fc-ninku-plan{background:none;color:#2563EB;font-weight:800;font-size:11px}
-.fc-memo-dot{width:5px;height:5px;border-radius:50%;background:#D97706;display:inline-block;margin-left:2px;vertical-align:middle}
+.fc-ninku-plan{background:#DBEAFE;color:#2563EB}
+.fc-memo-dot{width:6px;height:6px;border-radius:50%;background:#D97706;display:inline-block;margin-left:4px;vertical-align:middle}
 
 /* ═══ DAY DETAIL PANEL ═══ */
 .day-panel-bg{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:200;display:flex;align-items:flex-end;justify-content:center}
@@ -609,7 +626,8 @@ function initFullCalendar(){
     buttonText:{today:"今日",month:"月",week:"週"},
     dayCellContent:function(arg){return{html:String(arg.date.getDate())}},
     dayHeaderFormat:{weekday:"short"},
-    dayMaxEventRows:3,
+    dayMaxEventRows:4,
+    moreLinkText:function(n){return"+"+n+"件"},
     events:fcGetEvents(s),
     editable:true,
     eventStartEditable:true,
@@ -682,26 +700,23 @@ function fcRenderDayCell(info){
   let actH=0;if(log.workerStatus)Object.values(log.workerStatus).forEach(st=>{if(st==="present"||st==="half")actH++});
   const hasMemo=!!log.memo;
 
-  const badge=document.createElement("div");
-  badge.style.cssText="display:flex;align-items:center;gap:2px;justify-content:flex-end;padding:0 4px 2px";
+  const top=info.el.querySelector(".fc-daygrid-day-top");
+  if(!top)return;
   if(actH>0){
     const sp=document.createElement("span");
     sp.className="fc-ninku-badge fc-ninku-actual";
     sp.textContent=actH;
-    badge.appendChild(sp);
+    top.appendChild(sp);
   }else if(planH>0){
     const sp=document.createElement("span");
     sp.className="fc-ninku-badge fc-ninku-plan";
     sp.textContent=planH;
-    badge.appendChild(sp);
+    top.appendChild(sp);
   }
   if(hasMemo){
     const dot=document.createElement("span");
     dot.className="fc-memo-dot";
-    badge.appendChild(dot);
-  }
-  if(actH>0||planH>0||hasMemo){
-    info.el.querySelector(".fc-daygrid-day-frame")?.appendChild(badge);
+    top.appendChild(dot);
   }
 }
 
