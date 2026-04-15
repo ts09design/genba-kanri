@@ -99,8 +99,10 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
 #fc-container .fc .fc-daygrid-day-number{font-size:13px;font-weight:700;color:#64748B;padding:4px 6px}
 #fc-container .fc .fc-day-today{background:#EEF2FF !important}
 #fc-container .fc .fc-day-today .fc-daygrid-day-number{background:#4F46E5;color:#fff;border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;padding:0}
-#fc-container .fc .fc-day-sun .fc-daygrid-day-number{color:#DC2626}
-#fc-container .fc .fc-day-sat .fc-daygrid-day-number{color:#2563EB}
+#fc-container .fc .fc-day-sun .fc-daygrid-day-number{color:#DC2626 !important}
+#fc-container .fc .fc-day-sat .fc-daygrid-day-number{color:#2563EB !important}
+#fc-container .fc .fc-day-holiday .fc-daygrid-day-number{color:#DC2626 !important}
+#fc-container .fc .fc-day-today .fc-daygrid-day-number{color:#fff !important}
 #fc-container .fc .fc-daygrid-event{border-radius:4px;border:none;font-size:11px;font-weight:600;padding:1px 6px;margin:1px 2px}
 #fc-container .fc .fc-daygrid-dot-event{padding:2px 4px}
 #fc-container .fc .fc-col-header-cell{font-size:12px;font-weight:600;color:#94A3B8;padding:8px 0;border-bottom:1px solid #E8EAF2}
@@ -605,6 +607,8 @@ function initFullCalendar(){
       right:"dayGridMonth,dayGridWeek"
     },
     buttonText:{today:"今日",month:"月",week:"週"},
+    dayCellContent:function(arg){return{html:String(arg.date.getDate())}},
+    dayHeaderFormat:{weekday:"short"},
     dayMaxEventRows:3,
     events:fcGetEvents(s),
     editable:true,
@@ -618,7 +622,10 @@ function initFullCalendar(){
     },
     eventDrop:function(info){fcHandleEventMove(info)},
     eventResize:function(info){fcHandleEventResize(info)},
-    dayCellDidMount:function(info){fcRenderDayCell(info)},
+    dayCellDidMount:function(info){
+      fcRenderDayCell(info);
+      fcColorHoliday(info);
+    },
     datesSet:function(info){
       const mid=new Date((info.start.getTime()+info.end.getTime())/2);
       calYear=mid.getFullYear();calMonth=mid.getMonth();
@@ -695,6 +702,61 @@ function fcRenderDayCell(info){
   }
   if(actH>0||planH>0||hasMemo){
     info.el.querySelector(".fc-daygrid-day-frame")?.appendChild(badge);
+  }
+}
+
+// ─── Japanese Holidays ──────────────────────────────────────
+function getJapaneseHolidays(year){
+  const h={};
+  function add(m,d,name){h[`${year}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`]=name}
+  function nthDow(m,dow,n){let c=0;for(let d=1;d<=31;d++){const dt=new Date(year,m-1,d);if(dt.getMonth()!==m-1)break;if(dt.getDay()===dow){c++;if(c===n)return d}}return 1}
+
+  add(1,1,"元日");
+  add(1,nthDow(1,1,2),"成人の日");
+  add(2,11,"建国記念の日");
+  add(2,23,"天皇誕生日");
+  // 春分の日（近似計算）
+  const vernal=Math.floor(20.8431+0.242194*(year-1980)-Math.floor((year-1980)/4));
+  add(3,vernal,"春分の日");
+  add(4,29,"昭和の日");
+  add(5,3,"憲法記念日");
+  add(5,4,"みどりの日");
+  add(5,5,"こどもの日");
+  add(7,nthDow(7,1,3),"海の日");
+  add(8,11,"山の日");
+  add(9,nthDow(9,1,3),"敬老の日");
+  // 秋分の日（近似計算）
+  const autumnal=Math.floor(23.2488+0.242194*(year-1980)-Math.floor((year-1980)/4));
+  add(9,autumnal,"秋分の日");
+  add(10,nthDow(10,1,2),"スポーツの日");
+  add(11,3,"文化の日");
+  add(11,23,"勤労感謝の日");
+
+  // 振替休日: 祝日が日曜なら翌月曜
+  const keys=Object.keys(h);
+  keys.forEach(k=>{
+    const dt=new Date(k+"T00:00:00");
+    if(dt.getDay()===0){
+      const next=new Date(dt);next.setDate(next.getDate()+1);
+      const nk=next.toLocaleDateString("sv-SE");
+      if(!h[nk])h[nk]="振替休日";
+    }
+  });
+
+  return h;
+}
+
+let holidayCache={};
+function isHoliday(dateStr){
+  const y=parseInt(dateStr.split("-")[0]);
+  if(!holidayCache[y])holidayCache[y]=getJapaneseHolidays(y);
+  return holidayCache[y][dateStr]||null;
+}
+
+function fcColorHoliday(info){
+  const ds=info.date.toLocaleDateString("sv-SE");
+  if(isHoliday(ds)){
+    info.el.classList.add("fc-day-holiday");
   }
 }
 
