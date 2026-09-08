@@ -1,4 +1,4 @@
-const CACHE_NAME = 'genba-kanri-v5-mobile-ui';
+const CACHE_NAME = 'genba-kanri-v6-directory-reports';
 const ASSETS = [
   './genba-kanri.html',
   './manifest.json',

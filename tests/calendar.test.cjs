@@ -172,6 +172,9 @@ test('exported CSV contains actual attendance only; backup contains all records'
 
 test('fresh installation has no invented records; new sites contain the three company members', async t => {
   const page = await app(t, []); assert.deepEqual(await stored(page), []);
+  await page.locator('#tab-sites').click(); assert.match(await page.locator('#sites-directory').innerText(), /現場を登録/);
+  await page.locator('#tab-reports').click(); assert.equal(await page.locator('#report-total-value').innerText(), '0人工');
+  await page.locator('#tab-calendar').click();
   await page.getByRole('button', { name: '＋ 新規現場', exact: true }).click();
   assert.deepEqual((await stored(page))[0].workers.map(w => w.name), workers.map(w => w.name));
   assert.deepEqual((await stored(page))[0].dayLogs, {});
@@ -263,4 +266,59 @@ test('mobile layouts keep main controls visible and produce review screenshots',
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     await page.screenshot({ path: path.join(root, `artifacts/ui-review/home-${width}.png`) });
   }
+});
+
+test('directory always includes unscheduled sites and links to site reports and settings', async t => {
+  const data=fixture();data.push({id:'idle',name:'予定のない現場',address:'横浜市',generalContractor:'',gcManager:'',workers,events:[],dayLogs:{}});
+  const page=await app(t,data);
+  await page.getByRole('button',{name:'現場一覧',exact:true}).click();
+  assert.equal(await page.locator('.directory-card').count(),3);
+  await page.locator('#sites-query').fill('横浜');
+  assert.equal(await page.locator('.directory-card').count(),1);
+  await page.locator('[data-section-action="report"][data-section-site="idle"]').click();
+  assert.equal(await page.locator('#view-reports').isVisible(),true);
+  assert.equal(await page.locator('#report-site').inputValue(),'idle');
+  assert.match(await page.locator('#report-content').innerText(),/この月の出面実績はありません/);
+  await page.locator('#tab-sites').click();
+  await page.locator('[data-section-action="settings"][data-section-site="idle"]').click();
+  assert.equal(await page.evaluate(()=>getSite().id),'idle');
+  assert.equal(await page.locator('#view-settings').isVisible(),true);
+  assert.deepEqual(await stored(page),data);
+});
+
+test('monthly reports aggregate actual full and half attendance, filter sites, and export the selected month', async t => {
+  const data=fixture();
+  data[0].dayLogs['2026-09-06'].workerStatus={h:'present',r:'half',n:'absent'};
+  data[0].dayLogs['2026-08-31']={workerStatus:{h:'present'}};
+  data[1].dayLogs['2026-09-07']={workerStatus:{h:'present',n:'half'}};
+  const page=await app(t,data);
+  await page.locator('#tab-reports').click();
+  assert.equal(await page.locator('#report-total-value').innerText(),'3.5人工');
+  assert.equal(await page.locator('.report-table tbody tr').count(),3);
+  const h=page.locator('.report-table tbody tr').filter({hasText:'髙嶋 宏'});
+  assert.deepEqual(await h.locator('td').allTextContents(),['2','1','2.5']);
+  await page.locator('#report-site').selectOption('b');
+  assert.equal(await page.locator('#report-total-value').innerText(),'1.5人工');
+  assert.equal(await page.locator('[data-report-site]').count(),1);
+  const download=page.waitForEvent('download');
+  await page.locator('[data-section-action="csv"]').click();
+  const file=await download;
+  assert.match(file.suggestedFilename(),/日本橋 オフィス_2026年9月/);
+  const csv=await fs.readFile(await file.path(),'utf8');
+  assert.match(csv,/髙嶋 昇/);assert.doesNotMatch(csv,/髙嶋 隆一/);
+  await page.locator('#report-site').selectOption('');
+  await page.getByRole('button',{name:'前月の集計'}).click();
+  assert.equal(await page.locator('#report-month').inputValue(),'2026-08');
+  assert.equal(await page.locator('#report-total-value').innerText(),'1人工');
+  await page.getByRole('button',{name:'今月',exact:true}).click();
+  assert.equal(await page.locator('#report-total-value').innerText(),'3.5人工');
+  for(const width of [320,390]){
+    await page.setViewportSize({width,height:844});
+    for(const tab of ['sites','reports']){
+      await page.locator('#tab-'+tab).click();
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+      await page.screenshot({path:path.join(root,`artifacts/ui-review/${tab}-${width}.png`)});
+    }
+  }
+  assert.deepEqual(await stored(page),data);
 });

@@ -174,6 +174,12 @@ button,input,select,textarea{touch-action:manipulation}button:focus-visible,a:fo
 @media(max-height:700px){.fs-selection-items{max-height:64px}.fs-head{padding-top:calc(env(safe-area-inset-top,0px) + 3px)}.fs-context{margin-top:0}.fs-selection-head{min-height:36px}.fs-selection-head>button{min-height:36px}.fs-dock{padding-top:5px;padding-bottom:6px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
+
+/* Preserve the directory and reports as first-class destinations. */
+.tab-bar-bottom{grid-template-columns:repeat(5,minmax(0,1fr))}
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.section-heading h1{font-size:25px}.section-note{font-size:12px;color:var(--muted);line-height:1.8;margin:14px 0}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.directory-card{background:#fff;border:1px solid var(--line);border-radius:18px;margin:12px 0;overflow:hidden}.directory-main{display:flex;align-items:center;gap:12px;text-align:left;width:100%;padding:18px 16px;color:var(--ink)}.directory-main>span:nth-child(2){flex:1;min-width:0}.directory-main strong{display:block;font-size:16px;line-height:1.6;overflow-wrap:anywhere}.directory-main small{display:block;font-size:11px;color:var(--muted);line-height:1.6;overflow-wrap:anywhere}.directory-site-icon{width:36px;height:40px;display:grid;place-items:center;background:#eaf4f1;color:var(--accent);border-radius:10px;font-size:23px;flex-shrink:0}.directory-metrics{display:flex;justify-content:space-between;gap:10px;padding:0 16px 16px;font-size:12px;color:var(--muted)}.directory-metrics b{font-size:18px;color:var(--ink);font-weight:600}.directory-actions{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.directory-actions button{min-height:46px;font-size:12px;color:var(--accent);font-weight:600}.directory-actions button+button{border-left:1px solid var(--line)}
+.report-month-nav{display:flex;align-items:center;gap:6px;margin-bottom:18px}.report-month-nav button{min-width:40px;min-height:44px;background:white;border:1px solid var(--line);border-radius:10px;color:var(--accent);font-size:24px}.report-month-nav .report-this-month{font-size:12px;padding:0 8px}.report-month-nav input{flex:1;min-width:0;width:100%;min-height:44px;padding:8px;border:1px solid var(--line);border-radius:10px;background:white;color:var(--ink);font-size:16px}.report-total{margin-top:20px;padding:23px;border-radius:20px;background:#167e85;color:white}.report-total>span{font-size:12px;color:#d0ece7}.report-total strong{display:block;font-size:40px;line-height:1.5;font-weight:600}.report-total small{font-size:13px;font-weight:400;margin-left:9px}.report-total p{font-size:11px;margin:4px 0 0;color:#d0ece7;line-height:1.7}.report-section-title{font-size:16px;margin:24px 0 12px}.report-site-list{background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden}.report-site-row{padding:15px 16px;border-bottom:1px solid var(--line)}.report-site-row:last-child{border-bottom:0}.report-site-row>div:first-child{display:flex;align-items:baseline;justify-content:space-between;gap:12px}.report-site-row strong{font-size:13px;line-height:1.7;overflow-wrap:anywhere}.report-site-row span{white-space:nowrap;font-size:11px;color:var(--muted)}.report-site-row b{font-size:19px;font-weight:600;color:var(--ink)}.report-export{display:flex;gap:8px;margin-top:8px}.report-export button{font-size:12px;min-height:44px;background:#eff6f3;border-radius:10px;padding:8px 13px;color:var(--accent)}.report-table-wrap{background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden}.report-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12px}.report-table th,.report-table td{padding:12px 6px;border-bottom:1px solid var(--line);text-align:center}.report-table thead{background:#ebf2ef;color:var(--muted);font-size:10px}.report-table th:first-child{width:49%;text-align:left;padding-left:12px;overflow-wrap:anywhere}.report-table tbody th{font-weight:500}.report-table small{display:block;font-size:10px;color:var(--muted);font-weight:400;line-height:1.6;margin-top:4px}.report-table tr:last-child>*{border-bottom:0}
 </style>
 </head>
 <body>
@@ -260,6 +266,19 @@ button,input,select,textarea{touch-action:manipulation}button:focus-visible,a:fo
   </div>
 </div>
 
+<section id="view-sites" class="view hidden" aria-labelledby="sites-title">
+  <div class="top-header"><div class="section-heading"><div><div class="sub">すべての現場を管理</div><h1 id="sites-title">現場一覧</h1></div><button class="btn btn-primary btn-sm" onclick="addSite()">＋ 新規現場</button></div></div>
+  <div class="container"><label class="label" for="sites-query">現場を検索</label><input id="sites-query" class="field" type="search" placeholder="現場名・住所・元請会社" oninput="renderSiteDirectory()"><p id="sites-count" class="section-note" role="status"></p><div id="sites-directory"></div></div>
+</section>
+<section id="view-reports" class="view hidden" aria-labelledby="reports-title">
+  <div class="top-header"><div class="sub">出面実績を月ごとに確認</div><h1 id="reports-title">集計</h1></div>
+  <div class="container">
+    <div class="report-month-nav"><button onclick="reportNavigate(-1)" aria-label="前月の集計">‹</button><label for="report-month" class="sr-only">集計する月</label><input type="month" id="report-month" min="1900-01" max="2100-12" onchange="reportSetMonth(this.value)"><button onclick="reportNavigate(1)" aria-label="翌月の集計">›</button><button onclick="reportSetMonth(fsToday().slice(0,7))" class="report-this-month">今月</button></div>
+    <label for="report-site" class="label">現場</label><select id="report-site" class="field" onchange="reportState.site=this.value;renderReports()"></select>
+    <div id="report-content"></div>
+  </div>
+</section>
+
 <!-- ═══ BOTTOM TAB BAR ═══ -->
 <div class="tab-bar-bottom">
   <button id="tab-today" onclick="switchTab('today')" class="active">
@@ -270,6 +289,8 @@ button,input,select,textarea{touch-action:manipulation}button:focus-visible,a:fo
     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
     カレンダー
   </button>
+  <button id="tab-sites" onclick="switchTab('sites')"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 12h8M8 17h5"/></svg>現場一覧</button>
+  <button id="tab-reports" onclick="switchTab('reports')"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 3v18h17M8 17v-5m5 5V6m5 11V9"/></svg>集計</button>
   <button id="tab-settings" onclick="switchTab('settings')">
     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
     設定
@@ -484,7 +505,7 @@ function updateSite(fn){const sites=loadSites();const i=sites.findIndex(s=>s.id=
 function switchTab(t){
   document.body.classList.toggle("calendar-active",t==="calendar");
   currentTab=t;
-  ["today","calendar","settings"].forEach(v=>{
+  ["today","calendar","sites","reports","settings"].forEach(v=>{
     document.getElementById("view-"+v).classList.toggle("hidden",v!==t);
     document.getElementById("tab-"+v).classList.toggle("active",v===t);
     document.getElementById("tab-"+v).setAttribute("aria-current",v===t?"page":"false");
@@ -492,6 +513,54 @@ function switchTab(t){
   if(t==="today")renderToday();
   else if(t==="calendar")renderCalendar();
   else if(t==="settings")renderSettings();
+  else if(t==="sites")renderSiteDirectory();
+  else if(t==="reports")renderReports();
+}
+
+// Site directory and monthly attendance are always reachable from the bottom tabs.
+const reportState={month:fsToday().slice(0,7),site:''};
+function siteMonthStats(site,month){
+  const rows=sortedWorkers(site).map(worker=>({worker,present:0,half:0,total:0}));
+  for(const [date,log] of Object.entries(site.dayLogs||{})){
+    if(!fsDate(date)||date.slice(0,7)!==month)continue;
+    for(const row of rows){const status=log.workerStatus?.[row.worker.id];if(status==='present')row.present++;else if(status==='half')row.half++;}
+  }
+  for(const row of rows)row.total=row.present+row.half*.5;
+  return {rows:rows.filter(row=>row.total>0),total:rows.reduce((n,row)=>n+row.total,0),entries:rows.reduce((n,row)=>n+row.present+row.half,0)};
+}
+function renderSiteDirectory(){
+  const query=document.getElementById('sites-query').value.trim().normalize('NFKC').toLocaleLowerCase('ja');
+  const all=loadSites(),sites=all.filter(s=>[s.name,s.address,s.generalContractor].some(v=>String(v||'').normalize('NFKC').toLocaleLowerCase('ja').includes(query)));
+  document.getElementById('sites-count').textContent=query?`${sites.length}件 / 全${all.length}現場`:`全${all.length}現場 · 予定のない現場も表示`;
+  document.getElementById('sites-directory').innerHTML=sites.length?sites.map(s=>{
+    const stat=siteMonthStats(s,fsToday().slice(0,7));
+    return `<article class="directory-card"><button class="directory-main" data-section-action="settings" data-section-site="${escHtml(s.id)}"><span class="directory-site-icon" aria-hidden="true">▤</span><span><strong>${escHtml(s.name||'現場名未設定')}</strong><small>${escHtml(s.address||s.generalContractor||'住所未登録')}</small></span><span aria-hidden="true">›</span></button><div class="directory-metrics"><span>${(s.workers||[]).length}名登録</span><span>今月 <b>${stat.total}</b> 人工</span></div><div class="directory-actions"><button data-section-action="calendar" data-section-site="${escHtml(s.id)}">カレンダー</button><button data-section-action="report" data-section-site="${escHtml(s.id)}">集計・出面表</button></div></article>`;
+  }).join(''):`<div class="home-empty"><h3>${all.length?'該当する現場はありません':'現場を登録しましょう'}</h3><p>${all.length?'検索する言葉を変えてお試しください。':'右上の「新規現場」から追加できます。'}</p></div>`;
+}
+function reportSetMonth(month){if(!/^\d{4}-\d{2}$/.test(month)||!fsDate(month+'-01')||month<'1900-01'||month>'2100-12'){document.getElementById('report-month').value=reportState.month;return}reportState.month=month;renderReports()}
+function reportNavigate(dir){const date=fsDate(reportState.month+'-01');date.setMonth(date.getMonth()+dir);reportSetMonth(fsKey(date).slice(0,7))}
+function reportExport(siteId,format){if(!loadSites().some(s=>s.id===siteId))return;currentSiteId=siteId;const date=fsDate(reportState.month+'-01');calYear=date.getFullYear();calMonth=date.getMonth();if(format==='pdf')exportPDF();else exportCSV()}
+function renderReports(){
+  const all=loadSites();if(!all.some(s=>s.id===reportState.site))reportState.site='';
+  document.getElementById('report-month').value=reportState.month;
+  const filter=document.getElementById('report-site');filter.innerHTML='<option value="">すべての現場</option>'+all.map(s=>`<option value="${escHtml(s.id)}">${escHtml(s.name||'現場名未設定')}</option>`).join('');filter.value=reportState.site;
+  const sites=all.filter(s=>!reportState.site||s.id===reportState.site),stats=sites.map(site=>({site,...siteMonthStats(site,reportState.month)}));
+  const total=stats.reduce((n,s)=>n+s.total,0),entries=stats.reduce((n,s)=>n+s.entries,0);
+  const members=new Map();for(const stat of stats)for(const row of stat.rows){const key=row.worker.id;let member=members.get(key);if(!member){member={...row,present:0,half:0,total:0,sites:[]};members.set(key,member)}member.present+=row.present;member.half+=row.half;member.total+=row.total;member.sites.push(stat.site.name||'現場名未設定')}
+  document.getElementById('report-content').innerHTML=`<div class="report-total"><span>月間合計人工</span><strong id="report-total-value">${total}<small>人工</small></strong><p>${stats.filter(s=>s.total>0).length}現場で稼働 · 延べ${entries}件の出勤・半日記録</p></div><p class="section-note">出勤＝1人工、半日＝0.5人工。配置予定・欠勤・未入力は含みません。</p>
+    <h2 class="report-section-title">現場別</h2><div class="report-site-list">${stats.length?stats.map(stat=>`<article class="report-site-row" data-report-site="${escHtml(stat.site.id)}"><div><strong>${escHtml(stat.site.name||'現場名未設定')}</strong><span><b>${stat.total}</b> 人工</span></div><div class="report-export"><button data-section-action="pdf" data-section-site="${escHtml(stat.site.id)}">出面PDF</button><button data-section-action="csv" data-section-site="${escHtml(stat.site.id)}">CSV</button></div></article>`).join(''):'<p class="section-note">現場の登録はありません。</p>'}</div>
+    <h2 class="report-section-title">メンバー別</h2>${members.size?`<div class="report-table-wrap"><table class="report-table"><thead><tr><th scope="col">メンバー</th><th scope="col">出勤</th><th scope="col">半日</th><th scope="col">人工</th></tr></thead><tbody>${Array.from(members.values()).sort((a,b)=>b.total-a.total).map(row=>`<tr><th scope="row">${escHtml(row.worker.name)}<small>${row.sites.map(escHtml).join('・')}</small></th><td>${row.present}</td><td>${row.half}</td><td><b>${row.total}</b></td></tr>`).join('')}</tbody></table></div>`:'<p class="home-empty">この月の出面実績はありません。</p>'}`;
+}
+function installSectionHandlers(){
+  for(const id of ['view-sites','view-reports'])document.getElementById(id).addEventListener('click',e=>{
+    const b=e.target.closest('[data-section-action]');if(!b)return;const site=b.dataset.sectionSite;if(!loadSites().some(s=>s.id===site))return;currentSiteId=site;
+    const action=b.dataset.sectionAction;
+    if(action==='calendar'){fsState.filter=site;switchTab('calendar')}
+    else if(action==='report'){reportState.site=site;switchTab('reports')}
+    else if(action==='settings')switchTab('settings');
+    else if(action==='pdf'||action==='csv')reportExport(site,action);
+  });
+  window.addEventListener('storage',e=>{if(e.key==='genba_sites'){if(currentTab==='sites')renderSiteDirectory();else if(currentTab==='reports')renderReports()}});
 }
 
 // ─── HOME SCREEN (Dashboard) ─────────────────────────────────
@@ -1093,6 +1162,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   const sites=loadSites();
   currentSiteId=sites[0]?.id||null;
   fsInstallCalendarHandlers();
+  installSectionHandlers();
   document.getElementById("em-colors").addEventListener("click",e=>{const b=e.target.closest("[data-event-color]");if(b){selectedEventColor=b.dataset.eventColor;renderEmColors()}});
   switchTab("calendar");
   updateFieldClock();loadFieldWeather();
