@@ -5,8 +5,8 @@
   "start_url": "./genba-kanri.html",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#EEF0F8",
-  "theme_color": "#4F46E5",
+  "background_color": "#F3F6F5",
+  "theme_color": "#FFFFFF",
   "icons": [
     {
       "src": "./assets/apple-touch-icon.png",

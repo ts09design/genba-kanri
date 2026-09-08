@@ -2,17 +2,16 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="現場管理">
-<meta name="theme-color" content="#1E293B">
+<meta name="theme-color" content="#FFFFFF">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="512x512" href="./assets/icon-512.png">
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-<title>彩心堂 現場管理</title>
+
+<title>彩心堂 FIELD LOG｜現場管理</title>
 <style>
 /* ═══ RESET & BASE ═══ */
 *,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -80,71 +79,6 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
 .summary-bar .num{font-size:24px;font-weight:900;color:#4F46E5}
 .summary-bar .lbl{font-size:11px;color:#94A3B8;font-weight:600}
 
-/* ═══ FULLCALENDAR CUSTOMIZATION ═══ */
-#fc-container{background:#fff;border-radius:16px;border:1px solid #E8EAF2;box-shadow:0 1px 3px rgba(20,30,80,.04);overflow:hidden;padding:8px}
-#fc-container .fc{font-family:inherit;font-size:13px}
-#fc-container .fc .fc-toolbar{margin-bottom:8px;padding:0 4px}
-#fc-container .fc .fc-toolbar-title{font-size:18px;font-weight:800;color:#1A2240}
-#fc-container .fc .fc-button{background:#4F46E5;border:none;border-radius:10px;font-size:13px;font-weight:600;padding:6px 14px;box-shadow:none;text-transform:none}
-#fc-container .fc .fc-button:hover{background:#4338CA}
-#fc-container .fc .fc-button-active{background:#3730A3}
-#fc-container .fc .fc-button-group .fc-button{border-radius:10px;margin:0 2px}
-#fc-container .fc .fc-today-button{background:rgba(79,70,229,.12);color:#4F46E5;font-weight:700}
-#fc-container .fc .fc-today-button:hover{background:rgba(79,70,229,.2)}
-#fc-container .fc .fc-today-button:disabled{opacity:.4}
-#fc-container .fc .fc-prev-button,#fc-container .fc .fc-next-button{background:none;color:#64748B;padding:6px 8px}
-#fc-container .fc .fc-prev-button:hover,#fc-container .fc .fc-next-button:hover{background:#F1F5F9;color:#1A2240}
-#fc-container .fc .fc-daygrid-day{min-height:92px;cursor:pointer}
-#fc-container .fc .fc-daygrid-day-frame{min-height:92px;padding-bottom:2px}
-#fc-container .fc .fc-daygrid-day:active{background:#EEF2FF}
-#fc-container .fc .fc-daygrid-day-top{flex-direction:row;justify-content:flex-start;padding:2px 0 0 2px}
-#fc-container .fc .fc-daygrid-day-number{font-size:13px;font-weight:700;color:#475569;padding:3px 6px;line-height:1}
-#fc-container .fc .fc-day-today{background:#F5F3FF !important}
-#fc-container .fc .fc-day-today .fc-daygrid-day-number{background:#4F46E5;color:#fff;border-radius:50%;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;padding:0;font-size:12px}
-#fc-container .fc .fc-day-sun .fc-daygrid-day-number{color:#DC2626 !important}
-#fc-container .fc .fc-day-sat .fc-daygrid-day-number{color:#2563EB !important}
-#fc-container .fc .fc-day-holiday .fc-daygrid-day-number{color:#DC2626 !important}
-#fc-container .fc .fc-day-today .fc-daygrid-day-number{color:#fff !important}
-
-/* Google Calendar風イベントバー */
-#fc-container .fc .fc-daygrid-event-harness{margin:1px 0}
-#fc-container .fc .fc-daygrid-event{border-radius:4px;border:none;font-size:12px;font-weight:600;padding:2px 7px;margin:0 2px;line-height:1.3;min-height:20px;box-shadow:0 1px 1px rgba(0,0,0,.04);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#fc-container .fc .fc-daygrid-event .fc-event-title{font-weight:600;letter-spacing:-.1px}
-#fc-container .fc .fc-daygrid-event.fc-event-start{border-top-left-radius:10px;border-bottom-left-radius:10px;padding-left:9px}
-#fc-container .fc .fc-daygrid-event.fc-event-end{border-top-right-radius:10px;border-bottom-right-radius:10px;padding-right:9px}
-#fc-container .fc .fc-daygrid-event:not(.fc-event-start):not(.fc-event-end){border-radius:0}
-#fc-container .fc .fc-daygrid-event:not(.fc-event-start){margin-left:0}
-#fc-container .fc .fc-daygrid-event:not(.fc-event-end){margin-right:0}
-#fc-container .fc .fc-daygrid-event:active{filter:brightness(.92);transform:scale(.98)}
-#fc-container .fc .fc-daygrid-dot-event{padding:2px 6px}
-#fc-container .fc .fc-daygrid-more-link{font-size:11px;font-weight:700;color:#4F46E5;padding:1px 6px;margin:1px 4px;border-radius:4px;background:#EEF2FF}
-#fc-container .fc .fc-daygrid-more-link:hover{background:#E0E7FF}
-
-#fc-container .fc .fc-col-header-cell{font-size:11px;font-weight:700;color:#64748B;padding:10px 0;border-bottom:1px solid #E8EAF2;letter-spacing:.5px}
-#fc-container .fc .fc-col-header-cell.fc-day-sun{color:#DC2626}
-#fc-container .fc .fc-col-header-cell.fc-day-sat{color:#2563EB}
-#fc-container .fc .fc-scrollgrid{border:none}
-#fc-container .fc td,#fc-container .fc th{border-color:#EEF0F6}
-#fc-container .fc .fc-daygrid-day-bottom{padding:2px 4px}
-
-/* 人工バッジ：控えめに、日付番号の横に表示 */
-.fc-ninku-badge{display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 4px;border-radius:8px;font-size:10px;font-weight:800;line-height:1;margin-left:auto;margin-right:4px}
-.fc-ninku-actual{background:#DC2626;color:#fff}
-.fc-ninku-plan{background:#DBEAFE;color:#2563EB}
-.fc-memo-dot{width:6px;height:6px;border-radius:50%;background:#D97706;display:inline-block;margin-left:4px;vertical-align:middle}
-
-/* ═══ DAY DETAIL PANEL ═══ */
-.day-panel-bg{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:200;display:flex;align-items:flex-end;justify-content:center}
-.day-panel-bg.hidden{display:none!important}
-.day-panel{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:540px;padding:8px 20px calc(env(safe-area-inset-bottom,0px) + 24px);max-height:80vh;overflow-y:auto;animation:slideUp .25s ease}
-.day-panel .dp-handle{width:36px;height:5px;border-radius:3px;background:#E2E8F0;margin:0 auto 12px}
-.day-panel .dp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.day-panel .dp-title{font-size:18px;font-weight:800;color:#1A2240}
-.day-panel .dp-nav{display:flex;gap:8px}
-.day-panel .dp-tabs{display:flex;gap:4px;margin-bottom:14px;background:#F1F5F9;border-radius:10px;padding:3px}
-.day-panel .dp-tab{flex:1;text-align:center;padding:8px;border-radius:8px;font-size:14px;font-weight:700;color:#64748B;cursor:pointer;border:none;background:none}
-.day-panel .dp-tab.active{background:#fff;color:#4F46E5;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-
 /* ═══ MODAL ═══ */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:200;display:flex;align-items:flex-end;justify-content:center}
 .modal-bg.hidden{display:none!important}
@@ -192,17 +126,82 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
 .w-row .av{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0}
 .star-btn{padding:10px;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center}
 </style>
+<style>
+/* FIELD LOG: compact shared title, clock, forecast and calendar shortcut. */
+:root{--field-dark:#18262B;--field-teal:#167E85;--field-orange:#EF7D31}
+.field-header{background:var(--field-dark);color:#F7F5F0;padding:calc(env(safe-area-inset-top,0px) + 8px) 16px 13px;border-bottom:3px solid var(--field-teal)}
+.field-header-inner{max-width:508px;margin:auto}
+.field-brand-row{display:flex;align-items:center;justify-content:space-between;gap:16px;height:84px}
+.field-logo{display:block;width:196px;height:84px;object-fit:contain;max-width:calc(100% - 72px);border-radius:7px}
+.google-calendar-link{height:46px;width:46px;display:grid;place-items:center;background:#FFFFFF0C;border:1px solid #FFFFFF21;border-radius:13px;text-decoration:none;transition:background .15s,transform .15s;flex-shrink:0}
+.google-calendar-link:hover{background:#FFFFFF1A}.google-calendar-link:active{transform:scale(.96)}.google-calendar-link svg{width:29px;height:29px}
+.field-glance{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:7px}.field-clock{display:flex;align-items:center;gap:12px;border-right:1px solid #FFFFFF24;min-width:0}.field-clock time{font-size:27px;line-height:1.1;font-weight:650;letter-spacing:-1px;font-variant-numeric:tabular-nums}.field-clock-date{font-size:11px;line-height:1.65;color:#C1CDCF;white-space:nowrap}.field-clock-date b{display:block;color:#F8F6F0;font-size:12px;font-weight:550}.field-weather{padding:0;background:transparent;color:inherit;text-align:left;display:flex;align-items:center;gap:9px;min-width:0;min-height:42px}.field-weather-symbol{width:27px;text-align:center;color:#F4B563;font-size:25px;flex-shrink:0;line-height:1}.field-weather-copy{min-width:0;flex:1}.field-weather-copy small{display:block;color:#B7C9CB;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.field-weather-copy strong{display:block;font-size:13px;font-weight:550;line-height:1.65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.field-weather-copy em{font-style:normal;color:#9BD1D4;margin-left:5px;font-size:11px}.weather-chevron{color:#AABCBF;font-size:12px}
+.top-header{position:static;background:#F1F3F9;color:#203139;padding:14px 16px 0;max-width:540px;width:100%;margin:0 auto}.top-header .sub{color:#5E7079;font-size:12px}.top-header h1{color:#203139;font-size:17px}.top-header button.btn{background:white!important;color:#355E67!important;border:1px solid #D9E3E5;box-shadow:none!important}.top-header button.btn-primary{background:var(--field-teal)!important;color:white!important;border-color:var(--field-teal)}.date-toggle{background:#E2E8ED;margin-top:7px;padding:3px;border-radius:9px}.date-toggle button{color:#586C76;min-height:32px}.date-toggle button.active{background:white;color:var(--field-teal);box-shadow:0 1px 3px #18363A12}.calendar-page-actions{display:flex;align-items:center;gap:10px;justify-content:space-between}.calendar-page-actions>div:first-child{min-width:0;flex:1}.calendar-page-actions h1{line-height:1.5;overflow-wrap:anywhere}.calendar-page-actions .calendar-buttons{display:flex;gap:5px;flex-shrink:0}.calendar-buttons .btn-sm{padding:7px 9px;font-size:12px}.tab-bar-bottom button.active{color:var(--field-teal)}
+.weather-dialog{width:min(420px,calc(100% - 32px));max-height:85dvh;border:0;border-radius:19px;padding:22px;background:#FAFCFC;color:#203139;box-shadow:0 20px 80px #142D3D40}.weather-dialog::backdrop{background:#162A3480;backdrop-filter:blur(3px)}.weather-dialog h2{font-size:18px;margin:0}.weather-dialog-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.weather-dialog-top button{width:38px;height:38px;background:#EAF0F2;border-radius:10px;font-size:20px;color:#46606A}.weather-dialog label{display:block;color:#586F79;font-size:12px;margin:13px 0 6px}.weather-dialog select{width:100%;padding:11px;border:1px solid #CFDEE2;border-radius:10px;background:white;font-size:15px;color:#254851}.weather-details{font-size:13px;line-height:1.8;background:#EDF4F4;border-radius:12px;padding:14px;margin:16px 0}.weather-dialog a{color:#167E85;font-size:11px}.weather-update{font-size:11px;color:#617A84;margin:9px 0}.weather-retry{min-height:40px;width:100%;border-radius:10px;background:var(--field-teal);color:white;font-weight:650}.field-header a:focus-visible,.field-header button:focus-visible{outline:2px solid #F8C183;outline-offset:4px}
+@media(max-width:360px){.field-logo{width:176px;height:77px}.field-brand-row{height:77px}.field-clock{gap:8px}.field-clock time{font-size:23px}.field-clock-date{font-size:10px}.field-clock-date b{font-size:11px}.field-glance{gap:9px}.field-weather{gap:6px}.field-weather-symbol{font-size:22px;width:22px}.field-weather-copy strong{font-size:12px}.field-weather-copy em{font-size:10px;margin-left:3px}.calendar-page-actions{flex-wrap:wrap}.calendar-page-actions>div:first-child{flex-basis:100%}}
+@media(prefers-reduced-motion:reduce){.google-calendar-link{transition:none}}
+/* Field calendar: month-first, one-handed controls and site-specific daily crews. */
+body.calendar-active{background:#fff}body.calendar-active .field-header{display:none}body.calendar-active .app{height:100dvh;min-height:0}#view-calendar:not(.hidden){display:flex;flex-direction:column;min-height:0;overflow:hidden;padding:0 0 calc(58px + env(safe-area-inset-bottom,0px));background:#fff;color:#17202a}#view-calendar{--fs-line:#e1e5eb;--fs-muted:#616b77;--fs-blue:#5085dc;--fs-soft:#f3f4f6;--fs-font:12px}#view-calendar.fs-large{--fs-font:14px}
+.fs-head{padding:calc(env(safe-area-inset-top,0px) + 12px) 14px 8px;flex-shrink:0}.fs-topline{display:flex;align-items:center;justify-content:space-between;gap:8px;max-width:1180px;margin:auto}.fs-month-title{font-size:clamp(22px,5.6vw,32px);font-weight:500;letter-spacing:-.8px;white-space:nowrap;line-height:1.4;min-height:48px;padding:4px}.fs-circle{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;min-width:48px;border:1px solid #d8dce2;border-radius:50%;background:linear-gradient(#f6f7f8,#e9ebee);color:#1c242d;box-shadow:0 3px 9px #182a3910}.fs-circle svg,.fs-tools svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.fs-tools{display:flex;border:1px solid #d8dce2;border-radius:30px;background:#eff0f2;padding:2px;flex-shrink:0}.fs-tools button{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;color:inherit}.fs-context{display:flex;align-items:center;justify-content:space-between;gap:8px;max-width:1180px;margin:10px auto 0}.fs-filter{min-width:0;max-width:53%;padding:7px 22px 7px 0;border:0;background:transparent;font-size:13px;font-weight:600;color:#425365;text-overflow:ellipsis}.fs-mode{display:flex;background:#f0f2f5;padding:3px;border-radius:10px}.fs-mode button{font-size:12px;padding:6px 10px;border-radius:8px;color:#687383;min-height:32px}.fs-mode button[aria-pressed=true]{background:#fff;color:#17202a;box-shadow:0 1px 4px #00000015}.fs-legend{display:flex;align-items:center;gap:10px;font-size:11px;max-width:1180px;margin:7px auto 0;color:#4b5665;min-height:22px}.fs-legend span{display:inline-flex;align-items:center;gap:3px}.fs-local{margin-left:auto;font-size:10px;color:#657080}.fs-person{font-style:normal;display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:19px;border-radius:4px;background:var(--crew-bg,#e2e6ed);color:var(--crew-ink,#303944);font-size:11px;font-weight:700;padding:0 2px;line-height:1;flex-shrink:0}.fs-person.fs-half{border-bottom:2px solid currentColor}.fs-weekdays{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));font-size:14px;text-align:center;border-bottom:1px solid var(--fs-line);padding:6px 0;flex-shrink:0;max-width:1200px;width:100%;margin:auto}.fs-sun{color:#de4039}.fs-sat{color:#376bbf}.fs-viewport{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;scrollbar-width:thin;width:100%;max-width:1200px;margin:0 auto}.fs-month{display:flex;flex-direction:column;min-height:100%}.fs-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:30px;grid-auto-rows:min-content;border-bottom:1px solid var(--fs-line);min-height:94px;flex:1;position:relative;isolation:isolate}.fs-day{grid-row:1 / -1;min-height:100%;padding:0;border-right:1px solid var(--fs-line);position:relative;z-index:0;text-align:right;background:transparent;color:#46505b;display:block;min-width:0}.fs-day:nth-child(7){border-right:0}.fs-day.fs-sun{background:#fff5f4;color:#d63730}.fs-day.fs-sat{background:#f5f7fd;color:#3465b9}.fs-day.fs-other{color:#a6aab2;background:#fafafa}.fs-day[aria-pressed=true]{box-shadow:inset 0 0 0 2px #1e2732}.fs-day-number{position:absolute;top:2px;right:4px;width:25px;height:25px;display:grid;place-items:center;font-size:15px}.fs-day.fs-today .fs-day-number{border-radius:50%;background:#17202a;color:#fff;font-weight:700}.fs-holiday-name{position:absolute;bottom:2px;left:2px;right:2px;font-size:10px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#cb4b43;text-align:left}.fs-bar{z-index:1;background:var(--fs-blue);color:white;text-align:left;font-size:var(--fs-font);font-weight:600;padding:2px 5px;min-height:23px;line-height:19px;border-radius:4px;margin:1px 1px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;align-self:start}.fs-bar.fs-continued{border-top-left-radius:0;border-bottom-left-radius:0}.fs-bar.fs-continues{border-top-right-radius:0;border-bottom-right-radius:0}.fs-bar:active{filter:brightness(.9)}.fs-slot{z-index:1;min-height:27px;display:flex;align-items:center;justify-content:center;gap:2px;min-width:0;padding:3px 1px 5px;color:#626a74;border-radius:4px}.fs-slot:hover,.fs-slot:focus-visible{background:#e9edf4}.fs-slot-label{font-size:10px;white-space:nowrap}.fs-more{z-index:1;font-size:11px;color:#4d6080;padding:4px 0 6px;min-width:0}.fs-dock{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 18px 12px;flex-shrink:0;width:100%;max-width:540px;margin:0 auto;background:#ffffffef}.fs-period-control{display:flex;border:1px solid #d8dce2;border-radius:30px;min-height:48px;background:#eff0f2;padding:3px;flex:1;max-width:280px}.fs-period-control button{flex:1;min-width:40px;border-radius:24px;font-size:20px;font-weight:600;color:#3e4853}.fs-period-control button[aria-pressed=true]{background:#fff;color:#141b23;box-shadow:0 1px 5px #00000017}.fs-add{background:#17202a;color:#fff;border:0;box-shadow:none;font-size:36px;line-height:1}.fs-today-button{font-size:12px;flex-direction:column;gap:0;font-weight:600}.fs-today-button strong{font-size:18px;line-height:1.1}.fs-month-arrows{display:flex;justify-content:space-between;max-width:1180px;margin:0 auto}.fs-month-arrows button{min-width:44px;min-height:28px;font-size:12px;color:#737d89}.fs-tooltip{position:fixed;z-index:110;background:#17202a;color:white;font-size:12px;padding:10px 13px;border-radius:10px;max-width:min(280px,90vw);pointer-events:none;box-shadow:0 8px 28px #0002;white-space:pre-line}.fs-toast{position:fixed;bottom:calc(130px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);max-width:calc(100vw - 32px);width:max-content;background:#17202a;color:#fff;padding:12px 16px;border-radius:12px;font-size:13px;z-index:500;box-shadow:0 6px 22px #0003}.fs-empty{padding:36px 22px;color:#687484;text-align:center;font-size:14px}.fs-empty button{display:block;margin:14px auto;padding:11px 18px;border-radius:12px;background:#17202a;color:#fff}.fs-sheet{border:0;padding:0;border-radius:24px 24px 0 0;background:#f7f8fa;color:#17202a;width:min(560px,100%);max-width:100%;max-height:88dvh;margin:auto auto 0;box-shadow:0 -10px 60px #15233324;overflow:auto;overscroll-behavior:contain}.fs-sheet::backdrop{background:#0f172a66;backdrop-filter:blur(3px)}.fs-sheet-inner{padding:10px 18px calc(20px + env(safe-area-inset-bottom,0px))}.fs-handle{width:34px;height:4px;background:#c2c8d0;border-radius:4px;margin:0 auto 10px}.fs-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 13px}.fs-sheet-head h2{font-size:19px;line-height:1.5;margin:0;font-weight:700;min-width:0;overflow-wrap:anywhere}.fs-close{width:40px;height:40px;min-width:40px;border-radius:50%;background:#e7eaf0;color:#5c6572;font-size:25px}.fs-sheet label{display:block;font-size:12px;font-weight:600;color:#697484;margin:14px 0 6px}.fs-sheet input:not([type=checkbox]),.fs-sheet select,.fs-sheet textarea{width:100%;min-width:0;background:#fff;border:1px solid #d9dfe7;border-radius:10px;min-height:44px;padding:10px;color:#18212b;font-size:16px}.fs-sheet textarea{resize:vertical;min-height:70px}.fs-row{display:flex;gap:10px}.fs-row>*{flex:1;min-width:0}.fs-sheet-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}.fs-sheet-actions button,.fs-action{min-height:44px;border-radius:11px;background:#e8ecf2;color:#283b52;font-size:13px;padding:10px 14px;font-weight:600}.fs-sheet-actions .fs-primary,.fs-action.fs-primary{background:#17202a;color:#fff;flex:1}.fs-sheet-actions .fs-danger{color:#c83032}.fs-note{font-size:12px;line-height:1.65;color:#6a7482;margin:10px 0}.fs-log-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:white;border:1px solid #e1e5ec;border-radius:11px;margin:6px 0;min-height:52px}.fs-log-row .fs-person{width:30px;height:30px;font-size:16px;border-radius:9px}.fs-log-name{flex:1;font-size:14px;min-width:0}.fs-log-row select{width:100px;padding:8px;min-height:38px;font-size:14px}.fs-agenda{padding:8px 12px}.fs-agenda-day{padding:12px 3px;border-bottom:1px solid #e0e5ec}.fs-agenda-day h3{font-size:16px;margin:0 0 10px}.fs-agenda-item{display:block;width:100%;text-align:left;background:white;border:1px solid #e0e5ec;border-left:4px solid #5085dc;border-radius:9px;padding:10px 12px;margin:7px 0}.fs-agenda-title{font-size:14px;font-weight:600;display:block}.fs-agenda-meta{display:flex;align-items:center;gap:4px;margin-top:5px;color:#677382;font-size:12px;flex-wrap:wrap}.fs-event-row{display:flex;align-items:center;gap:8px;background:#fff;padding:11px;border-radius:10px;margin:6px 0;border-left:4px solid #5085dc}.fs-event-row button{min-height:38px;color:#3f6cac;font-size:12px}.fs-event-row-main{flex:1;min-width:0;font-size:14px;overflow-wrap:anywhere}.fs-event-row-main small{display:block;font-size:11px;color:#748093}.fs-checks{display:flex;flex-wrap:wrap;gap:6px}.fs-checks label{display:flex;align-items:center;gap:4px;margin:0;background:#fff;padding:8px 9px;border:1px solid #dce2ea;border-radius:8px;min-height:42px;color:#354151}.fs-checks input{accent-color:#5085dc;width:17px;height:17px}.fs-checks label:has(input:checked){background:#eaf1ff;border-color:#92b4ed}.fs-sheet summary{font-size:13px;padding:12px 0;color:#566373;cursor:pointer}#event-modal .modal-sheet{animation:none;background:transparent;border:0;border-radius:0;box-shadow:none;max-height:none;width:100%;padding:10px 18px 22px;margin:0}#event-modal .modal-handle{display:none}#event-modal .label{margin-top:12px}#event-modal .color-dot{min-width:32px;min-height:32px}#event-modal #em-colors{flex-wrap:wrap}
+@media(hover:hover){.fs-bar:hover{filter:brightness(.94)}.fs-day:hover{background:#eef3fa}}@media(min-width:700px){.fs-head{padding-top:18px}.fs-month-title{font-size:32px}.fs-sheet{margin:auto;border-radius:22px;max-height:88dvh}.fs-week{min-height:94px}.fs-slot{min-height:33px}.fs-person{min-width:22px;height:23px;font-size:13px}.fs-legend .fs-person{min-width:16px;height:18px;font-size:11px}.fs-weekdays{font-size:16px}.fs-day-number{font-size:17px;right:9px}.fs-bar{font-size:14px;min-height:26px}.fs-dock{padding-top:12px}.fs-agenda{max-width:800px;margin:auto}}@media(max-width:359px){.fs-head{padding-left:8px;padding-right:8px}.fs-circle{width:42px;height:42px;min-width:42px}.fs-tools button{width:35px;height:38px}.fs-month-title{font-size:21px}.fs-legend{gap:5px}.fs-local{font-size:9px}.fs-person{min-width:13px;font-size:10px;padding:0 1px}.fs-slot{gap:1px}.fs-dock{padding-left:12px;padding-right:12px;gap:10px}}
+.fs-week-agenda{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));gap:7px;height:100%;min-height:460px}.fs-week-agenda .fs-agenda-day{border:1px solid #e1e5ec;border-radius:10px;padding:7px;min-height:0;background:#fafbfc}.fs-week-agenda .fs-agenda-day h3{font-size:12px;margin-bottom:5px}.fs-week-agenda .fs-agenda-title{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fs-week-agenda .fs-agenda-item{padding:4px 6px;margin:4px 0}.fs-week-agenda .fs-agenda-meta{font-size:10px;margin-top:2px;white-space:nowrap;overflow:hidden;flex-wrap:nowrap;min-height:17px}.fs-week-agenda .fs-person{min-width:14px;height:17px;font-size:10px}.fs-week-agenda .fs-action{font-size:11px;padding:5px;background:transparent;color:#698096}
+.fs-weekdays[hidden],.fs-sheet .hidden{display:none!important}
+@media(prefers-reduced-motion:reduce){.fs-viewport{scroll-behavior:auto}}button:focus-visible{outline:2px solid #3476d1;outline-offset:2px}
+
+/* Shared mobile visual system. Keep the calendar dense and the dashboard calm. */
+:root{--ink:#203438;--muted:#677d81;--accent:#167e85;--canvas:#f3f6f5;--line:#e2eae8}
+html,body{background:var(--canvas);color:var(--ink)}
+button,input,select,textarea{touch-action:manipulation}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #167e85;outline-offset:3px}
+.field-header{border:0;padding:calc(env(safe-area-inset-top,0px) + 6px) 22px 16px;background:#182d32;border-radius:0 0 26px 26px}
+.field-brand-row{height:54px}.field-logo{height:54px;width:150px}.google-calendar-link{width:42px;height:42px;border-radius:14px}.google-calendar-link svg{width:25px;height:25px}
+.field-glance{margin-top:6px}.field-clock time{font-size:25px;font-weight:500}.field-clock-date{font-size:10px}
+.top-header{background:transparent;padding:18px 20px 0}.top-header h1{font-size:26px;letter-spacing:-1px;line-height:1.5;font-weight:700}.top-header .sub{font-size:12px;color:var(--muted);margin-bottom:3px}
+#view-today .top-header>div{align-items:flex-start!important;gap:10px}#view-today .top-header .btn{margin-top:9px;min-height:44px!important;font-size:12px!important;padding:10px 12px!important}
+.date-toggle{margin-top:10px;background:#e7edeb;padding:3px;border-radius:12px}.date-toggle button{min-width:68px;min-height:34px;font-size:13px;border-radius:9px}.date-toggle button.active{color:#166c73}
+#home-container{padding:16px 20px 30px}.home-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-bottom:14px}.home-week button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border-radius:16px;min-height:64px;padding:6px 0;color:#496066}.home-week small{font-size:11px}.home-week b{font-size:19px;font-weight:600;font-variant-numeric:tabular-nums}.home-week i{width:4px;height:4px;border-radius:50%;background:transparent}.home-week i.has-work{background:#8da8a8}.home-week .is-today b{text-decoration:underline;text-underline-offset:4px}.home-week button[aria-pressed=true]{background:#167e85;color:white;box-shadow:0 4px 10px #167e851a}.home-week button[aria-pressed=true] i.has-work{background:#b8e3df}.home-week .fs-sun{color:#c25551}.home-week .fs-sat{color:#4277a8}
+.home-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:20px;background:white;padding:14px 6px;margin:0 0 16px;box-shadow:0 3px 12px #183b3403}.home-overview>div{padding:0 10px;border-right:1px solid var(--line)}.home-overview>div:last-child{border:0}.home-overview span{font-size:11px;color:var(--muted);display:block;white-space:nowrap}.home-overview strong{font-size:30px;line-height:1.55;font-weight:600;letter-spacing:-1px;display:block}.home-overview small{font-size:11px;font-weight:500;color:var(--muted);margin-left:5px;letter-spacing:0}
+.home-section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.home-section-title h2{font-size:16px;margin:0;letter-spacing:-.4px}.home-section-title button{font-size:12px;color:var(--accent);min-height:44px;padding:0 0 0 8px}
+.home-site{background:white;border:1px solid var(--line);border-radius:20px;margin-bottom:14px;padding:18px 18px 0;overflow:hidden;box-shadow:0 4px 16px #173b3303}.home-site-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:9px}.home-site-status{font-size:10px;font-weight:600;background:#edf5f2;color:#397265;padding:5px 9px;border-radius:7px}.home-site-status.is-pending{background:#fff4e3;color:#976724}.home-site-count{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}.home-site-count small{font-size:10px;font-weight:400;color:var(--muted)}.home-site h3{font-size:19px;letter-spacing:-.5px;margin:0 0 5px;line-height:1.5;overflow-wrap:anywhere}.home-site-address{font-size:11px;color:var(--muted);margin:0 0 12px;line-height:1.5;overflow-wrap:anywhere}.home-events{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}.home-events span{font-size:11px;padding:3px 8px;border-left:2px solid var(--site-color);background:#f3f7f7;border-radius:2px;line-height:1.5;overflow-wrap:anywhere}.home-crew{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:17px}.home-worker{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:5px 8px;background:#f5f7f6;border-radius:9px}.home-worker .fs-person{width:24px;height:24px;border-radius:7px;font-size:12px}.home-worker small{font-size:10px;color:var(--muted)}.home-muted{font-size:12px;color:var(--muted);line-height:1.7}.home-memo{font-size:12px;line-height:1.7;color:#506469;margin:0 0 16px;overflow-wrap:anywhere;white-space:pre-line}.home-edit{display:flex;justify-content:space-between;align-items:center;width:calc(100% + 36px);margin:0 -18px;border-top:1px solid #eaf0ee;padding:12px 18px;min-height:48px;color:#167e85;font-size:13px;font-weight:600;background:#fcfefd}.home-edit:active{background:#eaf5f2}.home-edit span{font-size:19px}
+.home-other summary{font-size:13px;color:#647b7e;padding:18px 0;cursor:pointer}.home-other summary span{float:right}.home-storage{font-size:10px;line-height:1.6;color:#718386;text-align:center;margin:25px 0 0}.home-empty,.home-welcome{padding:28px 22px;border:1px solid var(--line);border-radius:20px;background:white}.home-empty h3{font-size:16px;margin:0 0 9px}.home-empty p,.home-welcome p{font-size:13px;line-height:1.9;color:var(--muted)}.home-welcome{padding:40px 26px}.home-eyebrow{font-size:11px;letter-spacing:3px;color:#167e85}.home-welcome h2{font-size:29px;line-height:1.5;letter-spacing:-1px}.home-welcome .btn{margin-top:14px}.btn-primary{background:#167e85;box-shadow:none}.btn-outline{border-color:#bad7d4;color:#167e85}
+.tab-bar-bottom{background:#ffffffed;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid #dfe8e5;min-height:62px}.tab-bar-bottom button{padding:10px 0 8px;gap:4px;color:#748588;min-height:61px;font-size:10px;font-weight:500}.tab-bar-bottom button svg{width:23px;height:23px}.tab-bar-bottom button.active{color:#167e85;font-weight:700}.tab-bar-bottom button.active svg{background:#e7f2ef;box-shadow:0 0 0 6px #e7f2ef;border-radius:5px}
+#view-calendar{--fs-line:#e3e9e7;--fs-blue:#477f99;--fs-muted:#687d81;color:var(--ink)}#view-calendar:not(.hidden){padding-bottom:calc(62px + env(safe-area-inset-bottom,0px))}
+.fs-head{padding:calc(env(safe-area-inset-top,0px) + 8px) 14px 0}.fs-topline{gap:7px}.fs-month-title{font-size:clamp(21px,5.8vw,30px);font-weight:600;letter-spacing:-1px;min-height:48px;color:var(--ink)}.fs-circle{background:#f3f6f5;border:1px solid #e0e8e5;box-shadow:0 2px 5px #223e3605;color:var(--ink);width:44px;height:44px;min-width:44px}.fs-tools{background:#f3f6f5;border-color:#e0e8e5;padding:0}.fs-tools button{width:42px;height:44px;color:#385459}.fs-tools svg,.fs-circle svg{width:21px;height:21px}.fs-context{margin-top:5px;gap:6px}.fs-filter{font-size:12px;min-height:44px;max-width:47%;padding-right:8px;color:#516a70}.fs-mode{background:#eef3f1;padding:3px}.fs-mode button{min-height:36px;font-size:11px;padding:7px 9px;color:#637a7e}.fs-mode button[aria-pressed=true]{color:#146e76;background:white}.fs-legend{display:none}.fs-month-arrows{align-items:center}.fs-month-arrows button{min-height:36px;padding:4px;font-size:11px;color:#677e82}.fs-weekdays{padding:5px 0 7px;font-size:12px;color:#65767b;background:#fff}.fs-weekdays .fs-sun{color:#cc5955}.fs-weekdays .fs-sat{color:#467db0}
+.fs-month{height:100%;min-height:100%}.fs-week{min-height:72px;flex:1 0 auto}.fs-day{color:#3f5358}.fs-day.fs-sun{background:#fffafa;color:#ce5b55}.fs-day.fs-sat{background:#fafcfe;color:#447da9}.fs-day.fs-other{background:#fbfcfb;color:#a9b4b4}.fs-day[aria-pressed=true]{box-shadow:inset 0 0 0 1.5px #167e85;background:#eaf6f3}.fs-day-number{font-size:14px;right:3px;height:24px;width:24px;top:2px;font-weight:500}.fs-day.fs-today .fs-day-number{background:#167e85}.fs-holiday-name{font-size:9px;bottom:0;opacity:.9}.fs-bar{font-size:var(--fs-font);min-height:20px;line-height:18px;padding:0 4px;border-radius:3px;margin:1px 1px 0;font-weight:500}.fs-slot{min-height:22px;padding:1px;gap:2px;align-self:start}.fs-person{height:18px;min-width:15px;font-size:10px;border-radius:3px}.fs-slot-label{font-size:9px;color:#76858a}.fs-more{min-height:26px;font-size:10px;padding:5px 1px}.fs-viewport{scrollbar-width:none}
+.fs-selection{flex:0 0 auto;background:#f5f8f7;border-top:1px solid #dce6e2;padding:0 14px 7px;width:100%;max-width:1200px;margin:auto}.fs-selection[hidden]{display:none}.fs-selection-head{display:flex;align-items:center;gap:8px;min-height:42px}.fs-selection-head h2{font-size:15px;margin:0;flex:1;line-height:1.4}.fs-selection-head h2 span{font-size:11px;font-weight:400;color:var(--muted);margin-left:5px}.fs-selection-head>span{font-size:10px;color:var(--muted);white-space:nowrap}.fs-selection-head>button{font-size:11px;color:#167e85;min-height:42px;min-width:44px;padding:5px 0 5px 5px}.fs-selection-items{max-height:92px;overflow:auto;overscroll-behavior:contain}.fs-selection-items .fs-agenda-item{margin:0 0 5px;padding:8px 10px;min-height:62px;border-radius:10px;background:white}.fs-selection-items .fs-agenda-title{font-size:13px}.fs-selection-items .fs-agenda-work{display:none}.fs-selection-empty{font-size:12px;color:var(--muted);display:flex;align-items:center;justify-content:space-between;min-height:44px}.fs-selection-empty button{color:#167e85;font-size:12px;min-height:44px}
+.fs-dock{padding:9px 16px 10px;gap:12px;background:white;max-width:560px}.fs-period-control{min-height:44px;background:#edf2f0;border-color:#e1e8e4;padding:3px}.fs-period-control button{font-size:14px;min-width:34px;min-height:38px;font-weight:600;color:#5a7175}.fs-period-control button[data-fs-view=list]{font-size:11px;flex:1.25}.fs-period-control button[aria-pressed=true]{color:#167e85;box-shadow:0 2px 5px #1b493315}.fs-add{background:#167e85;color:white;border:0;font-size:30px;box-shadow:0 3px 7px #167e8520}.fs-today-button{font-size:10px;line-height:1.3}.fs-today-button strong{font-size:17px}.fs-sheet{background:#f5f8f7}.fs-sheet-head h2{color:var(--ink)}.fs-sheet-actions .fs-primary,.fs-action.fs-primary{background:#167e85}.fs-close{background:#e8efec;color:#577076}.fs-log-row{border-color:var(--line)}.fs-agenda{padding:12px 16px}.fs-agenda-day{border-color:var(--line);padding:12px 0}.fs-agenda-day h3{font-size:22px;letter-spacing:-.5px;color:var(--ink)}.fs-agenda-day h3 span{font-size:12px;color:var(--muted);font-weight:400;letter-spacing:0}.fs-agenda-item{border-color:#e0e9e5;border-left-width:3px;border-radius:13px;padding:14px;min-height:70px}.fs-agenda-title{color:var(--ink);overflow-wrap:anywhere}.fs-agenda-work{display:block;font-size:11px;color:#6a7f82;margin-top:5px;overflow-wrap:anywhere}.fs-agenda-meta{font-size:11px;color:#60767a;overflow-wrap:anywhere}.fs-agenda-empty{font-size:12px;color:var(--muted)}.fs-week-agenda{min-height:0;gap:8px;padding:10px}.fs-week-agenda .fs-agenda-day{padding:8px;border-color:var(--line);border-radius:13px;background:#f8faf9;overflow:auto}.fs-week-agenda .fs-agenda-day.is-today{background:#edf6f3;border-color:#b8d8d0}.fs-week-agenda .fs-agenda-day h3{font-size:14px;line-height:1.6;display:flex;align-items:baseline;gap:4px;flex-wrap:wrap}.fs-agenda-day h3 time{white-space:nowrap}.fs-week-agenda .fs-agenda-day h3 span{font-size:10px;display:inline;white-space:nowrap}.fs-week-agenda .fs-agenda-item{min-height:54px;border-radius:7px}.fs-week-agenda .fs-agenda-work{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fs-week-agenda .fs-action{min-height:44px}.fs-list-end{font-size:11px;color:var(--muted);text-align:center;padding:24px}.fs-list-end button{display:block;margin:12px auto}
+@media(min-width:700px){.field-header{border-radius:0}.fs-head{max-width:1200px;width:100%;margin:auto}.fs-selection-items{display:flex;gap:8px;max-height:100px}.fs-selection-items .fs-agenda-item{max-width:350px;flex:1;min-width:200px}.fs-selection{padding:0 20px 10px}.fs-day-number{font-size:16px}.fs-week-agenda{min-height:440px}.fs-period-control button{min-width:44px}.home-site h3{font-size:20px}}
+@media(max-width:359px){.field-header{padding-left:18px;padding-right:18px}.field-brand-row{height:60px}.field-logo{width:145px;height:60px}.top-header{padding-left:16px;padding-right:16px}.top-header h1{font-size:24px}#home-container{padding-left:14px;padding-right:14px}.home-overview>div{padding:0 6px}.home-overview span{font-size:10px}.fs-head{padding-left:8px;padding-right:8px}.fs-tools button{width:36px}.fs-month-title{font-size:21px}.fs-dock{gap:8px;padding-left:10px;padding-right:10px}.fs-selection{padding-left:10px;padding-right:10px}.fs-selection-head h2{font-size:14px}.fs-selection-head h2 span{font-size:10px;margin-left:3px}.fs-person{min-width:12px;font-size:9px}.fs-slot{gap:1px}}
+@media(max-height:700px){.fs-selection-items{max-height:64px}.fs-head{padding-top:calc(env(safe-area-inset-top,0px) + 3px)}.fs-context{margin-top:0}.fs-selection-head{min-height:36px}.fs-selection-head>button{min-height:36px}.fs-dock{padding-top:5px;padding-bottom:6px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+</style>
 </head>
 <body>
 <div class="app">
+<header class="field-header">
+  <div class="field-header-inner">
+    <div class="field-brand-row">
+      <img class="field-logo" src="./assets/field-log-logo.png" alt="彩心堂 FIELD LOG" width="196" height="84">
+      <a class="google-calendar-link" href="https://calendar.google.com/calendar/r" target="_blank" rel="noopener noreferrer" aria-label="Google カレンダーで会社の予定を開く" title="Google カレンダーを開く">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path fill="#fff" d="M8 8h24v24H8z"/><path fill="#4285F4" d="M8 2h24v8H8z"/><path fill="#1967D2" d="M2 8h8v24H2z"/><path fill="#FBBC04" d="M30 10h8v20l-8 8z"/><path fill="#34A853" d="M10 30h20v8H10z"/><path fill="#EA4335" d="M30 30h8l-8 8z"/><path fill="#188038" d="M2 30h8v8H7a5 5 0 0 1-5-5z"/><path fill="#1967D2" d="M32 2a6 6 0 0 1 6 6v2h-8V2z"/><path fill="#4285F4" d="M8 2v8H2V8a6 6 0 0 1 6-6z"/><text x="20" y="26" text-anchor="middle" fill="#4285F4" font-family="Arial,sans-serif" font-size="18" font-weight="600">31</text></svg>
+      </a>
+    </div>
+    <div class="field-glance">
+      <div class="field-clock"><time id="field-time" aria-label="日本時間">--:--</time><div class="field-clock-date"><span id="field-year">----</span><b id="field-date">--/--（--）</b></div></div>
+      <button class="field-weather" onclick="openWeatherSettings()" aria-label="天気予報と地域の設定">
+        <span class="field-weather-symbol" id="field-weather-symbol" aria-hidden="true">☁</span><span class="field-weather-copy"><small id="field-weather-location">東京地方 · 今日の予報</small><strong><span id="field-weather-text">取得中</span><em id="field-weather-rain"></em></strong></span><span class="weather-chevron" aria-hidden="true">⌄</span>
+      </button>
+    </div>
+  </div>
+</header>
 
 <!-- ═══ TAB 1: HOME (Dashboard) ═══ -->
 <div id="view-today" class="view">
   <div class="top-header">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div>
-        <h1>彩心堂</h1>
         <div class="sub" id="home-date"></div>
+        <h1 id="home-title">今日の現場</h1>
         <div class="date-toggle">
           <button class="active" onclick="setDashDate(0)">今日</button>
           <button onclick="setDashDate(1)">明日</button>
@@ -214,51 +213,28 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
   <div class="container" id="home-container"></div>
 </div>
 
-<!-- ═══ TAB 2: CALENDAR ═══ -->
 <div id="view-calendar" class="view hidden">
-  <div class="top-header">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div>
-        <h1 id="cal-title" style="cursor:pointer" onclick="showSiteSwitch()">カレンダー <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24" style="vertical-align:middle;opacity:.6"><polyline points="6,9 12,15 18,9"/></svg></h1>
-        <div class="sub" id="cal-sub"></div>
-      </div>
-      <div style="display:flex;gap:6px">
-        <button class="btn btn-sm" style="background:rgba(255,255,255,.12);color:#fff" onclick="exportPDF()">PDF</button>
-        <button class="btn btn-sm" style="background:rgba(255,255,255,.12);color:#fff" onclick="exportCSV()">CSV</button>
-        <button class="btn btn-sm" style="background:rgba(255,255,255,.12);color:#fff" onclick="showEventModal()">+ 工程</button>
-      </div>
+  <header class="fs-head">
+    <div class="fs-topline">
+      <button class="fs-circle" onclick="fsShowOptions()" aria-label="カレンダー表示設定"><svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="m9 3 1-1h4l1 3 3 1 3 1v4l-2 2v3l-2 3h-3l-2 2-3-1-2-3H4l-2-3 1-3-1-3 3-2 1-3Z"/></svg></button>
+      <button class="fs-month-title" id="fs-title" onclick="fsJumpDialog()" aria-label="表示する年月を選ぶ"></button>
+      <div class="fs-tools"><button onclick="fsJumpDialog()" aria-label="日付へ移動"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M7 2v4m10-4v4M3 10h18m-13 4h1m3 0h1m3 0h1m-9 3h1m3 0h1"/></svg></button><button onclick="fsShowSearch()" aria-label="現場・工程を検索"><svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg></button></div>
     </div>
-  </div>
-  <div class="container">
-    <div id="fc-container"></div>
-    <div id="cal-events" class="card" style="margin-top:14px">
-      <div class="card-hd">
-        <span class="title">工程一覧</span>
-        <button class="btn btn-sm btn-primary" onclick="showEventModal()">+ 追加</button>
-      </div>
-      <div id="cal-event-list"></div>
-    </div>
-  </div>
+    <div class="fs-context"><select id="fs-site-filter" class="fs-filter" aria-label="表示する現場" onchange="fsSetFilter(this.value)"></select><div class="fs-mode"><button data-fs-mode="plan" onclick="fsSetMode('plan')" aria-pressed="true">配置予定</button><button data-fs-mode="actual" onclick="fsSetMode('actual')" aria-pressed="false">出面実績</button></div></div>
+    <div class="fs-legend"><span><i class="fs-person" style="--crew-bg:#f7df8b;--crew-ink:#654b00">宏</i>本人</span><span><i class="fs-person" style="--crew-bg:#92d7b1;--crew-ink:#184b32">隆</i>隆一</span><span><i class="fs-person" style="--crew-bg:#c9cdd3;--crew-ink:#39414c">昇</i>昇</span><span class="fs-local">端末保存 · Google未接続</span></div>
+    <div class="fs-month-arrows"><button onclick="fsNavigate(-1)" id="fs-prev" aria-label="前の月">‹ 前の月</button><button onclick="fsNavigate(1)" id="fs-next" aria-label="次の月">次の月 ›</button></div>
+  </header>
+  <div class="fs-weekdays" id="fs-weekdays"><span class="fs-sun">日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span class="fs-sat">土</span></div>
+  <div class="fs-viewport" id="fs-viewport"><div id="fs-calendar" aria-label="現場カレンダー"></div></div>
+  <section id="fs-selection" class="fs-selection" aria-label="選択日の予定"></section>
+  <nav class="fs-dock" aria-label="カレンダー表示"><button class="fs-circle fs-today-button" onclick="fsGoToday()" aria-label="今日へ移動"><strong id="fs-today-day"></strong>今日</button><div class="fs-period-control"><button data-fs-view="day" onclick="fsSetView('day')" aria-pressed="false">日</button><button data-fs-view="week" onclick="fsSetView('week')" aria-pressed="false">週</button><button data-fs-view="month" onclick="fsSetView('month')" aria-pressed="true">月</button><button data-fs-view="list" onclick="fsSetView('list')" aria-pressed="false">リスト</button></div><button class="fs-circle fs-add" onclick="showEventModal()" aria-label="予定・工程を追加">＋</button></nav>
 </div>
 
-<!-- ═══ DAY DETAIL PANEL ═══ -->
-<div id="day-panel-bg" class="day-panel-bg hidden">
-  <div class="day-panel">
-    <div class="dp-handle"></div>
-    <div class="dp-header">
-      <div class="dp-title" id="dp-title"></div>
-      <div class="dp-nav">
-        <button class="btn btn-ghost btn-sm" onclick="dpPrev()"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg></button>
-        <button class="btn btn-ghost btn-sm" onclick="dpNext()"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg></button>
-      </div>
-    </div>
-    <div class="dp-tabs">
-      <button class="dp-tab active" onclick="dpSwitchTab('actual',this)">実績</button>
-      <button class="dp-tab" onclick="dpSwitchTab('plan',this)">予定</button>
-    </div>
-    <div id="dp-content"></div>
-  </div>
-</div>
+<dialog id="day-panel-bg" class="fs-sheet" aria-labelledby="dp-title"><div class="fs-sheet-inner"><div class="fs-handle"></div><div class="fs-sheet-head"><h2 id="dp-title"></h2><button class="fs-close" onclick="closeDayPanel()" aria-label="日別詳細を閉じる">×</button></div><div class="fs-row"><button class="fs-action" onclick="dpPrev()" aria-label="前日">‹ 前日</button><button class="fs-action" onclick="dpNext()" aria-label="翌日">翌日 ›</button></div><label for="dp-site">現場</label><select id="dp-site" onchange="fsChooseDaySite(this.value)"></select><div class="fs-mode" style="margin:14px 0"><button class="dp-tab" data-tab="plan" onclick="dpSwitchTab('plan')">配置予定</button><button class="dp-tab" data-tab="actual" onclick="dpSwitchTab('actual')">出面実績</button></div><div id="dp-content"></div></div></dialog>
+<dialog id="fs-options" class="fs-sheet" aria-labelledby="fs-options-title"><div class="fs-sheet-inner"><div class="fs-handle"></div><div class="fs-sheet-head"><h2 id="fs-options-title">カレンダーの表示</h2><button class="fs-close" onclick="document.getElementById('fs-options').close()" aria-label="閉じる">×</button></div><label for="fs-size">バーの文字サイズ</label><select id="fs-size" onchange="fsSaveOption('large',this.value==='large')"><option value="normal">標準</option><option value="large">大きめ</option></select><label for="fs-density">1週間に表示する現場の数</label><select id="fs-density" onchange="fsSaveOption('rows',Number(this.value))"><option value="2">2件 · ゆったり</option><option value="3">3件 · 標準</option><option value="5">5件 · 多め</option></select><p class="fs-note">入りきらない現場は「ほか○件」から開けます。日曜日を含むバーは予定期間です。実際の出面は別に記録します。</p><div class="fs-sheet-actions"><button onclick="document.getElementById('fs-options').close();switchTab('settings')">現場・メンバー設定</button><button onclick="fsDownloadBackup()">データをバックアップ</button></div><p class="fs-note">現在はこの端末に保存しています。Googleカレンダーとの自動同期は未接続です。</p><a href="https://calendar.google.com/calendar/r" target="_blank" rel="noopener noreferrer" class="fs-action" style="display:inline-block;text-decoration:none">Googleカレンダーを開く ↗</a></div></dialog>
+<dialog id="fs-jump" class="fs-sheet" aria-labelledby="fs-jump-title"><form method="dialog" class="fs-sheet-inner" onsubmit="fsJumpTo(document.getElementById('fs-jump-date').value)"><div class="fs-handle"></div><div class="fs-sheet-head"><h2 id="fs-jump-title">日付へ移動</h2><button type="button" class="fs-close" onclick="document.getElementById('fs-jump').close()" aria-label="閉じる">×</button></div><label for="fs-jump-date">表示する日付</label><input type="date" id="fs-jump-date" required min="1900-01-01" max="2100-12-31"><div class="fs-sheet-actions"><button class="fs-primary">移動</button></div></form></dialog>
+<dialog id="fs-search" class="fs-sheet" aria-labelledby="fs-search-title"><div class="fs-sheet-inner"><div class="fs-handle"></div><div class="fs-sheet-head"><h2 id="fs-search-title">現場・工程を検索</h2><button class="fs-close" onclick="document.getElementById('fs-search').close()" aria-label="閉じる">×</button></div><input id="fs-search-input" type="search" placeholder="現場名・工程名・住所" aria-label="検索キーワード" oninput="fsSearch(this.value)"><div id="fs-search-results" aria-live="polite"></div></div></dialog>
+<div class="fs-tooltip" id="fs-tooltip" hidden></div><div class="fs-toast" id="fs-toast" role="status" hidden></div>
 
 <!-- ═══ TAB 3: SETTINGS ═══ -->
 <div id="view-settings" class="view hidden">
@@ -302,6 +278,16 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
 
 </div><!-- /app -->
 
+<dialog id="weather-dialog" class="weather-dialog" aria-labelledby="weather-title">
+  <div class="weather-dialog-top"><h2 id="weather-title">天気予報</h2><button onclick="document.getElementById('weather-dialog').close()" aria-label="閉じる">×</button></div>
+  <label for="weather-office">都道府県・地域</label><select id="weather-office" onchange="changeWeatherOffice(this.value)"><option value="130000">東京都</option></select>
+  <label for="weather-area">予報エリア</label><select id="weather-area" onchange="changeWeatherArea(this.value)"><option value="130010">東京地方</option></select>
+  <div id="weather-details" class="weather-details" aria-live="polite">天気予報を読み込んでいます。</div>
+  <p id="weather-update" class="weather-update"></p>
+  <button class="weather-retry" onclick="loadFieldWeather(true)">予報を更新</button>
+  <p><a href="https://www.jma.go.jp/bosai/forecast/" target="_blank" rel="noopener noreferrer">出典：気象庁の天気予報 ↗</a></p>
+</dialog>
+
 <!-- ═══ WORKER MODAL ═══ -->
 <div id="worker-modal" class="modal-bg hidden">
   <div class="modal-sheet slide-up">
@@ -323,24 +309,24 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
 </div>
 
 <!-- ═══ EVENT MODAL ═══ -->
-<div id="event-modal" class="modal-bg hidden">
+<dialog id="event-modal" class="fs-sheet" aria-labelledby="em-title">
   <div class="modal-sheet slide-up">
     <div class="modal-handle"></div>
-    <h3 id="em-title" style="font-size:18px;font-weight:800;margin:0 0 16px">工程を追加</h3>
-    <div class="label">工程名</div>
+    <div class="fs-sheet-head"><h2 id="em-title">予定・工程を追加</h2><button class="fs-close" onclick="hideEventModal()" aria-label="予定編集を閉じる">×</button></div><label for="em-site">現場</label><select id="em-site" onchange="fsEventSiteChanged(this.value)"></select>
+    <label for="em-name">予定・工程名</label>
     <input type="text" id="em-name" class="field" placeholder="例: ボード貼り" style="margin-bottom:14px">
     <div style="display:flex;gap:10px;margin-bottom:14px">
-      <div style="flex:1"><div class="label">開始日</div><input type="date" id="em-start" class="field"></div>
-      <div style="flex:1"><div class="label">終了日</div><input type="date" id="em-end" class="field"></div>
+      <div style="flex:1"><label for="em-start">開始日</label><input type="date" id="em-start" class="field"></div>
+      <div style="flex:1"><label for="em-end">終了日</label><input type="date" id="em-end" class="field"></div>
     </div>
     <div class="label">色</div>
     <div id="em-colors" style="display:flex;gap:10px;margin-bottom:18px"></div>
-    <div style="display:flex;gap:8px">
+    <details><summary>期間中の担当者をまとめて配置（任意）</summary><div class="fs-checks" id="em-crew"></div><label>配置する曜日</label><div class="fs-checks"><label><input type="checkbox" data-em-weekday value="0">日</label><label><input type="checkbox" data-em-weekday value="1" checked>月</label><label><input type="checkbox" data-em-weekday value="2" checked>火</label><label><input type="checkbox" data-em-weekday value="3" checked>水</label><label><input type="checkbox" data-em-weekday value="4" checked>木</label><label><input type="checkbox" data-em-weekday value="5" checked>金</label><label><input type="checkbox" data-em-weekday value="6" checked>土</label></div><p class="fs-note">未配置の日だけに追加します。入力済みの配置・休工・出面は変更しません。</p></details><p id="em-error" class="fs-note" role="alert"></p><div class="fs-sheet-actions"><button id="em-duplicate" onclick="fsDuplicateEvent()">複製</button>
       <button id="em-del" class="btn btn-danger btn-sm hidden" onclick="deleteEventFromModal()">削除</button>
-      <button class="btn btn-primary" style="flex:1" onclick="saveEventFromModal()">保存</button>
+      <button class="fs-primary" style="flex:1" onclick="saveEventFromModal()">保存</button>
     </div>
   </div>
-</div>
+</dialog>
 
 <!-- ═══ SITE SWITCH MODAL ═══ -->
 <div id="site-modal" class="modal-bg hidden">
@@ -360,10 +346,9 @@ textarea.field{resize:none;line-height:1.5;min-height:52px}
 const WORKER_COLORS=["#4F46E5","#E11D48","#0D9488","#D97706","#2563EB","#DC2626","#7C3AED","#059669","#EA580C","#0891B2","#BE185D","#65A30D","#0284C7","#C026D3","#9333EA","#0E7490","#B91C1C","#047857","#6D28D9","#C2410C"];
 const EVENT_COLORS=["#4F46E5","#0EA5E9","#10B981","#F59E0B","#EF4444","#8B5CF6"];
 const DEFAULT_WORKERS=[
-  {id:"saishindo-1",name:"髙嶋 宏",color:"#DC2626",icon:"宏",starred:true},
-  {id:"saishindo-2",name:"髙嶋 隆一",color:"#7C3AED",icon:"隆",starred:true},
-  {id:"saishindo-3",name:"髙嶋 昇",color:"#059669",icon:"昇",starred:true},
-  {id:"saishindo-4",name:"佐久間 英二",color:"#D97706",icon:"佐",starred:true},
+  {id:"saishindo-1",name:"髙嶋 宏",color:"#DDB548",icon:"宏",starred:true},
+  {id:"saishindo-2",name:"髙嶋 隆一",color:"#329766",icon:"隆",starred:true},
+  {id:"saishindo-3",name:"髙嶋 昇",color:"#7C8490",icon:"昇",starred:true},
 ];
 const DAY_JP=["日","月","火","水","木","金","土"];
 const STATUS_CYCLE=["","present","half","absent"];
@@ -384,6 +369,92 @@ function escHtml(s){if(s==null)return"";return String(s).replace(/&/g,"&amp;").r
 function loadSites(){try{return JSON.parse(localStorage.getItem("genba_sites")||"[]")}catch(e){return[]}}
 function saveSites(sites){localStorage.setItem("genba_sites",JSON.stringify(sites))}
 
+// Shared header: Japan time and optional, cached JMA forecast.
+const FIELD_WEATHER_KEY='fieldlog_weather_region';
+let fieldWeatherRegion={office:'130000',area:'130010'};
+try{const saved=JSON.parse(localStorage.getItem(FIELD_WEATHER_KEY)||'null');if(saved&&/^\d{6}$/.test(saved.office)&&/^\d{6}$/.test(saved.area))fieldWeatherRegion=saved}catch(e){}
+let fieldWeatherData=null,fieldWeatherFetchedAt=0,fieldWeatherFailed=false,fieldWeatherController=null,fieldWeatherOfficeLoaded=false;
+function japanDate(date=new Date()){return new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(date)}
+function updateFieldClock(){
+  const now=new Date(),parts=new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',year:'numeric',month:'numeric',day:'numeric',weekday:'short'}).formatToParts(now);
+  const part=type=>parts.find(p=>p.type===type)?.value||'';
+  const clock=document.getElementById('field-time');clock.textContent=new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(now);clock.dateTime=now.toISOString();
+  document.getElementById('field-year').textContent=part('year')+'年';document.getElementById('field-date').textContent=`${part('month')}/${part('day')}（${part('weekday')}）`;
+}
+function getFieldForecast(data,areaCode,date=japanDate()){
+  const series=data?.[0]?.timeSeries;if(!Array.isArray(series))return null;
+  const weatherSeries=series.find(s=>s.areas?.some(a=>Array.isArray(a.weathers)));
+  const area=weatherSeries?.areas?.find(a=>a.area?.code===areaCode);
+  const index=weatherSeries?.timeDefines?.findIndex(time=>time.slice(0,10)===date)??-1;
+  if(!area||index<0||!area.weathers?.[index])return null;
+  const rainSeries=series.find(s=>s.areas?.some(a=>Array.isArray(a.pops)));
+  const rainArea=rainSeries?.areas?.find(a=>a.area?.code===areaCode);
+  const rain=(rainSeries?.timeDefines||[]).flatMap((time,i)=>time.slice(0,10)===date&&/^\d+$/.test(rainArea?.pops?.[i]??'')?[Number(rainArea.pops[i])]:[]);
+  const detail=area.weathers[index].replace(/\s+/g,' ').trim();
+  return {name:area.area.name,detail,short:detail.split('所により')[0].replace(/\s/g,''),symbol:({'1':'☀','2':'☁','3':'☂','4':'❄'})[String(area.weatherCodes?.[index]||'')[0]]||'☁',rain:rain.length?Math.max(...rain):null,report:data[0].reportDatetime};
+}
+function saveFieldWeatherRegion(){try{localStorage.setItem(FIELD_WEATHER_KEY,JSON.stringify(fieldWeatherRegion))}catch(e){}}
+function renderFieldWeather(){
+  const forecast=getFieldForecast(fieldWeatherData,fieldWeatherRegion.area);
+  const text=document.getElementById('field-weather-text'),location=document.getElementById('field-weather-location'),rain=document.getElementById('field-weather-rain');
+  if(forecast){
+    location.textContent=forecast.name+' · 今日の予報';text.textContent=forecast.short;document.getElementById('field-weather-symbol').textContent=forecast.symbol;
+    rain.textContent=forecast.rain===null?'':`降水${forecast.rain}%`;
+    if(fieldWeatherFailed)location.textContent=forecast.name+' · 前回取得の予報';
+    document.getElementById('weather-details').textContent=forecast.detail+(forecast.rain===null?'':`\n今日の降水確率：最大 ${forecast.rain}%`);
+    const reportDate=new Date(forecast.report);document.getElementById('weather-update').textContent=(fieldWeatherFailed?'更新できませんでした。保存済みの予報です。 ':'')+(Number.isNaN(reportDate.getTime())?'':new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(reportDate)+' 発表');
+  }else{
+    text.textContent=fieldWeatherFailed?'取得できません':'予報なし';rain.textContent='';
+    const region=fieldWeatherData?.[0]?.timeSeries?.[0]?.areas?.find(a=>a.area?.code===fieldWeatherRegion.area);
+    location.textContent=(region?.area?.name||(fieldWeatherRegion.area==='130010'?'東京地方':'選択地域'))+' · 今日の予報';
+    document.getElementById('weather-details').textContent=fieldWeatherFailed?'通信を確認して「予報を更新」をお試しください。':'今日の予報がまだ配信されていません。';document.getElementById('weather-update').textContent='';
+  }
+}
+function refreshWeatherAreaOptions(){
+  const areas=fieldWeatherData?.[0]?.timeSeries?.find(s=>s.areas?.some(a=>a.weathers))?.areas||[];
+  if(!areas.length)return;
+  if(!areas.some(a=>a.area.code===fieldWeatherRegion.area)){fieldWeatherRegion.area=areas[0].area.code;saveFieldWeatherRegion()}
+  document.getElementById('weather-area').innerHTML=areas.map(a=>`<option value="${escHtml(a.area.code)}">${escHtml(a.area.name)}</option>`).join('');document.getElementById('weather-area').value=fieldWeatherRegion.area;
+}
+async function fetchFieldJSON(url,signal){
+  const response=await fetch(url,{signal,cache:'no-store'});if(!response.ok)throw new Error('Forecast unavailable');return response.json();
+}
+async function loadFieldWeather(force=false){
+  const office=fieldWeatherRegion.office,key='fieldlog_weather_'+office;
+  if(fieldWeatherController)return;
+  if(!force){try{const cached=JSON.parse(localStorage.getItem(key)||'null');if(cached?.data&&Array.isArray(cached.data)){fieldWeatherData=cached.data;fieldWeatherFetchedAt=cached.at||0;refreshWeatherAreaOptions();renderFieldWeather();if(Date.now()-fieldWeatherFetchedAt<30*60*1000&&getFieldForecast(fieldWeatherData,fieldWeatherRegion.area))return}}catch(e){}}
+  const controller=new AbortController();fieldWeatherController=controller;const timeout=setTimeout(()=>controller.abort(),10000);
+  const retry=document.querySelector('.weather-retry');retry.disabled=true;
+  if(!fieldWeatherData)document.getElementById('field-weather-text').textContent='取得中';
+  try{
+    const data=await fetchFieldJSON(`https://www.jma.go.jp/bosai/forecast/data/forecast/${office}.json`,controller.signal);
+    if(!Array.isArray(data)||!data[0]?.timeSeries)throw new Error('Invalid forecast');
+    if(fieldWeatherRegion.office!==office||fieldWeatherController!==controller)return;
+    fieldWeatherData=data;fieldWeatherFetchedAt=Date.now();fieldWeatherFailed=false;
+    try{localStorage.setItem(key,JSON.stringify({data,at:fieldWeatherFetchedAt}))}catch(e){}
+    refreshWeatherAreaOptions();renderFieldWeather();
+  }catch(e){if(fieldWeatherRegion.office===office&&fieldWeatherController===controller){fieldWeatherFailed=true;renderFieldWeather()}}
+  finally{clearTimeout(timeout);if(fieldWeatherController===controller){fieldWeatherController=null;retry.disabled=false}}
+}
+async function openWeatherSettings(){
+  document.getElementById('weather-dialog').showModal();renderFieldWeather();
+  if(fieldWeatherOfficeLoaded)return;
+  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),10000);
+  try{
+    const definitions=await fetchFieldJSON('https://www.jma.go.jp/bosai/common/const/area.json',controller.signal);
+    const offices=Object.entries(definitions.offices||{}).filter(([code])=>/^\d{6}$/.test(code));if(!offices.length)return;
+    document.getElementById('weather-office').innerHTML=offices.sort(([a],[b])=>a.localeCompare(b)).map(([code,value])=>`<option value="${code}">${escHtml(value.name)}</option>`).join('');
+    document.getElementById('weather-office').value=fieldWeatherRegion.office;fieldWeatherOfficeLoaded=true;
+  }catch(e){document.getElementById('weather-update').textContent='地域一覧を取得できませんでした。通信を確認して開き直してください。'}finally{clearTimeout(timeout)}
+}
+function changeWeatherOffice(office){
+  if(!/^\d{6}$/.test(office))return;
+  fieldWeatherController?.abort();fieldWeatherController=null;fieldWeatherRegion={office,area:''};fieldWeatherData=null;fieldWeatherFailed=false;
+  document.getElementById('field-weather-location').textContent='選択地域 · 今日の予報';document.getElementById('field-weather-rain').textContent='';document.getElementById('weather-details').textContent='天気予報を読み込んでいます。';document.getElementById('weather-update').textContent='';
+  document.getElementById('weather-area').innerHTML='<option value="">読込中…</option>';loadFieldWeather(true);
+}
+function changeWeatherArea(area){if(!/^\d{6}$/.test(area))return;fieldWeatherRegion.area=area;saveFieldWeatherRegion();renderFieldWeather()}
+
 // ─── Demo Data ───────────────────────────────────────────────
 function initDemoData(){
   const sites=loadSites();
@@ -393,31 +464,6 @@ function initDemoData(){
     if(m)saveSites(sites);
     return;
   }
-  const now=new Date(),y=now.getFullYear(),m=now.getMonth();
-  const logs={};
-  const pT=["LGS下地組み","ボード貼り","クロス下地処理","仕上げ塗装","建具吊り込み","タイル貼り","CF貼り","養生・清掃"];
-  const mT=["壁下地ボード貼り","天井LGS組み","床CF貼り","クロス貼り","建具取付","タイル施工","塗装作業",""];
-  for(let d=1;d<=Math.min(now.getDate(),daysInMonth(y,m));d++){
-    const dow=new Date(y,m,d).getDay();if(dow===0||dow===6)continue;
-    const k=dkey(y,m,d),ws={},pw={};
-    ws["w1"]=Math.random()>.15?"present":"half";ws["w2"]=Math.random()>.2?"present":Math.random()>.5?"half":"absent";
-    ws["w3"]=Math.random()>.1?"present":"half";ws["w4"]=d%3===0?"half":Math.random()>.25?"present":"";
-    pw["w1"]="planned";pw["w2"]="planned";pw["w3"]="planned";if(d%3!==0)pw["w4"]="planned";
-    logs[k]={workerStatus:ws,planWorkers:pw,memo:mT[d%mT.length],planMemo:pT[d%pT.length]};
-    if(d%5===0)logs[k].plannedHeadcount=3;
-  }
-  const dim=daysInMonth(y,m);
-  const events=[
-    {id:uid(),title:"LGS下地組み",start:dkey(y,m,Math.min(3,dim)),end:dkey(y,m,Math.min(7,dim)),color:"#4F46E5"},
-    {id:uid(),title:"ボード貼り",start:dkey(y,m,Math.min(8,dim)),end:dkey(y,m,Math.min(14,dim)),color:"#0EA5E9"},
-    {id:uid(),title:"クロス・仕上げ",start:dkey(y,m,Math.min(15,dim)),end:dkey(y,m,Math.min(22,dim)),color:"#10B981"},
-  ];
-  saveSites([{id:"demo1",name:"渋谷パークレジデンス 内装工事",address:"東京都渋谷区神南1-2-3",generalContractor:"渋谷建設株式会社",gcManager:"山本 一郎",manager:"髙嶋 宏",phone:"090-1234-5678",notes:"3階〜5階のリノベーション工事",workers:[
-    {id:"w1",name:"髙嶋 宏",color:"#DC2626",icon:"宏",starred:true},
-    {id:"w2",name:"髙嶋 隆一",color:"#7C3AED",icon:"隆",starred:true},
-    {id:"w3",name:"髙嶋 昇",color:"#059669",icon:"昇",starred:true},
-    {id:"w4",name:"佐久間 英二",color:"#D97706",icon:"佐",starred:true},
-  ],dayLogs:logs,events:events,createdAt:new Date().toISOString()}]);
 }
 
 // ─── App State ───────────────────────────────────────────────
@@ -436,10 +482,12 @@ function updateSite(fn){const sites=loadSites();const i=sites.findIndex(s=>s.id=
 
 // ─── Navigation ──────────────────────────────────────────────
 function switchTab(t){
+  document.body.classList.toggle("calendar-active",t==="calendar");
   currentTab=t;
   ["today","calendar","settings"].forEach(v=>{
     document.getElementById("view-"+v).classList.toggle("hidden",v!==t);
     document.getElementById("tab-"+v).classList.toggle("active",v===t);
+    document.getElementById("tab-"+v).setAttribute("aria-current",v===t?"page":"false");
   });
   if(t==="today")renderToday();
   else if(t==="calendar")renderCalendar();
@@ -455,94 +503,56 @@ function setDashDate(offset){
   renderToday();
 }
 
-function dashDate(){const n=new Date();n.setDate(n.getDate()+dashDateOffset);return n}
+function dashDate(){return fsDate(fsShift(fsToday(),dashDateOffset))}
 function todayKey(){const n=dashDate();return dkey(n.getFullYear(),n.getMonth(),n.getDate())}
 
+function homeOpenDay(siteId){
+  openDayPanel(todayKey(),siteId);
+  dpTab=dashDateOffset>0?'plan':'actual';renderDayPanel();
+}
+function homeCalendar(){fsState.filter='';fsState.date=todayKey();switchTab('calendar')}
+function homeSelectDate(date){dashDateOffset=Math.round((fsDate(date)-fsDate(fsToday()))/86400000);renderToday()}
+function homeHasActual(site,date){const log=site.dayLogs?.[date]||{};return ['confirmed','rest'].includes(log.actualState)||Object.values(log.workerStatus||{}).some(Boolean)}
+function homeSiteCard(s,dk,future){
+  const plan=fsDayInfo(s,dk,'plan'),actual=fsDayInfo(s,dk,'actual'),info=future?plan:actual;
+  const evs=eventsOnDate(s,dk),recorded=homeHasActual(s,dk);
+  const status=future?(plan.label==='休工'?'休工予定':plan.members.length?'配置済み':'配置未定'):(actual.label==='休工'?'休工':recorded?'出面入力あり':'出面未確認');
+  const names=info.members.map(w=>`<span class="home-worker">${fsCrewChip(w,info.half(w))}<span>${escHtml(w.name.replace(/^髙嶋\s*/,''))}</span>${info.half(w)?'<small>半日</small>':''}</span>`).join('');
+  const total=info.members.reduce((n,w)=>n+(info.half(w)?0.5:1),0);
+  return `<article class="home-site" style="--site-color:${fsSiteColor(s)}">
+    <div class="home-site-top"><span class="home-site-status ${!future&&!recorded?'is-pending':''}">${status}</span><span class="home-site-count">${info.members.length?`${total}<small> ${future?'人工予定':'人工'}</small>`:'—'}</span></div>
+    <h3>${escHtml(s.name||'現場名未設定')}</h3><p class="home-site-address">${escHtml(s.address||s.generalContractor||'住所未登録')}</p>
+    ${evs.length?`<div class="home-events">${evs.map(e=>`<span>${escHtml(e.title)}</span>`).join('')}</div>`:''}
+    <div class="home-crew">${names||`<span class="home-muted">${future?'担当者を配置してください':plan.members.length?`配置予定：${plan.members.map(w=>escHtml(w.name)).join('・')}`:info.label==='休工'?'この日は休工です':'出面はまだ入力されていません'}</span>`}</div>
+    ${info.memo?`<p class="home-memo">${escHtml(info.memo)}</p>`:''}
+    <button class="home-edit" data-home-site="${escHtml(s.id)}">${future?'配置予定を編集':recorded?'出面を確認・編集':'出面を入力'}<span aria-hidden="true">↗</span></button>
+  </article>`;
+}
 function renderToday(){
-  const sites=loadSites();
-  const now=dashDate(),y=now.getFullYear(),m=now.getMonth(),d=now.getDate();
-  const dk=todayKey();
-
-  const label=dashDateOffset===0?"今日":"明日";
-  document.getElementById("home-date").textContent=`${y}年${m+1}月${d}日（${jpDay(y,m,d)}）${dashDateOffset?` — ${label}`:""}`;
-
-  const container=document.getElementById("home-container");
-
-  if(sites.length===0){
-    container.innerHTML=`<div style="text-align:center;padding:60px 20px">
-      <div style="font-size:48px;margin-bottom:16px">🏗️</div>
-      <h2 style="font-size:18px;font-weight:800;margin:0 0 8px">現場を追加しましょう</h2>
-      <p style="color:#94A3B8;font-size:14px;margin:0 0 20px">右上の「+ 新規現場」ボタンから<br>最初の現場を登録してください</p>
-    </div>`;
-    return;
-  }
-
-  let html="";
-  sites.forEach(s=>{
-    const log=s.dayLogs?.[dk]||{};
-    const workers=sortedWorkers(s);
-    const evs=eventsOnDate(s,dk);
-
-    // Calc today's ninku
-    let nk=0,cnt=0;
-    workers.forEach(w=>{const st=log.workerStatus?.[w.id]||"";if(st==="present"){nk+=1;cnt++}else if(st==="half"){nk+=0.5;cnt++}});
-    const hasAny=workers.some(w=>{const st=log.workerStatus?.[w.id]||"";return st==="present"||st==="half"||st==="absent"});
-
-    // Event bar
-    const evHTML=evs.length>0?`<div class="site-card-ev">${evs.map(e=>`<span style="background:${e.color}">${escHtml(e.title)}</span>`).join("")}</div>`:"";
-
-    // Member chips (inline attendance)
-    let membersHTML="";
-    if(workers.length>0){
-      membersHTML=`<div class="site-card-members">${workers.map(w=>{
-        const st=log.workerStatus?.[w.id]||"";
-        return`<div class="mc" data-s="${st}" onclick="toggleSiteStatus('${s.id}','${w.id}')">
-          <div class="av" style="background:${w.color}">${workerIcon(w)}</div>
-          <span class="st">${STATUS_LABEL[st]}</span>
-        </div>`;
-      }).join("")}</div>`;
-    } else {
-      membersHTML=`<div style="padding:8px 16px"><button class="btn btn-outline btn-sm" style="width:100%" onclick="currentSiteId='${s.id}';switchTab('settings')">メンバーを追加</button></div>`;
-    }
-
-    // Footer with ninku + copy button
-    const copyBtn=(!hasAny&&workers.length>0)?`<div style="display:flex;gap:4px">
-      <button class="btn btn-outline btn-sm" onclick="copySiteYesterday('${s.id}')" style="font-size:11px;min-height:30px;padding:5px 8px">昨日と同じ</button>
-      <button class="btn btn-outline btn-sm" onclick="copySiteLastWeek('${s.id}')" style="font-size:11px;min-height:30px;padding:5px 8px">先週同曜日</button>
-    </div>`:"";
-
-    // Memo
-    const memo=log.memo||"";
-    const memoHTML=`<div class="site-card-memo">
-      <textarea placeholder="作業メモ..." oninput="saveSiteMemo('${s.id}',this.value)">${escHtml(memo)}</textarea>
-    </div>`;
-
-    html+=`<div class="site-card fade-in">
-      <div class="site-card-hd" onclick="currentSiteId='${s.id}';switchTab('calendar')">
-        <div>
-          <h3>${escHtml(s.name||"新規現場")}</h3>
-          ${s.generalContractor?`<div style="font-size:12px;color:#94A3B8;margin-top:2px">${escHtml(s.generalContractor)}</div>`:""}
-        </div>
-        <svg width="18" height="18" fill="none" stroke="#B0BAC8" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
-      </div>
-      ${evHTML}
-      ${membersHTML}
-      <div class="site-card-foot">
-        <div>
-          <span class="nk">${nk}</span>
-          <span class="nk-label"> 人工</span>
-          ${cnt>0?`<span style="font-size:12px;color:#64748B;margin-left:8px">${cnt}名出勤</span>`:""}
-        </div>
-        ${copyBtn}
-      </div>
-      ${memoHTML}
-    </div>`;
-  });
-
+  const sites=loadSites(),dk=todayKey(),now=fsDate(dk),future=dk>fsToday();
+  const label=dashDateOffset===0?'今日':dashDateOffset===1?'明日':`${now.getMonth()+1}月${now.getDate()}日`;
+  document.getElementById('home-date').textContent=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${DAY_JP[now.getDay()]}曜日`;
+  document.getElementById('home-title').textContent=label+'の現場';
+  document.querySelectorAll('.date-toggle button').forEach((b,i)=>{b.classList.toggle('active',i===dashDateOffset);b.setAttribute('aria-pressed',String(i===dashDateOffset))});
+  const container=document.getElementById('home-container');
+  if(!sites.length){container.innerHTML='<div class="home-welcome"><span class="home-eyebrow">FIELD LOG</span><h2>現場の一日を、<br>ここから。</h2><p>予定も、メンバーの配置も、出面も。<br>まずは最初の現場を登録しましょう。</p><button class="btn btn-primary" onclick="addSite()">＋ 現場を登録</button></div>';return}
+  const active=sites.filter(s=>fsOnDay(s,dk));
+  const working=active.filter(s=>s.dayLogs?.[dk]?.planState!=='rest');
+  const crew=new Set(working.flatMap(s=>fsDayInfo(s,dk,'plan').members.map(w=>w.name.replace(/\s/g,''))));
+  const pending=working.filter(s=>!homeHasActual(s,dk)).length;
+  const start=fsShift(dk,-now.getDay());
+  let html=`<nav class="home-week" aria-label="ホームの日付">${Array.from({length:7},(_,i)=>{const date=fsShift(start,i),d=fsDate(date);return `<button data-home-date="${date}" class="${i===0?'fs-sun':i===6?'fs-sat':''} ${date===fsToday()?'is-today':''}" aria-label="${date}" aria-pressed="${date===dk}"><small>${DAY_JP[i]}</small><b>${d.getDate()}</b><i class="${sites.some(s=>fsOnDay(s,date))?'has-work':''}"></i></button>`}).join('')}</nav>
+  <div class="home-overview"><div><span>稼働予定</span><strong>${working.length}<small>現場</small></strong></div><div><span>配置予定</span><strong>${crew.size}<small>人</small></strong></div><div><span>${future?'配置未定':'出面未確認'}</span><strong>${future?working.filter(s=>!fsDayInfo(s,dk,'plan').members.length).length:pending}<small>現場</small></strong></div></div>
+  <div class="home-section-title"><h2>${future?'配置を確認する':'現場の状況'}</h2><button onclick="homeCalendar()">カレンダーへ <span aria-hidden="true">→</span></button></div>`;
+  html+=active.length?active.map(s=>homeSiteCard(s,dk,future)).join(''):`<div class="home-empty"><h3>この日の予定はありません</h3><p>カレンダーから工程や配置を登録できます。</p><button class="fs-action" onclick="homeCalendar()">予定を確認する</button></div>`;
+  const other=sites.filter(s=>!active.includes(s));
+  if(other.length)html+=`<details class="home-other"><summary>この日の予定がない現場 <span>${other.length}</span></summary>${other.map(s=>homeSiteCard(s,dk,future)).join('')}</details>`;
+  html+='<p class="home-storage">この端末に保存中 · バックアップはカレンダーの表示設定から</p>';
   container.innerHTML=html;
 }
 
 function toggleSiteStatus(siteId,wId){
+  if(todayKey()>fsToday())return;
   const dk=todayKey();
   const sites=loadSites();
   const si=sites.findIndex(s=>s.id===siteId);
@@ -557,6 +567,7 @@ function toggleSiteStatus(siteId,wId){
 }
 
 function copySiteYesterday(siteId){
+  if(todayKey()>fsToday())return;
   const now=dashDate();
   let prev=new Date(now);
   do{prev.setDate(prev.getDate()-1)}while(prev.getDay()===0||prev.getDay()===6);
@@ -575,6 +586,7 @@ function copySiteYesterday(siteId){
 }
 
 function copySiteLastWeek(siteId){
+  if(todayKey()>fsToday())return;
   const now=dashDate();
   const prev=new Date(now);
   prev.setDate(prev.getDate()-7);
@@ -593,6 +605,7 @@ function copySiteLastWeek(siteId){
 }
 
 function saveSiteMemo(siteId,val){
+  if(todayKey()>fsToday())return;
   const dk=todayKey();
   const sites=loadSites();
   const si=sites.findIndex(s=>s.id===siteId);
@@ -602,122 +615,192 @@ function saveSiteMemo(siteId,val){
   saveSites(sites);
 }
 
-// ─── FULLCALENDAR ────────────────────────────────────────────
-let fcInstance=null;
-
-function initFullCalendar(){
-  const el=document.getElementById("fc-container");
-  if(!el)return;
-  if(fcInstance){fcInstance.destroy();fcInstance=null}
-  const s=getSite();
-  if(!s){el.innerHTML=`<div style="padding:40px;text-align:center;color:#94A3B8">現場を選択してください</div>`;return}
-
-  fcInstance=new FullCalendar.Calendar(el,{
-    locale:"ja",
-    initialView:"dayGridMonth",
-    height:"auto",
-    firstDay:0,
-    fixedWeekCount:false,
-    headerToolbar:{
-      left:"prev,next today",
-      center:"title",
-      right:"dayGridMonth,dayGridWeek"
-    },
-    buttonText:{today:"今日",month:"月",week:"週"},
-    dayCellContent:function(arg){return{html:String(arg.date.getDate())}},
-    dayHeaderFormat:{weekday:"short"},
-    dayMaxEventRows:4,
-    moreLinkText:function(n){return"+"+n+"件"},
-    events:fcGetEvents(s),
-    editable:true,
-    eventStartEditable:true,
-    eventDurationEditable:true,
-    dateClick:function(info){openDayPanel(info.dateStr)},
-    eventClick:function(info){
-      info.jsEvent.preventDefault();
-      const evId=info.event.extendedProps.siteEventId;
-      if(evId)showEventModal(evId);
-    },
-    eventDrop:function(info){fcHandleEventMove(info)},
-    eventResize:function(info){fcHandleEventResize(info)},
-    dayCellDidMount:function(info){
-      fcRenderDayCell(info);
-      fcColorHoliday(info);
-    },
-    datesSet:function(info){
-      const mid=new Date((info.start.getTime()+info.end.getTime())/2);
-      calYear=mid.getFullYear();calMonth=mid.getMonth();
-      updateCalSub();
-      renderEventList();
-    }
-  });
-  fcInstance.render();
-  updateCalSub();
+// ─── FIELD CALENDAR ──────────────────────────────────────────
+// Keep legacy dayLogs and event IDs. Calendar views never manufacture attendance.
+const fsState={date:fsToday(),view:'month',mode:'plan',filter:'',large:false,rows:3};
+try{const p=JSON.parse(localStorage.getItem('genba_calendar_preferences')||'{}');fsState.large=p.large===true;if([2,3,5].includes(p.rows))fsState.rows=p.rows}catch(e){}
+function fsToday(){return new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
+function fsDate(key){if(!/^\d{4}-\d{2}-\d{2}$/.test(key||''))return null;const [y,m,d]=key.split('-').map(Number);if(y<1899||y>2101)return null;const v=new Date(y,m-1,d,12);return v.getFullYear()===y&&v.getMonth()===m-1&&v.getDate()===d?v:null}
+function fsKey(d){return dkey(d.getFullYear(),d.getMonth(),d.getDate())}
+function fsShift(key,days){const d=fsDate(key);if(!d)return key;d.setDate(d.getDate()+days);return fsKey(d)}
+function fsSafeColor(c,fallback='#5085dc'){return /^#[0-9a-f]{6}$/i.test(c||'')?c:fallback}
+function fsCrewStyle(w){const name=(w.name||'').replace(/\s/g,'');if(name.endsWith('隆一'))return'--crew-bg:#92d7b1;--crew-ink:#184b32';if(name.endsWith('宏')||name.endsWith('寛'))return'--crew-bg:#f7df8b;--crew-ink:#654b00';if(name.endsWith('昇'))return'--crew-bg:#c9cdd3;--crew-ink:#39414c';return'--crew-bg:'+fsSafeColor(w.color,'#d8e5f5')+';--crew-ink:#17202a'}
+function fsCrewChip(w,half=false){return `<i class="fs-person${half?' fs-half':''}" style="${fsCrewStyle(w)}" aria-label="${escHtml(w.name)}${half?' 半日':''}">${escHtml(workerIcon(w))}</i>`}
+function fsHasLog(log){return !!log&&(Object.values(log.planWorkers||{}).some(Boolean)||Object.values(log.workerStatus||{}).some(Boolean)||log.memo||log.planMemo||log.plannedHeadcount||log.planState||log.actualState)}
+function fsRanges(site){
+  let ranges=[];
+  if(fsDate(site.calendarStart)&&fsDate(site.calendarEnd)&&site.calendarStart<=site.calendarEnd)ranges.push({start:site.calendarStart,end:site.calendarEnd,eventIds:[]});
+  else for(const e of site.events||[])if(fsDate(e.start)&&fsDate(e.end)&&e.start<=e.end)ranges.push({start:e.start,end:e.end,eventIds:[e.id]});
+  ranges.sort((a,b)=>a.start.localeCompare(b.start));const merged=[];
+  for(const r of ranges){const prev=merged.at(-1);if(prev&&r.start<=fsShift(prev.end,1)){prev.end=prev.end>r.end?prev.end:r.end;prev.eventIds.push(...r.eventIds)}else merged.push({...r,eventIds:[...r.eventIds]})}
+  for(const [date,log] of Object.entries(site.dayLogs||{}))if(fsDate(date)&&fsHasLog(log)&&!merged.some(r=>r.start<=date&&r.end>=date))merged.push({start:date,end:date,eventIds:[]});
+  return merged.sort((a,b)=>a.start.localeCompare(b.start));
 }
-
-function fcGetEvents(s){
-  if(!s||!s.events)return[];
-  return s.events.map(e=>({
-    id:e.id,
-    title:e.title,
-    start:e.start,
-    end:fcEndDate(e.end),
-    backgroundColor:e.color,
-    borderColor:e.color,
-    extendedProps:{siteEventId:e.id}
-  }));
+function fsDayInfo(site,date,mode=fsState.mode){
+  const log=site.dayLogs?.[date]||{},isPlan=mode==='plan';
+  const members=sortedWorkers(site).filter(w=>isPlan?['planned','half'].includes(log.planWorkers?.[w.id]):['present','half'].includes(log.workerStatus?.[w.id]));
+  const state=isPlan?log.planState:log.actualState;
+  const count=isPlan?Math.max(0,Number(log.plannedHeadcount)||0):0;
+  const label=state==='rest'?'休工':members.length?'':!isPlan&&date>fsToday()?'—':isPlan?(count?'予定'+count+'人':'未定'):Object.values(log.workerStatus||{}).some(Boolean)?'出勤なし':'未確認';
+  return{log,members,label,memo:isPlan?log.planMemo:log.memo,half:w=>(isPlan?log.planWorkers:log.workerStatus)?.[w.id]==='half'};
 }
-
-// FullCalendar uses exclusive end dates, so add 1 day
-function fcEndDate(dateStr){
-  const d=new Date(dateStr);
-  d.setDate(d.getDate()+1);
-  return d.toISOString().split("T")[0];
+function fsCrewHTML(info){return info.members.length?info.members.slice(0,3).map(w=>fsCrewChip(w,info.half(w))).join('')+(info.members.length>3?`<span class="fs-slot-label">+${info.members.length-3}</span>`:''):`<span class="fs-slot-label">${escHtml(info.label)}</span>`}
+function fsSites(){return loadSites().filter(s=>!fsState.filter||s.id===fsState.filter)}
+function fsOnDay(site,date){return fsRanges(site).some(r=>r.start<=date&&r.end>=date)}
+function fsDayDescription(site,date){const i=fsDayInfo(site,date);return `${date} ${site.name||'現場名未設定'}\n${fsState.mode==='plan'?'配置予定':'出面実績'}：${i.members.map(w=>w.name+(i.half(w)?'（半日）':'')).join('・')||i.label}${i.memo?'\n'+i.memo:''}`}
+function fsSetFilter(id){fsState.filter=id;if(id)currentSiteId=id;renderCalendar()}
+function fsSetMode(mode){fsState.mode=mode;renderCalendar()}
+function fsSetView(view){if(!['day','week','month','list'].includes(view))return;fsState.view=view;renderCalendar();document.getElementById('fs-viewport').scrollTop=0}
+function fsJumpTo(key){if(!fsDate(key)||key<'1900-01-01'||key>'2100-12-31')return;fsState.date=key;renderCalendar()}
+function fsGoToday(){fsJumpTo(fsToday());document.querySelector('.fs-day.fs-today')?.scrollIntoView({block:'nearest'});}
+function fsNavigate(dir){const d=fsDate(fsState.date);if(fsState.view==='month'){const day=d.getDate();d.setDate(1);d.setMonth(d.getMonth()+dir);d.setDate(Math.min(day,daysInMonth(d.getFullYear(),d.getMonth())))}else d.setDate(d.getDate()+dir*(fsState.view==='week'?7:fsState.view==='list'?30:1));if(fsDate(fsKey(d))){fsJumpTo(fsKey(d));const vp=document.getElementById('fs-viewport');vp.scrollTop=0;if(!matchMedia('(prefers-reduced-motion: reduce)').matches)vp.animate([{opacity:.5,transform:`translateX(${dir*20}px)`},{opacity:1,transform:'translateX(0)'}],{duration:180,easing:'ease-out'})}}
+function fsShowOptions(){document.getElementById('fs-size').value=fsState.large?'large':'normal';document.getElementById('fs-density').value=fsState.rows;document.getElementById('fs-options').showModal()}
+function fsSaveOption(key,value){fsState[key]=value;try{localStorage.setItem('genba_calendar_preferences',JSON.stringify({large:fsState.large,rows:fsState.rows}))}catch(e){fsToast('表示設定を保存できませんでした')}renderCalendar()}
+function fsJumpDialog(){document.getElementById('fs-jump-date').value=fsState.date;document.getElementById('fs-jump').showModal()}
+let fsToastTimer;
+function fsToast(message){const el=document.getElementById('fs-toast');(document.querySelector('dialog[open]')||document.body).appendChild(el);el.textContent=message;el.hidden=false;clearTimeout(fsToastTimer);fsToastTimer=setTimeout(()=>{el.hidden=true},4500)}
+function fsDownloadBackup(){const blob=new Blob([JSON.stringify({version:1,exportedAt:new Date().toISOString(),sites:loadSites()},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='彩心堂_現場データ_'+fsToday()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function fsSyncHeader(){
+  const d=fsDate(fsState.date);calYear=d.getFullYear();calMonth=d.getMonth();
+  document.getElementById('fs-title').textContent=fsState.view==='day'?`${calYear}年 ${calMonth+1}月${d.getDate()}日`:`${calYear}年 ${calMonth+1}月`;
+  document.getElementById('fs-today-day').textContent=fsDate(fsToday()).getDate();
+  document.querySelectorAll('[data-fs-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.fsMode===fsState.mode)));
+  document.querySelectorAll('[data-fs-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.fsView===fsState.view)));
+  document.getElementById('view-calendar').classList.toggle('fs-large',fsState.large);
+  const filter=document.getElementById('fs-site-filter');const sites=loadSites();if(fsState.filter&&!sites.some(s=>s.id===fsState.filter))fsState.filter='';
+  filter.innerHTML='<option value="">彩心堂 · 全現場</option>'+sites.map(s=>`<option value="${escHtml(s.id)}">${escHtml(s.name||'現場名未設定')}</option>`).join('');filter.value=fsState.filter;
+  const word=fsState.view==='month'?'月':fsState.view==='week'?'週':fsState.view==='list'?'30日':'日';document.getElementById('fs-prev').textContent='‹ 前の'+word;document.getElementById('fs-next').textContent='次の'+word+' ›';document.getElementById('fs-prev').setAttribute('aria-label','前の'+word);document.getElementById('fs-next').setAttribute('aria-label','次の'+word);
+  document.getElementById('fs-weekdays').hidden=fsState.view!=='month';
+  document.getElementById('fs-selection').hidden=fsState.view!=='month';
 }
-
-function fcHandleEventMove(info){
-  const evId=info.event.extendedProps.siteEventId;
-  const newStart=info.event.startStr;
-  const endD=new Date(info.event.endStr||info.event.startStr);
-  endD.setDate(endD.getDate()-1);
-  const newEnd=endD.toISOString().split("T")[0];
-  updateSite(s=>{
-    const ev=(s.events||[]).find(e=>e.id===evId);
-    if(ev){ev.start=newStart;ev.end=newEnd}
-  });
-  updateCalSub();renderEventList();
-}
-
-function fcHandleEventResize(info){
-  fcHandleEventMove(info);
-}
-
-function fcRenderDayCell(info){
-  const s=getSite();if(!s)return;
-  const ds=info.date.toLocaleDateString("sv-SE");
-  const log=s.dayLogs?.[ds]||{};
-  const planH=Math.max(log.plannedHeadcount||0,(log.planWorkers?Object.values(log.planWorkers).filter(v=>v==="planned").length:0));
-  let actH=0;if(log.workerStatus)Object.values(log.workerStatus).forEach(st=>{if(st==="present"||st==="half")actH++});
-  const hasMemo=!!log.memo;
-
-  const top=info.el.querySelector(".fc-daygrid-day-top");
-  if(!top)return;
-  if(actH>0){
-    const sp=document.createElement("span");
-    sp.className="fc-ninku-badge fc-ninku-actual";
-    sp.textContent=actH;
-    top.appendChild(sp);
-  }else if(planH>0){
-    const sp=document.createElement("span");
-    sp.className="fc-ninku-badge fc-ninku-plan";
-    sp.textContent=planH;
-    top.appendChild(sp);
+function renderCalendar(){
+  fsSyncHeader();fsRenderSelection();const el=document.getElementById('fs-calendar');const sites=fsSites();el.className=fsState.view==='month'?'fs-month':fsState.view==='week'?'fs-agenda fs-week-agenda':'fs-agenda';
+  if(fsState.view!=='month'){fsRenderAgenda(el,sites);return}
+  const start=fsShift(dkey(calYear,calMonth,1),-firstDow(calYear,calMonth));const weeks=Math.ceil((firstDow(calYear,calMonth)+daysInMonth(calYear,calMonth))/7);const today=fsToday();const allRanges=sites.flatMap(site=>fsRanges(site).map(range=>({...range,site})));
+  let html='';
+  for(let w=0;w<weeks;w++){
+    const ws=fsShift(start,w*7),we=fsShift(ws,6);const overlaps=allRanges.filter(r=>r.start<=we&&r.end>=ws).sort((a,b)=>a.site.id.localeCompare(b.site.id)||a.start.localeCompare(b.start));
+    // One lane per site, keeping disjoint ranges on the same row.
+    const groups=[];for(const r of overlaps){let g=groups.find(g=>g.site.id===r.site.id);if(!g){g={site:r.site,ranges:[]};groups.push(g)}g.ranges.push(r)}
+    const visible=groups.slice(0,fsState.rows);const rowCount=Math.max(1,visible.length);const lastRow=3+rowCount*2+(groups.length>visible.length?1:0);html+=`<section class="fs-week" data-week="${ws}" aria-label="${ws}からの週" style="grid-template-rows:28px repeat(${rowCount},21px 22px)${groups.length>visible.length?' 26px':''} minmax(0,1fr)">`;
+    for(let col=0;col<7;col++){const key=fsShift(ws,col),d=fsDate(key),holiday=isHoliday(key);html+=`<button class="fs-day ${col===0||holiday?'fs-sun':col===6?'fs-sat':''} ${d.getMonth()!==calMonth?'fs-other':''} ${key===today?'fs-today':''}" style="grid-column:${col+1};grid-row:1/${lastRow}" data-day="${key}" aria-label="${key} ${DAY_JP[d.getDay()]}曜日${holiday?' '+holiday:''}" aria-pressed="${fsState.date===key}"><span class="fs-day-number">${d.getDate()}</span>${holiday?`<span class="fs-holiday-name">${escHtml(holiday)}</span>`:''}</button>`}
+    visible.forEach((g,lane)=>{const site=g.site;for(const r of g.ranges){const lo=r.start>ws?r.start:ws,hi=r.end<we?r.end:we;const first=fsDate(lo).getDay()+1,last=fsDate(hi).getDay()+2;const row=2+lane*2;const eventId=r.eventIds.length===1?r.eventIds[0]:'';
+      html+=`<button class="fs-bar ${r.start<ws?'fs-continued':''} ${r.end>we?'fs-continues':''}" style="--fs-blue:${fsSiteColor(site)};grid-column:${first}/${last};grid-row:${row}" data-site="${escHtml(site.id)}" data-day="${lo}" ${eventId?`draggable="true" data-drag-event="${escHtml(eventId)}"`:''} aria-label="${escHtml(site.name||'現場名未設定')} ${r.start}から${r.end}">${escHtml(site.name||'現場名未設定')}</button>`;
+      for(let date=lo;date<=hi;date=fsShift(date,1)){const info=fsDayInfo(site,date);html+=`<button class="fs-slot" style="grid-column:${fsDate(date).getDay()+1};grid-row:${row+1}" data-site="${escHtml(site.id)}" data-day="${date}" aria-label="${escHtml(fsDayDescription(site,date))}">${fsCrewHTML(info)}</button>`}
+    }});
+    if(groups.length>visible.length)for(let col=0;col<7;col++){const date=fsShift(ws,col);const n=groups.slice(visible.length).filter(g=>g.ranges.some(r=>r.start<=date&&r.end>=date)).length;if(n)html+=`<button class="fs-more" style="grid-column:${col+1};grid-row:${2+rowCount*2}" data-day="${date}">ほか${n}件</button>`}
+    html+='</section>';
   }
-  if(hasMemo){
-    const dot=document.createElement("span");
-    dot.className="fc-memo-dot";
-    top.appendChild(dot);
+  el.innerHTML=html;
+  if(!loadSites().length)el.insertAdjacentHTML('beforeend','<div class="fs-empty">最初の現場を登録すると、ここに予定を表示できます。<button onclick="addSite()">＋ 新規現場</button></div>');
+}
+function fsSiteColor(site){return fsSafeColor(site.events?.[0]?.color,'#397b84')}
+function fsAgendaItem(s,date){
+  const info=fsDayInfo(s,date),evs=eventsOnDate(s,date);
+  return `<button class="fs-agenda-item" style="border-left-color:${fsSiteColor(s)}" data-site="${escHtml(s.id)}" data-day="${date}"><span class="fs-agenda-title">${escHtml(s.name||'現場名未設定')}</span>${evs.length?`<span class="fs-agenda-work">${evs.map(e=>escHtml(e.title)).join('・')}</span>`:''}<span class="fs-agenda-meta">${fsCrewHTML(info)} ${escHtml(info.memo||'')}</span></button>`;
+}
+function fsRenderSelection(){
+  const el=document.getElementById('fs-selection'),date=fsState.date,d=fsDate(date),active=fsSites().filter(s=>fsOnDay(s,date));
+  el.innerHTML=`<div class="fs-selection-head"><h2><time datetime="${date}">${d.getMonth()+1}月${d.getDate()}日</time> <span>${DAY_JP[d.getDay()]}曜日${isHoliday(date)?' · '+escHtml(isHoliday(date)):''}</span></h2><span>${active.length}現場</span><button onclick="fsSetView('day')" aria-label="選択日を日表示で開く">詳細 <span aria-hidden="true">↗</span></button></div><div class="fs-selection-items">${active.length?active.map(s=>fsAgendaItem(s,date)).join(''):'<div class="fs-selection-empty">予定はありません。<button onclick="showEventModal()">＋ この日に追加</button></div>'}</div>`;
+}
+function fsSelectDate(date){
+  const scroll=document.getElementById('fs-viewport').scrollTop;
+  fsJumpTo(date);document.getElementById('fs-viewport').scrollTop=scroll;
+}
+function fsRenderAgenda(el,sites){
+  const week=fsState.view==='week',list=fsState.view==='list';
+  const start=week?fsShift(fsState.date,-fsDate(fsState.date).getDay()):fsState.date;let html='';
+  for(let i=0;i<(week?7:list?30:1);i++){
+    const date=fsShift(start,i),d=fsDate(date),active=sites.filter(s=>fsOnDay(s,date));
+    if(list&&!active.length&&i>0)continue;
+    html+=`<section class="fs-agenda-day ${date===fsToday()?'is-today':''}" ${week?`style="grid-column:${i<4?1:2};grid-row:${i<4?i+1:i-3}"`:''}><h3 class="${d.getDay()===0||isHoliday(date)?'fs-sun':d.getDay()===6?'fs-sat':''}"><time datetime="${date}">${d.getMonth()+1}月${d.getDate()}日</time> <span>${DAY_JP[d.getDay()]}曜日${date===fsToday()?' · 今日':''}</span></h3>`;
+    const shown=week&&active.length>1?active.slice(0,1):active;
+    html+=active.length?shown.map(s=>fsAgendaItem(s,date)).join(''):`<p class="fs-agenda-empty">予定はありません</p><button class="fs-action" data-new-date="${date}">＋ 予定を追加</button>`;
+    if(shown.length<active.length)html+=`<button class="fs-more" data-day="${date}">ほか${active.length-shown.length}件</button>`;
+    html+='</section>';
   }
+  if(list)html+=`<div class="fs-list-end">${fsShift(start,29)} までの予定<button class="fs-action" onclick="fsNavigate(1)">次の30日を見る →</button></div>`;
+  el.innerHTML=html;
+}
+// Compatibility with the existing event editor and export entry points.
+function fsShowSearch(){document.getElementById('fs-search-input').value='';fsSearch('');document.getElementById('fs-search').showModal();document.getElementById('fs-search-input').focus()}
+function fsSearch(query){
+  const q=query.trim().toLocaleLowerCase();const result=[];
+  for(const s of loadSites()){
+    if(!q||[s.name,s.address].some(v=>(v||'').toLocaleLowerCase().includes(q))){const range=fsRanges(s)[0];result.push({site:s,date:range?.start||fsState.date,title:s.name||'現場名未設定',sub:s.address||'現場'})}
+    if(q)for(const e of s.events||[])if((e.title||'').toLocaleLowerCase().includes(q))result.push({site:s,date:e.start,title:e.title,sub:s.name||'現場'});
+  }
+  document.getElementById('fs-search-results').innerHTML=result.slice(0,80).map(r=>`<button class="fs-agenda-item" data-search-site="${escHtml(r.site.id)}" data-date="${escHtml(r.date)}"><span class="fs-agenda-title">${escHtml(r.title)}</span><span class="fs-agenda-meta">${escHtml(r.sub)}</span></button>`).join('')||'<p class="fs-note">該当する現場・工程はありません。</p>';
+}
+
+// ─── DAILY PLAN / ATTENDANCE SHEET ──────────────────────────
+let dpDate=null,dpTab='plan';
+function openDayPanel(dateStr,siteId){
+  if(!fsDate(dateStr))return;fsState.date=dateStr;dpDate=fsDate(dateStr);dpTab=currentTab==='calendar'?fsState.mode:'actual';
+  const sites=loadSites();if(siteId)currentSiteId=siteId;else if(!sites.some(s=>s.id===currentSiteId&&fsOnDay(s,dateStr)))currentSiteId=sites.find(s=>fsOnDay(s,dateStr))?.id||currentSiteId||sites[0]?.id;
+  if(!getSite()){showEventModal();return}renderDayPanel();const dialog=document.getElementById('day-panel-bg');if(!dialog.open)dialog.showModal();renderCalendar();
+}
+function closeDayPanel(){document.getElementById('day-panel-bg').close();renderCalendar();if(currentTab==='today')renderToday()}
+function dpDateStr(){return fsKey(dpDate)}
+function dpPrev(){dpDate=fsDate(fsShift(dpDateStr(),-1));fsState.date=dpDateStr();renderDayPanel()}
+function dpNext(){dpDate=fsDate(fsShift(dpDateStr(),1));fsState.date=dpDateStr();renderDayPanel()}
+function dpSwitchTab(tab){dpTab=tab;renderDayPanel()}
+function fsChooseDaySite(id){currentSiteId=id;renderDayPanel()}
+function renderDayPanel(){
+  const s=getSite();if(!s)return;const ds=dpDateStr(),log=s.dayLogs?.[ds]||{},future=ds>fsToday()&&dpTab==='actual';const info=fsDayInfo(s,ds,dpTab);const plan=dpTab==='plan';
+  document.getElementById('dp-title').textContent=`${dpDate.getMonth()+1}月${dpDate.getDate()}日（${DAY_JP[dpDate.getDay()]}）`;
+  const select=document.getElementById('dp-site');select.innerHTML=loadSites().map(site=>`<option value="${escHtml(site.id)}">${escHtml(site.name||'現場名未設定')}${fsOnDay(site,ds)?'':' · この日の予定なし'}</option>`).join('');select.value=s.id;
+  document.querySelectorAll('.dp-tab').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.tab===dpTab));b.classList.toggle('active',b.dataset.tab===dpTab)});
+  const state=plan?log.planState:log.actualState;
+  let html=`<p class="fs-note">${future?'未来の日は、配置予定を入力してください。':state==='rest'?(plan?'休工予定です。':'休工を確認済みです。'):plan?'担当者を選ぶと、この現場のこの日だけに反映します。':info.members.length?`確定した出面：${info.members.reduce((n,w)=>n+(info.half(w) ? 0.5 : 1),0)}人工`:'出面は未確認です。予定から自動では確定しません。'}</p>`;
+  html+=sortedWorkers(s).map(w=>{const st=plan?log.planWorkers?.[w.id]||'':log.workerStatus?.[w.id]||'';const opts=plan?[['','未定'],['planned','終日予定'],['half','半日予定']]:[['','未確認'],['present','出勤'],['half','半日'],['absent','欠勤']];return`<div class="fs-log-row">${fsCrewChip(w)}<span class="fs-log-name">${escHtml(w.name)}</span><select aria-label="${escHtml(w.name)}の${plan?'配置':'出面'}" data-worker-status="${escHtml(w.id)}" ${future?'disabled':''}>${opts.map(([v,l])=>`<option value="${v}" ${v===st?'selected':''}>${l}</option>`).join('')}</select></div>`}).join('');
+  if(!s.workers?.length)html+='<p class="fs-note">現場・メンバー設定から担当者を追加してください。</p>';
+  html+=`<label for="dp-memo">${plan?'予定する仕事内容':'実際の仕事内容'}</label><textarea id="dp-memo" ${future?'disabled':''} oninput="${plan?'dpSavePlanMemo':'dpSaveMemo'}(this.value)" placeholder="場所・作業内容・申し送り">${escHtml(plan?log.planMemo||'':log.memo||'')}</textarea>`;
+  html+=`<div class="fs-sheet-actions">${!plan?`<button class="fs-primary" onclick="fsConfirmPlan()" ${future?'disabled':''}>予定どおりの出面を確定</button>`:''}<button onclick="fsSetRest()" ${future?'disabled':''}>${state==='rest'?'休工を解除':plan?'休工にする':'休工を確認'}</button></div>`;
+  const evs=eventsOnDate(s,ds);html+='<div style="margin-top:20px"><div class="fs-sheet-head"><h2 style="font-size:15px">この日の工程</h2><button class="fs-action" onclick="fsEditFromDay()">＋ 追加</button></div>';
+  html+=evs.map(e=>`<div class="fs-event-row" style="border-left-color:${fsSafeColor(e.color)}"><div class="fs-event-row-main">${escHtml(e.title)}<small>${escHtml(e.start)} 〜 ${escHtml(e.end)}</small></div><button data-edit-event="${escHtml(e.id)}">編集</button></div>`).join('')||'<p class="fs-note">工程の登録はありません。</p>';html+='</div>';
+  html+='<details><summary>出面表・現場情報</summary><div class="fs-sheet-actions"><button onclick="exportPDF()">この現場の出面PDF</button><button onclick="exportCSV()">出面CSV</button><button onclick="closeDayPanel();switchTab(\'settings\')">現場情報</button></div></details>';
+  document.getElementById('dp-content').innerHTML=html;calYear=dpDate.getFullYear();calMonth=dpDate.getMonth();
+}
+function fsUpdateDay(fn){
+  const ds=dpDateStr();if(dpTab==='actual'&&ds>fsToday())return false;
+  try{updateSite(s=>{s.dayLogs=s.dayLogs||{};const log=s.dayLogs[ds]||{};fn(log,s);log.updatedAt=new Date().toISOString();s.dayLogs[ds]=log});return true}catch(e){fsToast('保存できませんでした。空き容量をご確認ください。');return false}
+}
+function fsChangeWorker(id,value){const allowed=dpTab==='plan'?['','planned','half']:['','present','half','absent'];if(!allowed.includes(value)||!getSite()?.workers?.some(w=>w.id===id))return;if(fsUpdateDay(log=>{const field=dpTab==='plan'?'planWorkers':'workerStatus';log[field]={...log[field],[id]:value};if(value)log[dpTab==='plan'?'planState':'actualState']='';else if(dpTab==='plan'&&!Object.values(log.planWorkers).some(Boolean))log.planState='unassigned';})){renderDayPanel();renderCalendar()}}
+function dpSaveMemo(val){fsUpdateDay(log=>{log.memo=val})}
+function dpSavePlanMemo(val){fsUpdateDay(log=>{log.planMemo=val})}
+function fsSetRest(){const log=getSite()?.dayLogs?.[dpDateStr()]||{},field=dpTab==='plan'?'planState':'actualState',members=dpTab==='plan'?'planWorkers':'workerStatus';if(log[field]!=='rest'&&Object.values(log[members]||{}).some(Boolean)&&!confirm('この日の'+(dpTab==='plan'?'配置':'出面')+'を休工に変更しますか？'))return;if(fsUpdateDay(l=>{if(l[field]==='rest')l[field]='';else{l[field]='rest';l[members]={};if(dpTab==='plan')l.plannedHeadcount=0}})){renderDayPanel();renderCalendar()}}
+function fsConfirmPlan(){
+  const s=getSite(),ds=dpDateStr();if(ds>fsToday())return;const log=s?.dayLogs?.[ds]||{};const members=Object.entries(log.planWorkers||{}).filter(([id,v])=>['planned','half'].includes(v)&&s.workers.some(w=>w.id===id));
+  if(!members.length&&log.planState!=='rest'){fsToast('先に配置予定を入力してください');return}
+  if(Object.values(log.workerStatus||{}).some(Boolean)&&!confirm('入力済みの出面を、この日の配置予定で置き換えますか？'))return;
+  if(fsUpdateDay(l=>{l.workerStatus=Object.fromEntries(members.map(([id,v])=>[id,v==='half'?'half':'present']));l.actualState=l.planState==='rest'?'rest':'confirmed';if(!l.memo)l.memo=l.planMemo||''})){renderDayPanel();renderCalendar();fsToast('出面を確定しました')}
+}
+function fsEditFromDay(id){const ds=dpDateStr();closeDayPanel();fsState.date=ds;showEventModal(id)}
+
+// ─── CALENDAR INPUT HANDLERS ─────────────────────────────────
+let fsDrag=null,fsTouch=null,fsLongPress=null,fsSuppressClick=false;
+function fsPointerDate(event){const week=event.target.closest('[data-week]');if(!week)return null;const r=week.getBoundingClientRect();return fsShift(week.dataset.week,Math.max(0,Math.min(6,Math.floor((event.clientX-r.left)/(r.width/7)))))}
+function fsInstallCalendarHandlers(){
+  const calendar=document.getElementById('fs-calendar');
+  document.getElementById('home-container').addEventListener('click',e=>{const site=e.target.closest('[data-home-site]'),date=e.target.closest('[data-home-date]');if(site)homeOpenDay(site.dataset.homeSite);if(date)homeSelectDate(date.dataset.homeDate)});
+  document.getElementById('fs-selection').addEventListener('click',e=>{const item=e.target.closest('[data-site][data-day]');if(item)openDayPanel(item.dataset.day,item.dataset.site)});
+  calendar.addEventListener('keydown',e=>{const day=e.target.closest('.fs-day');if(!day)return;const offset={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}[e.key];if(offset){e.preventDefault();fsSelectDate(fsShift(day.dataset.day,offset));calendar.querySelector(`.fs-day[data-day="${fsState.date}"]`)?.focus()}});
+  calendar.addEventListener('click',e=>{if(fsSuppressClick){fsSuppressClick=false;return}const add=e.target.closest('[data-new-date]');if(add){fsState.date=add.dataset.newDate;showEventModal();return}const target=e.target.closest('[data-day]');if(target?.classList.contains('fs-day')){fsSelectDate(target.dataset.day);return}if(target?.classList.contains('fs-more')){fsState.date=target.dataset.day;fsSetView('day');return}if(target)openDayPanel(target.classList.contains('fs-bar')?fsPointerDate(e)||target.dataset.day:target.dataset.day,target.dataset.site)});
+  calendar.addEventListener('pointerover',e=>{if(!matchMedia('(hover:hover)').matches)return;const el=e.target.closest('[data-site][data-day]');const tip=document.getElementById('fs-tooltip');if(!el){tip.hidden=true;return}const site=loadSites().find(s=>s.id===el.dataset.site);if(!site)return;tip.textContent=fsDayDescription(site,el.classList.contains('fs-bar')?fsPointerDate(e)||el.dataset.day:el.dataset.day);tip.hidden=false;tip.style.left=Math.min(e.clientX+12,innerWidth-tip.offsetWidth-8)+'px';tip.style.top=Math.min(e.clientY+18,innerHeight-tip.offsetHeight-8)+'px'});
+  calendar.addEventListener('pointerleave',()=>{document.getElementById('fs-tooltip').hidden=true});
+  calendar.addEventListener('dragstart',e=>{const bar=e.target.closest('[data-drag-event]');if(!bar){e.preventDefault();return}clearTimeout(fsLongPress);fsDrag={site:bar.dataset.site,event:bar.dataset.dragEvent,anchor:fsPointerDate(e)||bar.dataset.day};e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',bar.dataset.dragEvent);document.getElementById('fs-tooltip').hidden=true});
+  calendar.addEventListener('dragover',e=>{if(fsDrag&&fsPointerDate(e))e.preventDefault()});
+  calendar.addEventListener('drop',e=>{const targetDate=fsPointerDate(e);if(!fsDrag||!targetDate)return;e.preventDefault();const drag=fsDrag;fsDrag=null;const s=loadSites().find(s=>s.id===drag.site),ev=s?.events?.find(x=>x.id===drag.event);if(!ev)return;const delta=Math.round((fsDate(targetDate)-fsDate(drag.anchor))/86400000);if(!delta)return;const start=fsShift(ev.start,delta),end=fsShift(ev.end,delta);if(!fsDate(start)||!fsDate(end))return;if(!confirm(`${ev.title}\n${start} 〜 ${end} に移動しますか？\n日別の配置と出面は元の日付に残ります。`))return;currentSiteId=s.id;updateSite(site=>{const event=site.events.find(x=>x.id===drag.event);event.start=start;event.end=end});renderCalendar();fsToast('工程を移動しました。配置は日別詳細で確認してください')});
+  calendar.addEventListener('dragend',()=>{fsDrag=null});
+  const vp=document.getElementById('fs-viewport');vp.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;fsTouch={x:e.touches[0].clientX,y:e.touches[0].clientY};const day=e.target.closest('.fs-day');if(day)fsLongPress=setTimeout(()=>{fsSuppressClick=true;fsTouch=null;fsState.date=day.dataset.day;showEventModal();setTimeout(()=>{fsSuppressClick=false},700)},550)},{passive:true});
+  vp.addEventListener('touchmove',e=>{if(fsTouch&&(Math.abs(e.touches[0].clientX-fsTouch.x)>10||Math.abs(e.touches[0].clientY-fsTouch.y)>10))clearTimeout(fsLongPress)},{passive:true});
+  vp.addEventListener('touchend',e=>{clearTimeout(fsLongPress);if(fsTouch&&e.changedTouches.length){const dx=e.changedTouches[0].clientX-fsTouch.x,dy=e.changedTouches[0].clientY-fsTouch.y;if(Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.7){fsSuppressClick=true;fsNavigate(dx<0?1:-1);setTimeout(()=>{fsSuppressClick=false},350)}}fsTouch=null},{passive:true});vp.addEventListener('touchcancel',()=>{clearTimeout(fsLongPress);fsTouch=null});
+  document.getElementById('dp-content').addEventListener('change',e=>{if(e.target.matches('[data-worker-status]'))fsChangeWorker(e.target.dataset.workerStatus,e.target.value)});
+  document.getElementById('dp-content').addEventListener('click',e=>{const b=e.target.closest('[data-edit-event]');if(b)fsEditFromDay(b.dataset.editEvent)});
+  document.getElementById('fs-search-results').addEventListener('click',e=>{const b=e.target.closest('[data-search-site]');if(!b)return;document.getElementById('fs-search').close();fsState.filter=b.dataset.searchSite;currentSiteId=b.dataset.searchSite;fsJumpTo(fsDate(b.dataset.date)?b.dataset.date:fsState.date)});
+  document.querySelectorAll('dialog.fs-sheet').forEach(d=>{d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}});d.addEventListener('close',()=>{document.getElementById('fs-tooltip').hidden=true;if(d.id==='day-panel-bg'){renderCalendar();if(currentTab==='today')renderToday()}})});
+  window.addEventListener('storage',e=>{if(e.key==='genba_sites'){renderCalendar();if(document.getElementById('day-panel-bg').open)renderDayPanel();if(currentTab==='today')renderToday()}});
 }
 
 // ─── Japanese Holidays ──────────────────────────────────────
@@ -747,15 +830,14 @@ function getJapaneseHolidays(year){
   add(11,3,"文化の日");
   add(11,23,"勤労感謝の日");
 
-  // 振替休日: 祝日が日曜なら翌月曜
-  const keys=Object.keys(h);
-  keys.forEach(k=>{
-    const dt=new Date(k+"T00:00:00");
-    if(dt.getDay()===0){
-      const next=new Date(dt);next.setDate(next.getDate()+1);
-      const nk=next.toLocaleDateString("sv-SE");
-      if(!h[nk])h[nk]="振替休日";
-    }
+  // Public holiday bridges and substitutes (Cabinet Office, checked 2026-09-07).
+  const national={...h};
+  Object.keys(national).forEach(k=>{
+    const next=fsShift(k,1),after=fsShift(k,2);
+    if(!national[next]&&national[after])h[next]="国民の休日";
+  });
+  Object.keys(national).forEach(k=>{
+    if(fsDate(k).getDay()===0){let next=fsShift(k,1);while(h[next])next=fsShift(next,1);h[next]="振替休日";}
   });
 
   return h;
@@ -766,197 +848,6 @@ function isHoliday(dateStr){
   const y=parseInt(dateStr.split("-")[0]);
   if(!holidayCache[y])holidayCache[y]=getJapaneseHolidays(y);
   return holidayCache[y][dateStr]||null;
-}
-
-function fcColorHoliday(info){
-  const ds=info.date.toLocaleDateString("sv-SE");
-  if(isHoliday(ds)){
-    info.el.classList.add("fc-day-holiday");
-  }
-}
-
-function updateCalSub(){
-  const s=getSite();if(!s)return;
-  document.getElementById("cal-title").innerHTML=(s.name||"カレンダー")+' <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24" style="vertical-align:middle;opacity:.6"><polyline points="6,9 12,15 18,9"/></svg>';
-  const dim=daysInMonth(calYear,calMonth);
-  let total=0;
-  for(let d=1;d<=dim;d++){
-    const log=s.dayLogs?.[dkey(calYear,calMonth,d)]||{};
-    if(log.workerStatus)Object.values(log.workerStatus).forEach(st=>{if(st==="present")total+=1;else if(st==="half")total+=.5});
-  }
-  document.getElementById("cal-sub").textContent=`合計 ${total} 人工`;
-}
-
-function renderCalendar(){
-  initFullCalendar();
-}
-
-function renderEventList(){
-  const s=getSite();if(!s)return;
-  const evs=(s.events||[]).filter(e=>{const ms=dkey(calYear,calMonth,1),me=dkey(calYear,calMonth,daysInMonth(calYear,calMonth));return e.start<=me&&e.end>=ms}).sort((a,b)=>a.start.localeCompare(b.start));
-  const el=document.getElementById("cal-event-list");
-  if(!evs.length){el.innerHTML=`<div style="padding:16px;text-align:center;color:#94A3B8;font-size:13px">工程がありません</div>`;return}
-  el.innerHTML=evs.map(e=>{
-    const sd=parseInt(e.start.split("-")[2]),ed=parseInt(e.end.split("-")[2]);
-    return`<div onclick="showEventModal('${e.id}')" style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid #F0F2F8;cursor:pointer">
-      <div style="width:4px;height:28px;border-radius:2px;background:${e.color}"></div>
-      <div style="flex:1"><div style="font-size:15px;font-weight:600">${escHtml(e.title)}</div><div style="font-size:12px;color:#94A3B8;margin-top:2px">${sd}日〜${ed}日</div></div>
-    </div>`}).join("");
-}
-
-// ─── DAY DETAIL PANEL (S1) ──────────────────────────────────
-let dpDate=null;
-let dpTab="actual";
-
-function openDayPanel(dateStr){
-  dpDate=new Date(dateStr+"T00:00:00");
-  dpTab="actual";
-  renderDayPanel();
-  document.getElementById("day-panel-bg").classList.remove("hidden");
-}
-
-function closeDayPanel(){
-  document.getElementById("day-panel-bg").classList.add("hidden");
-  if(fcInstance)fcInstance.refetchEvents();
-  initFullCalendar();
-}
-
-function dpPrev(){dpDate.setDate(dpDate.getDate()-1);renderDayPanel()}
-function dpNext(){dpDate.setDate(dpDate.getDate()+1);renderDayPanel()}
-
-function dpSwitchTab(tab,btn){
-  dpTab=tab;
-  document.querySelectorAll(".dp-tab").forEach(t=>t.classList.remove("active"));
-  btn.classList.add("active");
-  renderDayPanel();
-}
-
-function dpDateStr(){return dpDate.toLocaleDateString("sv-SE")}
-
-function renderDayPanel(){
-  const s=getSite();if(!s)return;
-  const ds=dpDateStr();
-  const d=dpDate;
-  document.getElementById("dp-title").textContent=`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${DAY_JP[d.getDay()]}）`;
-
-  const log=s.dayLogs?.[ds]||{};
-  const workers=sortedWorkers(s);
-  const evs=eventsOnDate(s,ds);
-  const el=document.getElementById("dp-content");
-
-  // Events on this day
-  let evHTML="";
-  if(evs.length>0){
-    evHTML=`<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">${evs.map(e=>`<span style="background:${e.color};color:#fff;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600">${escHtml(e.title)}</span>`).join("")}</div>`;
-  }
-
-  if(dpTab==="actual"){
-    // Actual attendance
-    let nk=0;
-    const membersHTML=workers.length>0?workers.map(w=>{
-      const st=log.workerStatus?.[w.id]||"";
-      if(st==="present")nk+=1;else if(st==="half")nk+=0.5;
-      return`<div class="mc" data-s="${st}" onclick="dpToggleStatus('${w.id}')" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;cursor:pointer;border:1.5px solid transparent;margin-bottom:4px;${st==="present"?"background:#ECFDF5;border-color:#A7F3D0":st==="half"?"background:#FFFBEB;border-color:#FDE68A":st==="absent"?"background:#FEF2F2;border-color:#FECACA":"background:#F8FAFC;border-color:#E2E8F0"}">
-        <div style="width:32px;height:32px;border-radius:10px;background:${w.color};display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff">${workerIcon(w)}</div>
-        <span style="flex:1;font-size:14px;font-weight:600">${escHtml(w.name)}</span>
-        <span style="font-size:13px;font-weight:700;color:${st==="present"?"#059669":st==="half"?"#D97706":st==="absent"?"#DC2626":"#CBD5E1"}">${STATUS_LABEL[st]}</span>
-      </div>`}).join(""):`<div style="color:#94A3B8;font-size:13px;text-align:center;padding:16px">メンバーが登録されていません</div>`;
-
-    el.innerHTML=`${evHTML}
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-        <div style="font-size:16px;font-weight:800;color:#4F46E5">${nk} <span style="font-size:12px;color:#94A3B8;font-weight:600">人工</span></div>
-        <div style="display:flex;gap:4px">
-          <button class="btn btn-outline btn-sm" onclick="dpCopyFrom('yesterday')" style="font-size:11px;min-height:30px;padding:5px 8px">昨日と同じ</button>
-          <button class="btn btn-outline btn-sm" onclick="dpCopyFrom('lastweek')" style="font-size:11px;min-height:30px;padding:5px 8px">先週同曜日</button>
-        </div>
-      </div>
-      ${membersHTML}
-      <div style="margin-top:12px">
-        <div class="label">作業メモ</div>
-        <textarea class="field" placeholder="作業メモ..." oninput="dpSaveMemo(this.value)">${escHtml(log.memo||"")}</textarea>
-      </div>`;
-  }else{
-    // Plan
-    const planH=log.plannedHeadcount||0;
-    const membersHTML=workers.length>0?workers.map(w=>{
-      const planned=log.planWorkers?.[w.id]==="planned";
-      return`<div onclick="dpTogglePlan('${w.id}')" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;cursor:pointer;border:1.5px solid ${planned?"#C7D2FE":"#E2E8F0"};background:${planned?"#EEF2FF":"#F8FAFC"};margin-bottom:4px">
-        <div style="width:32px;height:32px;border-radius:10px;background:${w.color};display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff">${workerIcon(w)}</div>
-        <span style="flex:1;font-size:14px;font-weight:600">${escHtml(w.name)}</span>
-        <span style="font-size:13px;font-weight:700;color:${planned?"#4F46E5":"#CBD5E1"}">${planned?"予定":"—"}</span>
-      </div>`}).join(""):"";
-
-    el.innerHTML=`${evHTML}
-      <div style="margin-bottom:12px">
-        <div class="label">予定人数</div>
-        <input type="number" class="field" value="${planH}" min="0" oninput="dpSavePlanH(this.value)" style="width:100px">
-      </div>
-      ${membersHTML}
-      <div style="margin-top:12px">
-        <div class="label">工程予定メモ</div>
-        <textarea class="field" placeholder="工程予定メモ..." oninput="dpSavePlanMemo(this.value)">${escHtml(log.planMemo||"")}</textarea>
-      </div>`;
-  }
-}
-
-function dpToggleStatus(wId){
-  const ds=dpDateStr();
-  const sites=loadSites();
-  const si=sites.findIndex(s=>s.id===currentSiteId);if(si<0)return;
-  const s=sites[si];
-  if(!s.dayLogs[ds])s.dayLogs[ds]={};
-  if(!s.dayLogs[ds].workerStatus)s.dayLogs[ds].workerStatus={};
-  const cur=s.dayLogs[ds].workerStatus[wId]||"";
-  s.dayLogs[ds].workerStatus[wId]=STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur)+1)%STATUS_CYCLE.length];
-  saveSites(sites);
-  renderDayPanel();
-}
-
-function dpTogglePlan(wId){
-  const ds=dpDateStr();
-  const sites=loadSites();
-  const si=sites.findIndex(s=>s.id===currentSiteId);if(si<0)return;
-  const s=sites[si];
-  if(!s.dayLogs[ds])s.dayLogs[ds]={};
-  if(!s.dayLogs[ds].planWorkers)s.dayLogs[ds].planWorkers={};
-  s.dayLogs[ds].planWorkers[wId]=s.dayLogs[ds].planWorkers[wId]==="planned"?"":"planned";
-  saveSites(sites);
-  renderDayPanel();
-}
-
-function dpSaveMemo(val){
-  const ds=dpDateStr();
-  updateSite(s=>{if(!s.dayLogs[ds])s.dayLogs[ds]={};s.dayLogs[ds].memo=val});
-}
-
-function dpSavePlanMemo(val){
-  const ds=dpDateStr();
-  updateSite(s=>{if(!s.dayLogs[ds])s.dayLogs[ds]={};s.dayLogs[ds].planMemo=val});
-}
-
-function dpSavePlanH(val){
-  const ds=dpDateStr();
-  updateSite(s=>{if(!s.dayLogs[ds])s.dayLogs[ds]={};s.dayLogs[ds].plannedHeadcount=parseInt(val)||0});
-}
-
-function dpCopyFrom(source){
-  const ds=dpDateStr();
-  const target=new Date(dpDate);
-  if(source==="yesterday"){
-    do{target.setDate(target.getDate()-1)}while(target.getDay()===0||target.getDay()===6);
-  }else if(source==="lastweek"){
-    target.setDate(target.getDate()-7);
-  }
-  const srcKey=target.toLocaleDateString("sv-SE");
-  const sites=loadSites();
-  const si=sites.findIndex(s=>s.id===currentSiteId);if(si<0)return;
-  const s=sites[si];
-  const srcLog=s.dayLogs?.[srcKey];
-  if(!srcLog?.workerStatus){alert("コピー元のデータがありません");return}
-  if(!s.dayLogs[ds])s.dayLogs[ds]={};
-  s.dayLogs[ds].workerStatus={...srcLog.workerStatus};
-  saveSites(sites);
-  renderDayPanel();
 }
 
 // ─── SETTINGS SCREEN ─────────────────────────────────────────
@@ -996,7 +887,7 @@ function renderSiteForm(){
   }
 }
 
-function updateSiteField(k,v){updateSite(s=>{s[k]=v});if(k==="name")document.getElementById("today-site-name").textContent=v||"現場名未設定"}
+function updateSiteField(k,v){updateSite(s=>{s[k]=v});if(k==="name"){const el=document.getElementById("today-site-name");if(el)el.textContent=v||"現場名未設定"}}
 
 function renderWorkerList(){
   const s=getSite();if(!s)return;
@@ -1095,43 +986,37 @@ function openWorkerEdit(wId){const s=getSite();const w=s?.workers.find(w=>w.id==
 
 // ─── EVENT MODAL ─────────────────────────────────────────────
 function showEventModal(evId){
-  const s=getSite();if(!s)return;
-  editingEventId=evId||null;
+  const sites=loadSites();if(!sites.length){addSite();return}
+  if(!getSite())currentSiteId=sites[0].id;const s=getSite();editingEventId=evId||null;
   const ev=evId?(s.events||[]).find(e=>e.id===evId):null;
-  document.getElementById("em-title").textContent=ev?"工程を編集":"工程を追加";
-  document.getElementById("em-del").classList.toggle("hidden",!ev);
-  document.getElementById("em-name").value=ev?ev.title:"";
-  document.getElementById("em-start").value=ev?ev.start:dkey(calYear,calMonth,1);
-  document.getElementById("em-end").value=ev?ev.end:dkey(calYear,calMonth,1);
-  selectedEventColor=ev?ev.color:EVENT_COLORS[0];
-  renderEmColors();
-  document.getElementById("event-modal").classList.remove("hidden");
+  document.getElementById('em-title').textContent=ev?'予定・工程を編集':'予定・工程を追加';
+  document.getElementById('em-del').classList.toggle('hidden',!ev);document.getElementById('em-duplicate').hidden=!ev;
+  document.getElementById('em-name').value=ev?ev.title:'';
+  document.getElementById('em-start').value=ev?ev.start:fsState.date;
+  document.getElementById('em-end').value=ev?ev.end:fsState.date;
+  const select=document.getElementById('em-site');select.innerHTML=sites.map(site=>`<option value="${escHtml(site.id)}">${escHtml(site.name||'現場名未設定')}</option>`).join('');select.value=s.id;select.disabled=!!ev;
+  selectedEventColor=fsSafeColor(ev?.color);renderEmColors();fsEventCrew();document.getElementById('em-error').textContent='';
+  const dlg=document.getElementById('event-modal');if(!dlg.open)dlg.showModal();
 }
-function hideEventModal(){document.getElementById("event-modal").classList.add("hidden");editingEventId=null}
-function renderEmColors(){
-  document.getElementById("em-colors").innerHTML=EVENT_COLORS.map(c=>{
-    const sel=c===selectedEventColor;
-    return`<button class="color-dot" onclick="selectedEventColor='${c}';renderEmColors()" style="background:${c};box-shadow:${sel?`0 0 0 3px #fff,0 0 0 5px ${c}`:`none`};transform:${sel?"scale(1.1)":"scale(1)"}">
-      ${sel?`<svg width="16" height="16" fill="none" stroke="#fff" stroke-width="3" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>`:""}</button>`}).join("");
-}
+function fsEventSiteChanged(id){currentSiteId=id;fsEventCrew()}
+function fsEventCrew(){document.getElementById('em-crew').innerHTML=sortedWorkers(getSite()).map(w=>`<label><input type="checkbox" value="${escHtml(w.id)}">${fsCrewChip(w)}${escHtml(w.name)}</label>`).join('');document.querySelectorAll('[data-em-weekday]').forEach(c=>c.checked=c.value!=='0')}
+function hideEventModal(){document.getElementById('event-modal').close();editingEventId=null}
+function renderEmColors(){document.getElementById('em-colors').innerHTML=['#5085dc',...EVENT_COLORS].map(c=>`<button type="button" class="color-dot" data-event-color="${c}" aria-label="予定の色 ${c}" aria-pressed="${c===selectedEventColor}" style="background:${c};box-shadow:${c===selectedEventColor?'0 0 0 2px #fff,0 0 0 4px '+c:'none'}"></button>`).join('')}
 function saveEventFromModal(){
-  const title=document.getElementById("em-name").value.trim();
-  const start=document.getElementById("em-start").value;
-  const end=document.getElementById("em-end").value;
-  if(!title||!start||!end)return;
-  if(end<start){alert("終了日は開始日以降にしてください");return}
-  updateSite(s=>{
-    if(!s.events)s.events=[];
-    if(editingEventId){const e=s.events.find(e=>e.id===editingEventId);if(e){e.title=title;e.start=start;e.end=end;e.color=selectedEventColor}}
-    else s.events.push({id:uid(),title,start,end,color:selectedEventColor});
-  });
-  hideEventModal();initFullCalendar();renderEventList();
+  const title=document.getElementById('em-name').value.trim(),start=document.getElementById('em-start').value,end=document.getElementById('em-end').value,error=document.getElementById('em-error');
+  if(!title||!fsDate(start)||!fsDate(end)){error.textContent='現場・工程の名前と、有効な開始日・終了日を入力してください。';return}
+  if(end<start){error.textContent='終了日は開始日以降にしてください。';return}
+  const crew=Array.from(document.querySelectorAll('#em-crew input:checked')).map(c=>c.value);const weekdays=Array.from(document.querySelectorAll('[data-em-weekday]:checked')).map(c=>Number(c.value));
+  if(crew.length&&!weekdays.length){error.textContent='担当者を配置する曜日を選んでください。';return}
+  if(crew.length&&(fsDate(end)-fsDate(start))/86400000>366){error.textContent='一括配置は367日以内の期間で指定してください。';return}
+  try{updateSite(s=>{s.events=s.events||[];if(editingEventId){const e=s.events.find(e=>e.id===editingEventId);if(!e)throw Error('missing event');Object.assign(e,{title,start,end,color:selectedEventColor})}else s.events.push({id:uid(),title,start,end,color:selectedEventColor});
+    // Fill only unspecified dates; preserve deliberate rest days and daily exceptions.
+    s.dayLogs=s.dayLogs||{};if(crew.length)for(let date=start;date<=end;date=fsShift(date,1)){if(!weekdays.includes(fsDate(date).getDay()))continue;const log=s.dayLogs[date]||{};if(log.planState||log.plannedHeadcount||log.planMemo||Object.values(log.planWorkers||{}).some(Boolean))continue;log.planWorkers=Object.fromEntries(crew.map(id=>[id,'planned']));log.planMemo=title;log.updatedAt=new Date().toISOString();s.dayLogs[date]=log;}
+  })}catch(e){error.textContent='保存できませんでした。データが残っているか確認してから再度お試しください。';return}
+  fsState.date=start;hideEventModal();renderCalendar();fsToast('予定を保存しました'+(crew.length?'。未配置の日に担当者を追加しました':''));
 }
-function deleteEventFromModal(){
-  if(!confirm("この工程を削除しますか？"))return;
-  updateSite(s=>{s.events=(s.events||[]).filter(e=>e.id!==editingEventId)});
-  hideEventModal();initFullCalendar();renderEventList();
-}
+function fsDuplicateEvent(){editingEventId=null;document.getElementById('em-title').textContent='予定・工程を複製';document.getElementById('em-del').classList.add('hidden');document.getElementById('em-duplicate').hidden=true;document.getElementById('em-site').disabled=false;document.getElementById('em-error').textContent='複製先の期間を選んで保存してください。出面実績は複製されません。'}
+function deleteEventFromModal(){if(!confirm('この予定・工程を削除しますか？\n日別の配置と出面実績は残ります。'))return;updateSite(s=>{s.events=(s.events||[]).filter(e=>e.id!==editingEventId)});hideEventModal();renderCalendar();fsToast('予定・工程を削除しました。出面は保持しています')}
 
 // ─── PDF EXPORT ──────────────────────────────────────────────
 function exportPDF(){
@@ -1207,11 +1092,18 @@ document.addEventListener("DOMContentLoaded",()=>{
   initDemoData();
   const sites=loadSites();
   currentSiteId=sites[0]?.id||null;
-  switchTab("today");
+  fsInstallCalendarHandlers();
+  document.getElementById("em-colors").addEventListener("click",e=>{const b=e.target.closest("[data-event-color]");if(b){selectedEventColor=b.dataset.eventColor;renderEmColors()}});
+  switchTab("calendar");
+  updateFieldClock();loadFieldWeather();
+  setInterval(()=>{updateFieldClock();if(fieldWeatherData)renderFieldWeather()},30000);
+  setInterval(()=>{if(!document.hidden)loadFieldWeather()},30*60*1000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden){updateFieldClock();loadFieldWeather()}});
+  document.getElementById('weather-dialog').addEventListener('click',event=>{if(event.target===event.currentTarget){const rect=event.currentTarget.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)event.currentTarget.close()}});
   // Close modals on background tap
   document.querySelectorAll(".modal-bg").forEach(m=>{m.addEventListener("click",e=>{if(e.target===m)m.classList.add("hidden")})});
   // Close day panel on background tap
-  document.getElementById("day-panel-bg").addEventListener("click",e=>{if(e.target.id==="day-panel-bg")closeDayPanel()});
+
 });
 </script>
 </body>
